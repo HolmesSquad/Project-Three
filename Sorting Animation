@@ -1,0 +1,83 @@
+from Tkinter import*
+import random
+import time
+global g
+
+main = Tk(className = "sorting animation")
+canvas = Canvas(main, width = 700, height = 400, bg = "white")
+canvas.pack()
+PointsList=[]
+
+class Treasure:
+    global g
+    def __init__(self,x,y,length,width,colour,canvas,points):
+        self.x=x
+        self.y=y
+        self.length=length
+        self.width=width
+        self.colour=colour
+        self.canvas=canvas
+        self.points=points
+        self.object=canvas.create_rectangle(self.x,self.y,self.x+self.length,self.y+self.width,fill=self.colour)
+        PointsList.append(points)
+        
+
+
+    
+def mergeSortAsc(List):
+    if len(List) > 1:
+        midMA = len(List) // 2
+        lHalfMA = List[:midMA]
+        rHalfMA = List[midMA:]
+
+        mergeSortAsc(lHalfMA)
+        mergeSortAsc(rHalfMA)
+        
+
+        aMA = 0
+        bMA = 0
+        cMA = 0
+
+        while aMA < len(lHalfMA) and bMA < len(rHalfMA):
+            if lHalfMA[aMA] < rHalfMA[bMA]:
+                List[cMA] = lHalfMA[aMA]
+                aMA += 1
+                
+            else:
+                List[cMA] = rHalfMA[bMA]
+                bMA += 1
+            cMA += 1
+
+        while aMA < len(lHalfMA):
+            List[cMA] = lHalfMA[aMA]
+            aMA += 1
+            cMA += 1
+
+        while bMA < len(rHalfMA):
+            List[cMA] = rHalfMA[bMA]
+            bMA += 1
+            cMA += 1
+
+    
+ 
+            
+    
+Treasure1= Treasure(50.0, 160.0, 20.0, 20.0, "red", canvas, 50)
+Treasure2= Treasure(75.0, 160.0, 20.0, 20.0, "yellow", canvas, 1000)
+Treasure3= Treasure(125.0, 160.0, 20.0, 20.0, "blue", canvas, 200)
+Treasure4= Treasure(100.0, 160.0, 20.0, 20.0, "green", canvas, 20)
+treasureList=[Treasure1,Treasure2,Treasure3,Treasure4]
+
+print PointsList
+coordslist[50.0,75.0,100.0,125.0]
+mergeSortAsc(PointsList)
+print PointsList
+
+
+'''treasureIndex = 0
+treasure1 = treasureList[treasureIndex]'''
+
+
+
+main.mainloop()
+
