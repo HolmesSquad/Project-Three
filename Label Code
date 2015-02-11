@@ -7,7 +7,8 @@ canvas.pack()
 Treasure1 = canvas.create_rectangle(250, 120, 270, 140, fill = "White")
 HoneyBee = canvas.create_rectangle(100,120,120,140, fill = "Yellow")
 
-for i in range(0,100):
+
+'''for i in range(0,100):
     Bx1,By1,Bx2,By2 = canvas.coords(HoneyBee)
     Tx1,Ty1,Tx2,Ty2 = canvas.coords(Treasure1)
     canvas.coords(HoneyBee, Bx1+10, By1, Bx2+10,By2)
@@ -15,17 +16,30 @@ for i in range(0,100):
     time.sleep(0.125)
     Bx1,By1,Bx2,By2 = canvas.coords(HoneyBee)
     if Bx1 == Tx1 or Bx2 == Tx2:
-        break
+        break'''
 
 Bx1,By1,Bx2,By2 = canvas.coords(HoneyBee)
-ShapeLabel = Label(main, text = "Shape = SQUARE  ", bg = "White", font = ("Arial", 10))
-ShapeLabel.place(x = Bx2 + 20, y = By1 - 20)
-ColourLabel = Label(main, text = "Colour = WHITE     ", bg = "White", font = ("Arial", 10))
-ColourLabel.place(x = Bx2 + 20, y = By1)
-WorthLabel = Label(main, text = "Worth = N POINTS ", bg = "White", font = ("Arial", 10))
-WorthLabel.place(x = Bx2 + 20, y = By1+20)
-
+Tx1,Ty1,Tx2,Ty2 = canvas.coords(Treasure1)
 '''main.bind("<Enter>", lambda e, x=x: e.widget.config(text=x))
 main.bind("<Leave>", lambda e, i=i: e.widget.config(text="Label "+str(i)))'''
+Shapes = [Treasure1]
+
+def MouseRollover(self):
+    ShapeLabel = Label(main, text = "Shape = SQUARE  ", bg = "White", font = ("Arial", 10))
+    ShapeLabel.place(x = Tx2 + 20, y = Ty1 - 20)
+    ColourLabel = Label(main, text = "Colour = WHITE     ", bg = "White", font = ("Arial", 10))
+    ColourLabel.place(x = Tx2 + 20, y = Ty1)
+    WorthLabel = Label(main, text = "Worth = N POINTS ", bg = "White", font = ("Arial", 10))
+    WorthLabel.place(x = Tx2 + 20, y = Ty1+20)
+
+def MouseOff(self):
+    ShapeLabel.place_forget()
+    ColourLabel.place_forget()
+    WorthLabel.place_forget()
+
+for i in Shapes:
+    canvas.tag_bind(i,"<Enter>", MouseRollover)
+    canvas.tag_bind(i, "<Leave>", MouseOff)
+
 
 main.mainloop()
