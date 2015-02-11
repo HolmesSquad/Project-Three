@@ -2,6 +2,7 @@ from Tkinter import *
 import tkMessageBox
 level2 = Tk()
 level2.title("Level 2")
+level2.resizable(0,0)
 canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
 canvas.pack()
 
@@ -45,7 +46,6 @@ class interface:
         self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
         self.treasureBackgroundLabel.place(x = 1020, y = 380)
 
-    
     def timer(level2):
          global counter, resetpressed, pausepressed
          counter==counter
@@ -69,22 +69,23 @@ class interface:
         global timerWindow, wishlistWindow
         timerWindow = Tk()
         timerWindow.title("Collection Time")
+        timerWindow.resizable(0,0)
         
         timerCanvas = Canvas(timerWindow, width = 210, height = 200, bg = "White")
         
         interface.timerselect_label = Label(timerCanvas, text = "Time to collect: (In Seconds)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
         interface.timerselect_label.place(x = 35, y = 10)
         
-        interface.timeEntry = Entry(timerCanvas, text= "" , width = 20, bd = 5)
+        interface.timeEntry = Entry(timerCanvas, text = "" , width = 20, bd = 5)
         interface.timeEntry.place(x = 45,y = 60)
         
-        interface.timeEntryButton = Button(timerCanvas, text="Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
+        interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
         interface.timeEntryButton.place(x = 65, y = 100)
         
         timerCanvas.pack()
         wishlistWindow.destroy()
         #timerwin.grab_set() these dont work yet
-        #timerwin.focus()
+        #timerWindow.focus_force()
 
     def timerwingeterror(self):
         tkMessageBox.showinfo("Timer Error", "Please enter a value greater than 0")
@@ -103,6 +104,7 @@ class interface:
         global wishlistWindow, timerWindow
         wishlistWindow = Tk()
         wishlistWindow.title("Wishlist")
+        wishlistWindow.resizable(0,0)
 
         wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 200, bg = "White")
 
@@ -116,7 +118,8 @@ class interface:
         interface.startButton.place_forget()
 
     def reset(self):
-        print "Reset"
+        level2.destroy()
+        import Level2
 
     def pause(self):
         print "Pause"
@@ -125,6 +128,8 @@ class interface:
         global levelWindow
         levelWindow = Tk()
         levelWindow.title("Level Select")
+        levelWindow.resizable(0,0)
+        
         levelCanvas = Canvas(levelWindow, width = 200, height = 180, bg = "White")
         
         interface.level1Button = Button(levelCanvas, text = "Level 1", width = 20, font = ("Arial", 10),command= self.levelSelectLevel1, bg = "LightBlue")
@@ -144,19 +149,19 @@ class interface:
     def levelSelectLevel1(self):
         global levelWindow
         levelWindow.destroy()
-        level1.destroy()
+        level2.destroy()
         import Level1
 
     def levelSelectLevel2(self):
         global levelWindow
         levelWindow.destroy()
-        level1.destroy()
+        level2.destroy()
         import Level2
 
     def levelSelectLevel3(self):
         global levelWindow
         levelWindow.destroy()
-        level1.destroy()
+        level2.destroy()
         import Level3
 
 interface = interface(level2)
