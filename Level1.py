@@ -44,7 +44,7 @@ class interface:
         self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
         self.treasureBackgroundLabel.place(x = 1020, y = 380)
 
-<<<<<<< HEAD
+
     def Timer(main):
          global counter, resetpressed, pausepressed
          counter==counter
@@ -92,7 +92,7 @@ class interface:
         else:
             counter=int(interface.time_entry.get())
         interface.Timer_label(interface)
-=======
+
         def start(self):
             print "Start"
 
@@ -104,11 +104,11 @@ class interface:
 
         def levelSelect(self):
             print "Level Select"
-            level = Tk()
+            '''level = Tk()
             level.title("Level Select")
-            levelCanvas = Canvas(level, width = 100
+            levelCanvas = Canvas(level, width = 100'''
            
->>>>>>> origin/Interface
+
         
 interface = interface(main)
 
