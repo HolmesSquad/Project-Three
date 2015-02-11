@@ -1,4 +1,5 @@
 from Tkinter import *
+import tkMessageBox
 main = Tk(className = "level 2")
 canvas = Canvas(main, width = 1280, height = 720, bg = "White")
 canvas.pack()
@@ -22,7 +23,7 @@ class interface:
         self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16), bg = "LightGreen")
         self.startButton.place(x = 1020, y = 80)
 
-        self.resetButton = Button(name, text = "Reset", width = 20, command = '', font = ("Arial", 16), bg = "Orange")
+        self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
         self.resetButton.place(x = 1020, y = 130)
 
         self.pauseButton = Button(name, text = "Pause", width = 20, command = '', font = ("Arial", 16), bg = "Yellow")
@@ -77,35 +78,41 @@ class interface:
         interface.time_entry.place(x=50,y=150)
         interface.time_entry_button = Button(timercanvas, text="Start", width = 8, font = ("Arial", 10),command=interface.timerwinget, bg = "Yellow")
         interface.time_entry_button.place(x = 50, y = 200)
+        #timerwin.grab_set() these dont work yet
+        #timerwin.focus()
         timercanvas.pack()
 
-    def start(self):
-        self.timerwin()
-        interface.startButton.place_forget()
+    def timerwingeterror(self):
+        tkMessageBox.showinfo("Timer Error", "Please enter a value greater than 0")
         
 
     def timerwinget(main):
         global counter
-        if (interface.time_entry.get())=="":
+        if (interface.time_entry.get())=="" or (interface.time_entry.get())=="0":
             counter=0
+            interface.timerwingeterror()
         else:
             counter=int(interface.time_entry.get())
-        interface.Timer_label(interface)
+            interface.Timer_label(interface)
+            #main.timerwin.destroy()
+            
+        
 
-        def start(self):
-            print "Start"
+    def start(self):
+         self.timerwin()
+         interface.startButton.place_forget()   
 
-        def reset(self):
-            print "Reset"
+    def reset(self):
+        print "Reset"
 
-        def pause(self):
-            print "Pause"
+    def pause(self):
+        print "Pause"
 
-        def levelSelect(self):
-            print "Level Select"
-            '''level = Tk()
-            level.title("Level Select")
-            levelCanvas = Canvas(level, width = 100'''
+    def levelSelect(self):
+        print "Level Select"
+        '''level = Tk()
+        level.title("Level Select")
+        levelCanvas = Canvas(level, width = 100'''
            
 
 interface = interface(main)
