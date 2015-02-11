@@ -1,10 +1,10 @@
 from Tkinter import *
-main = Tk()
-main.title("Level 1")
-canvas = Canvas(main, width = 1280, height = 720, bg = "White")
+level1 = Tk()
+level1.title("Level 1")
+canvas = Canvas(level1, width = 1280, height = 720, bg = "White")
 canvas.pack()
 
-mainCanvas = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
+level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
 class interface:
     def __init__(self, name):
@@ -44,26 +44,26 @@ class interface:
         self.treasureBackgroundLabel = Label(name, width = 20, height = 8, font = ("Arial", 16), bg = "LightGray")
         self.treasureBackgroundLabel.place(x = 1020, y = 380)
 
-    def timer(main):
+    def timer(level1):
          global counter, resetpressed, pausepressed
          counter==counter
          if (counter != 0):
             counter=counter-1
             interface.minuteConvert()
-            main.secShowLabel.after(1000, main.timer)
+            level1.secShowLabel.after(1000, level1.timer)
          else:
-            main.counter_stop()
+            level1.counter_stop()
 
-    def timerShow(main,self):
+    def timerShow(level1,self):
         global counter, RoboFinished
         RoboFinished=False
         interface.timer()
                 
-    def minuteConvert(main):
-        main.secShowLabel.config(text = str(counter%60))
-        main.minShowLabel.config(text = str(counter//60))
+    def minuteConvert(level1):
+        level1.secShowLabel.config(text = str(counter%60))
+        level1.minShowLabel.config(text = str(counter//60))
 
-    def timerWindow(main):
+    def timerWindow(level1):
         global timerWindow
         timerWindow = Tk()
         timerWindow.title("Collection Time")
@@ -85,7 +85,7 @@ class interface:
         self.timerWindow()
         interface.startButton.place_forget()
         
-    def timerwinget(main):
+    def timerwinget(level1):
         global counter, timerWindow
         if (interface.timeEntry.get())=="":
             counter=0
@@ -123,22 +123,22 @@ class interface:
     def levelSelectLevel1(self):
         global levelWindow
         levelWindow.destroy()
-        main.destroy()
+        level1.destroy()
         import Level1
 
     def levelSelectLevel2(self):
         global levelWindow
         levelWindow.destroy()
-        main.destroy()
+        level1.destroy()
         import Level2
 
     def levelSelectLevel3(self):
         global levelWindow
         levelWindow.destroy()
-        main.destroy()
+        level1.destroy()
         import Level3
 
 
-interface = interface(main)
+interface = interface(level1)
 
-main.mainloop()    
+level1.mainloop()    
