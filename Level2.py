@@ -164,6 +164,10 @@ class interface:
         level2.destroy()
         import Level3
 
+'''class treasure:
+    def __init__(self):'''
+        
+
 interface = interface(level2)
 
 level2.mainloop()    

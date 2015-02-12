@@ -1,6 +1,7 @@
 from Tkinter import *
 level1 = Tk()
 level1.title("Level 1")
+level1.resizable(0,0)
 canvas = Canvas(level1, width = 1280, height = 720, bg = "White")
 canvas.pack()
 
@@ -67,6 +68,7 @@ class interface:
         global timerWindow
         timerWindow = Tk()
         timerWindow.title("Collection Time")
+        timerWindow.resizable(0,0)
         
         timerCanvas = Canvas(timerWindow, width = 210, height = 200, bg = "White")
         
@@ -104,6 +106,7 @@ class interface:
         global levelWindow
         levelWindow = Tk()
         levelWindow.title("Level Select")
+        levelWindow.resizable(0,0)
         levelCanvas = Canvas(levelWindow, width = 200, height = 180, bg = "White")
         
         interface.level1Button = Button(levelCanvas, text = "Level 1", width = 20, font = ("Arial", 10),command= self.levelSelectLevel1, bg = "LightBlue")
