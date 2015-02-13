@@ -119,16 +119,22 @@ class interface:
         wishlistWindow.title("Wishlist")
         wishlistWindow.resizable(0,0)
 
-        wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 200, bg = "White")
+        wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 280, bg = "White")
 
         interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = self.timerWindow, bg = "LightGray")
-        interface.wishlistEntryButton.place(x = 10, y = 10)
+        interface.wishlistEntryButton.place(x = 60, y = 250)
+
+        interface.wishlistEntryLabel = Label(wishlistCanvas, text = "Please select your desired items", width = 24, font = ("Arial", 10),  bg = "LightGray")
+        interface.wishlistEntryLabel.place(x = 10, y = 10)
+
+        C1=Checkbutton(wishlistWindow,text="Square",onvalue=1,offvalue=0,height=1,width=11)
+        C1.place(x=110,y=50)
 
         wishlistCanvas.pack()
         
     def start(self):
         self.wishlistWindow()
-        interface.startButton.place_forget()
+        #interface.startButton.place_forget()
 
     def reset(self):
         level2.destroy()
@@ -177,6 +183,9 @@ class interface:
         levelWindow.destroy()
         level2.destroy()
         import Level3
+
+    #def wishlistquitconfirm(self):
+        
 
 '''class treasure:
     def __init__(self):'''
