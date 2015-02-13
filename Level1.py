@@ -7,6 +7,19 @@ canvas.pack()
 
 level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
+class Treasure:
+    global g
+    def __init__(self,x,y,length,width,colour,canvas,points):
+        self.x=x
+        self.y=y
+        self.length=length
+        self.width=width
+        self.colour=colour
+        self.canvas=canvas
+        self.points=points
+        self.object=canvas.create_rectangle(self.x,self.y,self.x+self.length,self.y+self.width,fill=self.colour)
+        PointsList.append(points)
+        
 class interface:
     def __init__(self, name):
         self.timerLabel = Label(name, text = "Timer:", width = 10, height = 2, font = ("Arial", 16), bg = "Gray")
