@@ -29,22 +29,21 @@ class interface:
         self.resetButton.place(x = 1020, y = 130)
 
         self.pauseButton = Button(name, text = "Pause", width = 20, command = '', font = ("Arial", 16), bg = "Yellow")
-        self.pauseButton.place(x = 1020, y = 180)
 
         self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
-        self.levelSelectButton.place(x = 1020, y = 230)
+        self.levelSelectButton.place(x = 1020, y = 180)
 
         self.scoreLabel = Label(name, text = "Score", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-        self.scoreLabel.place(x = 1020, y = 290)
+        self.scoreLabel.place(x = 1020, y = 240)
 
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-        self.scoreShowLabel.place(x = 1140, y = 290)
+        self.scoreShowLabel.place(x = 1140, y = 240)
 
         self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
-        self.treasureCollectedLabel.place(x = 1020, y = 350)
+        self.treasureCollectedLabel.place(x = 1020, y = 300)
 
         self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
-        self.treasureBackgroundLabel.place(x = 1020, y = 380)
+        self.treasureBackgroundLabel.place(x = 1020, y = 330)
 
     def timer(level2):
          global counter, resetpressed, pausepressed
@@ -134,16 +133,17 @@ class interface:
         
     def start(self):
         self.wishlistWindow()
-        #interface.startButton.place_forget()
+        interface.startButton.place_forget()
+        interface.pauseButton.place(x = 1020, y = 80)
 
     def reset(self):
-        level2.destroy()
-        import Level2
+        interface.pauseButton.place_forget()
+        interface.startButton.place(x = 1020, y = 80)
+        counter = 0
 
     def pause(self):
         print "Pause"
         
-
     def levelSelect(self):
         global levelWindow
         levelWindow = Tk()
@@ -184,12 +184,7 @@ class interface:
         level2.destroy()
         import Level3
 
-    #def wishlistquitconfirm(self):
-        
-
-'''class treasure:
-    def __init__(self):'''
-        
+    #def wishlistquitconfirm(self):        
 
 interface = interface(level2)
 
