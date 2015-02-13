@@ -1,9 +1,12 @@
 from Tkinter import *
-main = Tk(className = "level 3")
-canvas = Canvas(main, width = 1280, height = 720, bg = "White")
+import tkMessageBox
+level3 = Tk()
+level3.title("Level 3")
+level3.resizable(0,0)
+canvas = Canvas(level3, width = 1280, height = 720, bg = "White")
 canvas.pack()
 
-mainCanvas = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
+level3Canvas = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
 class interface:
     def __init__(self, name):
@@ -22,92 +25,158 @@ class interface:
         self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16), bg = "LightGreen")
         self.startButton.place(x = 1020, y = 80)
 
-        self.resetButton = Button(name, text = "Reset", width = 20, command = '', font = ("Arial", 16), bg = "Orange")
+        self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
         self.resetButton.place(x = 1020, y = 130)
 
-        self.pauseButton = Button(name, text = "Pause", width = 20, command = '', font = ("Arial", 16), bg = "Yellow")
-        self.pauseButton.place(x = 1020, y = 180)
+        self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
 
         self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = '', font = ("Arial", 16), bg = "LightBlue")
-        self.levelSelectButton.place(x = 1020, y = 230)
+        self.levelSelectButton.place(x = 1020, y = 180)
 
         self.scoreLabel = Label(name, text = "Score", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-        self.scoreLabel.place(x = 1020, y = 290)
+        self.scoreLabel.place(x = 1020, y = 240)
 
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-        self.scoreShowLabel.place(x = 1140, y = 290)
+        self.scoreShowLabel.place(x = 1140, y = 240)
 
         self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
-        self.treasureCollectedLabel.place(x = 1020, y = 350)
+        self.treasureCollectedLabel.place(x = 1020, y = 300)
 
-        self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
-        self.treasureBackgroundLabel.place(x = 1020, y = 380)
+        self.treasureBackgroundLabel = Label(name, width = 20, height = 7, font = ("Arial", 16), bg = "LightGray")
+        self.treasureBackgroundLabel.place(x = 1020, y = 330)
 
-
-    def Timer(main):
+    def timer(level3):
          global counter, resetpressed, pausepressed
          counter==counter
          if (counter != 0):
             counter=counter-1
-            interface.minuteconvert()
-            main.secShowLabel.after(1000, main.Timer)
-         else:
-            main.counter_stop()
-
-    def Timer_label(main,self):
-        
-            global counter, RoboFinished
+            interface.minuteConvert()
+            level3.secShowLabel.after(1000, level3.timer)
             
-            RoboFinished=False
-            interface.Timer()
+    def timerShow(level3,self):
+        global counter, RoboFinished  
+        RoboFinished=False
+        interface.timer()
                 
+    def minuteConvert(level3):
+        level3.secShowLabel.config(text = str(counter%60))
+        level3.minShowLabel.config(text = str(counter//60))
 
-    def minuteconvert(main):
+    def timerWindow(level3):
+        global timerWindow, wishlistWindow
+        timerWindow = Tk()
+        timerWindow.title("Collection Time")
+        timerWindow.resizable(0,0)
         
-        main.secShowLabel.config(text = str(counter%60))
-        main.minShowLabel.config(text = str(counter//60))
+        timerCanvas = Canvas(timerWindow, width = 210, height = 200, bg = "White")
+        
+        interface.timerselect_label = Label(timerCanvas, text = "Time to collect: (In Seconds)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.timerselect_label.place(x = 35, y = 10)
+        
+        interface.timeEntry = Entry(timerCanvas, text = "" , width = 20, bd = 5)
+        interface.timeEntry.place(x = 45,y = 60)
+        
+        interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
+        interface.timeEntryButton.place(x = 65, y = 100)
+        
+        timerCanvas.pack()
+        wishlistWindow.destroy()
 
+    def timerwingeterror(self):
+        tkMessageBox.showinfo("Timer Error", "Please enter a value greater than 0")
+        
+    def timerWindowGet(level3):
+        global counter, timerWindow
+        if (interface.timeEntry.get())=="" or (interface.timeEntry.get())=="0":
+            counter=0
+            interface.timerwingeterror()
+        else:
+            counter=int(interface.timeEntry.get())
+            interface.timerShow(interface)
+            timerWindow.destroy()
 
-    def timerwin(main):
-        timerwin = Tk(className = "Timer Window")
-        timercanvas = Canvas(timerwin, width = 205, height = 320, bg = "Grey")
-        interface.timerselect_label = Label(timercanvas, text = "Please Enter Robot Running Time", width = 26, font = ("Arial", 9))
-        interface.timerselect_label.place(x = 10, y = 30)
-        interface.time_entry=Entry(timercanvas,text= "0" ,bd=5)
-        interface.time_entry.place(x=50,y=150)
-        interface.time_entry_button = Button(timercanvas, text="Start", width = 8, font = ("Arial", 10),command=interface.timerwinget, bg = "Yellow")
-        interface.time_entry_button.place(x = 50, y = 200)
-        timercanvas.pack()
+    def wishlistWindow(self):
+        global wishlistWindow, timerWindow
+        wishlistWindow = Tk()
+        wishlistWindow.title("Wishlist")
+        wishlistWindow.resizable(0,0)
+
+        wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 200, bg = "White")
+
+        interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = self.timerWindow, bg = "LightGray")
+        interface.wishlistEntryButton.place(x = 10, y = 10)
+
+        wishlistCanvas.pack()
 
     def start(self):
-        self.timerwin()
+        self.wishlistWindow()
         interface.startButton.place_forget()
+        interface.pauseButton.place(x = 1020, y = 80)
+
+    def reset(self):
+        interface.pauseButton.place_forget()
+        interface.startButton.place(x = 1020, y = 80)
+        counter = 0
         
+    def pause(self):
+        print "Pause"
 
-    def timerwinget(main):
-        global counter
-        if (interface.time_entry.get())=="":
-            counter=0
-        else:
-            counter=int(interface.time_entry.get())
-        interface.Timer_label(interface)
+    def sortByWindow(self):
+        sortByWindow = Tk()
+        sortByWindow.title("Sort By")
+        sortByWindow.resizable(0,0)
 
-        def start(self):
-            print "Start"
+        sortByCanvas = Canvas(sortByWindow, width = 200, height = 100, bg = "White")
 
-        def reset(self):
-            print "Reset"
+        interface.sortByAscendingButton = Button(sortByCanvas, text = "Ascending", width = 20, font = ("Arial", 10), command = '', bg = "LightBlue")
+        interface.sortByAscendingButton.place (x = 20, y = 20)
 
-        def pause(self):
-            print "Pause"
-
-        def levelSelect(self):
-            print "Level Select"
-            '''level = Tk()
-            level.title("Level Select")
-            levelCanvas = Canvas(level, width = 100'''
-           
+        interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = '', bg = "LightGreen")
+        interface.sortByDescendingButton.place(x = 20, y = 60)
         
-interface = interface(main)
+        sortByCanvas.pack()
 
-main.mainloop()    
+    def levelSelect(self):
+        global levelWindow
+        levelWindow = Tk()
+        levelWindow.title("Level Select")
+        levelWindow.resizable(0,0)
+        
+        levelCanvas = Canvas(levelWindow, width = 200, height = 180, bg = "White")
+        
+        interface.level1Button = Button(levelCanvas, text = "Level 1", width = 20, font = ("Arial", 10),command= self.levelSelectLevel1, bg = "LightBlue")
+        interface.level1Button.place(x = 15, y = 10)
+        
+        interface.level2Button = Button(levelCanvas, text = "Level 2", width = 20, font = ("Arial", 10),command= self.levelSelectLevel2, bg = "LightBlue")
+        interface.level2Button.place(x = 15, y = 50)
+        
+        interface.level3Button = Button(levelCanvas, text = "Level 3", width = 20, font = ("Arial", 10),command= self.levelSelectLevel3, bg = "LightBlue")
+        interface.level3Button.place(x = 15, y = 90)
+        
+        interface.levelCancelButton = Button(levelCanvas, text = "Cancel", width = 10, font = ("Arial", 10),command = levelWindow.destroy , bg = "LightGray")
+        interface.levelCancelButton.place(x = 50, y = 140)
+        
+        levelCanvas.pack()
+
+    def levelSelectLevel1(self):
+        global levelWindow
+        levelWindow.destroy()
+        level2.destroy()
+        import Level1
+
+    def levelSelectLevel2(self):
+        global levelWindow
+        levelWindow.destroy()
+        level2.destroy()
+        import Level2
+
+    def levelSelectLevel3(self):
+        global levelWindow
+        levelWindow.destroy()
+        level2.destroy()
+        import Level3
+        
+interface = interface(level3)
+interface.sortByWindow()
+
+level3.mainloop()    
