@@ -20,6 +20,22 @@ class Treasure:
         self.points=points
         self.object=canvas.create_rectangle(self.x,self.y,self.x+self.length,self.y+self.width,fill=self.colour)
         PointsList.append(points)
+
+    def moveAnimation(self):
+        vx = 20.0
+        vy = 20.0
+        for i in range (1,len(treasureList)):
+            for treasure in treasurePointsList:
+                x1,y1,x2,y2 = canvas.coords(i)
+                canvas.coords(i,x1+vx,y1+vy,x2+vx,y2+vx)
+                canvas.update()
+                x1,y1,x2,y2 = canvas.coords(i)
+                time.sleep(0.1)
+
+
+        
+
+        
         
 
 
@@ -62,22 +78,22 @@ def mergeSortAsc(List):
  
             
     
-Treasure1= Treasure(50.0, 160.0, 20.0, 20.0, "red", canvas, 50)
-Treasure2= Treasure(75.0, 160.0, 20.0, 20.0, "yellow", canvas, 1000)
-Treasure3= Treasure(125.0, 160.0, 20.0, 20.0, "blue", canvas, 200)
-Treasure4= Treasure(100.0, 160.0, 20.0, 20.0, "green", canvas, 20)
+Treasure1 = Treasure(50.0, 160.0, 20.0, 20.0, "red", canvas, 50)
+Treasure2 = Treasure(75.0, 160.0, 20.0, 20.0, "yellow", canvas, 1000)
+Treasure3 = Treasure(125.0, 160.0, 20.0, 20.0, "blue", canvas, 200)
+Treasure4 = Treasure(100.0, 160.0, 20.0, 20.0, "green", canvas, 20)
+treasurePointsList=[Treasure1.points,Treasure2.points,Treasure3.points,Treasure4.points]
 treasureList=[Treasure1,Treasure2,Treasure3,Treasure4]
+treasureList.sort(key=lambda x: x.points,reverse=False)
 
-print PointsList
-coordslist[50.0,75.0,100.0,125.0]
-mergeSortAsc(PointsList)
-print PointsList
+print treasureList[0].colour
 
-
-'''treasureIndex = 0
-treasure1 = treasureList[treasureIndex]'''
+mergeSortAsc(treasurePointsList)
+print treasurePointsList
+Treasure3.moveAnimation()
 
 
 
-main.mainloop()
+canvas.mainloop()
+
 
