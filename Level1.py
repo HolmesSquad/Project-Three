@@ -141,6 +141,84 @@ class interface:
         level1.destroy()
         import Level3
 
+#Ascending
+def mergeSortAsc(fullList):
+    if len(fullList) > 1:
+        midMA = len(fullList) // 2
+        lHalfMA = fullList[:midMA]
+        rHalfMA = fullList[midMA:]
+
+        mergeSortAsc(lHalfMA)
+        mergeSortAsc(rHalfMA)
+
+        aMA = 0
+        bMA = 0
+        cMA = 0
+
+        while aMA < len(lHalfMA) and bMA < len(rHalfMA):
+            if lHalfMA[aMA] < rHalfMA[bMA]:
+                fullList[cMA] = lHalfMA[aMA]
+                aMA += 1
+                
+            else:
+                fullList[cMA] = rHalfMA[bMA]
+                bMA += 1
+            cMA += 1
+
+        while aMA < len(lHalfMA):
+            fullList[cMA] = lHalfMA[aMA]
+            aMA += 1
+            cMA += 1
+
+        while bMA < len(rHalfMA):
+            fullList[cMA] = rHalfMA[bMA]
+            bMA += 1
+            cMA += 1
+
+
+        
+                
+#Descending 
+def mergeSortDes(List):
+    if len(List) > 1:
+        midMD = len(List) // 2
+        lHalfMD = fullList[:midMD]
+        rHalfMD = fullList[midMD:]
+
+        mergeSortDes(lHalfMD)
+        mergeSortDes(rHalfMD)
+
+        aMD = 0
+        bMD = 0
+        cMD = 0
+
+        while aMD < len(lHalfMD) and bMD < len(rHalfMD):
+            if lHalfMD[aMD] > rHalfMD[bMD]:
+                List[cMD] = lHalfMD[aMD]
+                aMD += 1
+                
+            else:
+                List[cMD] = rHalfMD[bMD]
+                bMD += 1
+            cMD += 1
+
+        while aMD > len(lHalfMD):
+            List[cMD] = lHalfMD[aMD]
+            aMD += 1
+            cMD += 1
+
+        while bMD > len(rHalfMD):
+            List[cMD] = rHalfMD[bMD]
+            bMD += 1
+            cMD += 1
+
+fullList = []
+mergeSortAsc(fullList)
+print fullList
+
+fullList = []
+mergeSortDes(fullList)
+print fullList
 
 interface = interface(level1)
 
