@@ -73,31 +73,44 @@ class interface:
         
         timerCanvas = Canvas(timerWindow, width = 210, height = 200, bg = "White")
         
-        interface.timerselect_label = Label(timerCanvas, text = "Time to collect: (In Seconds)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.timerselect_label = Label(timerCanvas, text = "Time to collect:", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
         interface.timerselect_label.place(x = 35, y = 10)
+
+        interface.timermessage_label = Label(timerCanvas, text = "Minutes                Seconds",  width = 22, font = ("Arial", 9), bg = "White")
+        interface.timermessage_label.place(x = 30, y = 90)
+
+        interface.timermessage_label = Label(timerCanvas, text = "Please enter a value greater than 0",  wraplength = 100 ,width = 22, font = ("Arial", 9), bg = "White")
+        interface.timermessage_label.place(x = 30, y = 120)
         
-        interface.timeEntry = Entry(timerCanvas, text = "" , width = 20, bd = 5)
-        interface.timeEntry.place(x = 45,y = 60)
+        interface.timeEntrymin = Entry(timerCanvas, text = "" , width = 8, bd = 5)
+        interface.timeEntrymin.insert(0,"0")
+        interface.timeEntrymin.place(x = 30,y = 60)
+        
+        
+        interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
+        interface.timeEntrysec.insert(0,"0")
+        interface.timeEntrysec.place(x = 130,y = 60)
         
         interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
-        interface.timeEntryButton.place(x = 65, y = 100)
+        interface.timeEntryButton.place(x = 65, y = 170)
         
         timerCanvas.pack()
         wishlistWindow.destroy()
-        #timerwin.grab_set() these dont work yet
-        #timerWindow.focus_force()
+        timerWindow.grab_set() #these dont work 100% yet
+        timerWindow.focus_force()
 
-    def timerwingeterror(self):
-        tkMessageBox.showinfo("Timer Error", "Please enter a value greater than 0")
+
         
     def timerWindowGet(level2):
         global counter, timerWindow
-        if (interface.timeEntry.get())=="" or (interface.timeEntry.get())=="0":
+        if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
             counter=0
-            interface.timerwingeterror()
+    
         else:
-            counter=int(interface.timeEntry.get())
+            counter=int(interface.timeEntrysec.get())
+            counter=counter+((int(interface.timeEntrymin.get())*60))
             interface.timerShow(interface)
+            print "Run this"
             timerWindow.destroy()
 
     def wishlistWindow(self):
@@ -123,6 +136,7 @@ class interface:
 
     def pause(self):
         print "Pause"
+        
 
     def levelSelect(self):
         global levelWindow
