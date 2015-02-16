@@ -1,4 +1,5 @@
 from Tkinter import *
+import math
 level1 = Tk()
 level1.title("Level 1")
 level1.resizable(0,0)
@@ -126,7 +127,7 @@ class interface:
         
         treasureCanvas = Canvas(treasureWindow, width = 210, height = 200, bg = "White")
         
-        interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures (Max:10)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
         interface.treasure_label.place(x = 35, y = 10)
         
         interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
@@ -138,9 +139,11 @@ class interface:
         treasureCanvas.pack()
         
     def assignmaxtreasures(self):
-        self.MaxTreasures=interface.treasureEntry.get()
-        print self.MaxTreasures
-        treasureWindow.destroy()
+        if int(interface.treasureEntry.get())>10:
+            print "No more than ten treasures can be created"
+        else:
+            self.MaxTreasures=interface.treasureEntry.get()
+            treasureWindow.destroy()
 
     def robotWindow(level1):
         global robotWindow
@@ -150,7 +153,7 @@ class interface:
         
         robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
         
-        interface.robot_label = Label(robotCanvas, text = "Number of Robots", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
         interface.robot_label.place(x = 35, y = 10)
         
         interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
@@ -162,14 +165,17 @@ class interface:
         robotCanvas.pack()
         
     def assignmaxrobots(self):
-        self.MaxRobots=interface.robotEntry.get()
-        print self.MaxRobots
-        robotWindow.destroy()
+        if int(interface.robotEntry.get())>2:
+            print "No more than two robots can be created"
+        else:
+            self.MaxRobots=interface.robotEntry.get()
+            robotWindow.destroy()
         
     def start(self):
         self.timerWindow()
         interface.startButton.place_forget()
-        
+        ListOfRobots[1].moveto(600,500)
+
     def timerwinget(level1):
         global counter, timerWindow
         if (interface.timeEntry.get())=="":
@@ -242,23 +248,37 @@ class treasures:
         elif self.type=="Triangle":
             self.name=canvas.create_polygon(self.x,self.y-20,self.x-10,self.y,self.x+10,self.y,fill='green')
             self.score=100
-'''        canvas.tag_bind(self.name,"<Enter>",self.MouseRollover)
-    def MouseRollover(self):
-        ShapeLabel = Label(main, text = "Shape = SQUARE  ", bg = "White", font = ("Arial", 10))
-        ShapeLabel.place(x = Treasure.x + 40, y = Treasure.y - 20)
-        ColourLabel = Label(main, text = "Colour = WHITE     ", bg = "White", font = ("Arial", 10))
-        ColourLabel.place(x = Treasure.x + 40, y = Treasure.y)
-        WorthLabel = Label(main, text = "Worth = N POINTS ", bg = "White", font = ("Arial", 10))
-        WorthLabel.place(x = Treasure.x + 40, y = Treasure.y+20)
-    def MouseOff(self):
-        ShapeLabel.place_forget()
-        ColourLabel.place_forget()
-        WorthLabel.place_forget()'''
 class robots:
     def __init__(self,x,y):
+        self.x1=x-10
+        self.y1=y-10
+        self.x2=x+10
+        self.y2=y+10
         self.x=x
         self.y=y
-        canvas.create_rectangle(self.x-15,self.y-15,self.x+15,self.y+15,fill='cyan')
+        self.speed=1
+        canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
+    def moveto(self,xdest,ydest):
+        if xdest>self.x:
+            xdistance=xdest-self.x
+        elif xdest<self.x:
+            xdistance=self.x-xdest
+        else:
+            xdistance=0
+        if ydest>self.y:
+            ydistance=ydest-self.y
+        elif ydest<self.y:
+            ydistance=self.y-ydest
+        else:
+            ydistance=0
+        totaldistance=(ydistance**2+xdistance**2)**0.5
+        print str(totaldistance)
+        self.x1+=self.vx
+        self.x2+=self.vx
+        self.y1+=self.vy
+        self.y2+=self.vy
+        self.canvas.coords(self.shape,self.x1,self.y1,self.x2,self.y2)
+        self.canvas.update()
 interface = interface(level1)
 interface.MaxTreasures=0
 interface.MaxRobots=0
