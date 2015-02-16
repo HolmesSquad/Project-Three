@@ -248,6 +248,7 @@ class treasures:
         elif self.type=="Triangle":
             self.name=canvas.create_polygon(self.x,self.y-20,self.x-10,self.y,self.x+10,self.y,fill='green')
             self.score=100
+
 class robots:
     def __init__(self,x,y):
         self.x1=x-10
@@ -258,7 +259,28 @@ class robots:
         self.y=y
         self.speed=1
         canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
-    def moveto(self,xdest,ydest):
+    def distancetorobot(self):
+        lowestdistance=100000
+        for i in ListOfTreasures
+            if i.x>self.x:
+                xdistance=i.x-self.x
+            elif i.x<self.x:
+                xdistance=self.x-i.x
+            else:
+                xdistance=0
+            if i.y>self.y:
+                ydistance=i.y-self.y
+            elif i.y<self.y:
+                ydistance=self.y-i.y
+            else:
+                ydistance=0
+            totaldistance=(ydistance**2+xdistance**2)**0.5
+            if totaldistance<highestdistance:
+                lowestdistance=totaldistance
+                closesttreasure=i
+        return closesttreasure
+            
+'''    def moveto(self,xdest,ydest):
         if xdest>self.x:
             xdistance=xdest-self.x
         elif xdest<self.x:
@@ -278,7 +300,7 @@ class robots:
         self.y1+=self.vy
         self.y2+=self.vy
         self.canvas.coords(self.shape,self.x1,self.y1,self.x2,self.y2)
-        self.canvas.update()
+        self.canvas.update()'''
 interface = interface(level1)
 interface.MaxTreasures=0
 interface.MaxRobots=0
