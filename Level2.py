@@ -120,14 +120,75 @@ class interface:
 
         wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 280, bg = "White")
 
+        Boarder1 = wishlistCanvas.create_rectangle(105, 50, 108, 165, fill = 'Black', width = 2)
+        Boarder2 = wishlistCanvas.create_rectangle(11, 65, 211, 60, fill = 'Black', width = 2)
+        Boarder3 = wishlistCanvas.create_rectangle(11, 94, 211, 99, fill = 'Black', width = 2)        
+        Boarder4 = wishlistCanvas.create_rectangle(11, 129, 211, 133, fill = 'Black', width = 2)
+        Boarder5 = wishlistCanvas.create_rectangle(11, 164, 211, 167, fill = 'Black', width = 2)
+
         interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = self.timerWindow, bg = "LightGray")
         interface.wishlistEntryButton.place(x = 60, y = 250)
 
         interface.wishlistEntryLabel = Label(wishlistCanvas, text = "Please select your desired items", width = 24, font = ("Arial", 10),  bg = "LightGray")
         interface.wishlistEntryLabel.place(x = 10, y = 10)
 
-        C1=Checkbutton(wishlistWindow,text="Square",onvalue=1,offvalue=0,height=1,width=11)
-        C1.place(x=110,y=50)
+        C1=Checkbutton(wishlistWindow,text="Square  ",onvalue=1,offvalue=0,height=1,width=11)
+        C1.place(x=110,y=65)
+
+        c2=Checkbutton(wishlistWindow,text="Triangle",onvalue=1,offvalue=0,height=1,width=11)
+        c2.place(x=110,y=100)
+
+        c3=Checkbutton(wishlistWindow,text="Circle    ",onvalue=1,offvalue=0,height=1,width=11)
+        c3.place(x=110,y=135)
+
+        interface.wishlistQuantityLabel=Label(wishlistCanvas,text="Quantity",width=12,font=("Arial",10), bg="LightGray")
+        interface.wishlistQuantityLabel.place(x = 10, y = 38)
+
+        interface.wishlistShapeLabel=Label(wishlistCanvas,text="Objects",width=12,font=("Arial",10), bg="LightGray")
+        interface.wishlistShapeLabel.place(x = 110, y = 38)
+
+        interface.squareQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+        interface.squareQuantity.insert(0,"0")
+        interface.squareQuantity.place(x = 10,y = 66)
+
+        interface.triangleQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+        interface.triangleQuantity.insert(0,"0")
+        interface.triangleQuantity.place(x = 10,y = 101)
+
+        interface.circleQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+        interface.circleQuantity.insert(0,"0")
+        interface.circleQuantity.place(x = 10,y = 136)
+
+        interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
+        interface.multiplicationLabel1.place(x = 75, y = 67)
+        
+        interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
+        interface.multiplicationLabel2.place(x = 75, y = 102)
+
+        interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
+        interface.multiplicationLabel3.place(x = 75, y = 138)
+
+        interface.wishlistColourSelectLabel = Label(wishlistCanvas, text = "Choose the item colours", width = 24, font = ("Arial", 10),  bg = "LightGray")
+        interface.wishlistColourSelectLabel.place(x = 10, y = 170)
+        
+
+        yellowRec = wishlistCanvas.create_rectangle(10, 200, 25, 215, fill = 'Yellow')
+        redRec = wishlistCanvas.create_rectangle(65, 200, 80, 215, fill = 'Red')
+        greenRec = wishlistCanvas.create_rectangle(125, 200, 140, 215, fill = 'Green')
+        blueRec = wishlistCanvas.create_rectangle(185, 200, 200, 215, fill = 'Blue')
+
+        yellowCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
+        yellowCheck.place(x=7,y=220)
+
+        redCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
+        redCheck.place(x=62,y=220)
+
+        greenCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
+        greenCheck.place(x=122,y=220)
+
+        blueCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
+        blueCheck.place(x=182,y=220)
+
 
         wishlistCanvas.pack()
         
@@ -184,7 +245,8 @@ class interface:
         level2.destroy()
         import Level3
 
-    #def wishlistquitconfirm(self):        
+    #def wishlistquitconfirm(self):
+    #Red,Green,yellow,Blue
 
 interface = interface(level2)
 
