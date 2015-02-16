@@ -192,6 +192,24 @@ class interface:
 
         wishlistCanvas.pack()
         
+    def wishlistChecker(self):
+        if ((interface.multiplicationLabel1.get())=="0" and ((interface.multiplicationLabel2.get())=="0") and ((interface.multiplicationLabel3.get())=="0")) or ((interface.multiplicationLabel1.get())=="" and ((interface.multiplicationLabel2.get())=="") and ((interface.multiplicationLabel3.get())=="")) :
+            return 1 #returns 1 if no value is entered in wishlist
+        elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0):
+            return 2 #returns 2 if no objects are selected
+        elif ((interface.c1==1) and ((interface.multiplicationLabel1.get())=="0") or (interface.multiplicationLabel1.get())==""):
+            return 3 #returns 3 if squares are selected but no value input
+        elif 
+    
+        else: #continues the program if there are no errors
+            squareNum=int(interface.multiplicationLabel1.get())
+            triangleNum=int(interface.multiplicationLabel2.get())
+            circleNum=int(interface.multiplicationLabel3.get())
+            
+            
+            print "Run this"
+            timerWindow.destroy()
+        
     def start(self):
         self.wishlistWindow()
         interface.startButton.place_forget()
