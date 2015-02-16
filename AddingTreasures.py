@@ -1,5 +1,5 @@
 from Tkinter import *
-import math
+import time
 level1 = Tk()
 level1.title("Level 1")
 level1.resizable(0,0)
@@ -139,10 +139,12 @@ class interface:
         treasureCanvas.pack()
         
     def assignmaxtreasures(self):
+        global TreasuresRemaining
         if int(interface.treasureEntry.get())>10:
             print "No more than ten treasures can be created"
         else:
             self.MaxTreasures=interface.treasureEntry.get()
+            TreasuresRemaining=int(self.MaxTreasures)
             treasureWindow.destroy()
 
     def robotWindow(level1):
@@ -174,7 +176,6 @@ class interface:
     def start(self):
         self.timerWindow()
         interface.startButton.place_forget()
-        ListOfRobots[1].moveto(600,500)
 
     def timerwinget(level1):
         global counter, timerWindow
@@ -184,6 +185,12 @@ class interface:
             counter=int(interface.timeEntry.get())
         interface.timerShow(interface)
         timerWindow.destroy()
+        for robot in ListOfRobots:
+            robot.closesttreasure()
+            robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
+        while TreasuresRemaining>0:
+            for robot in ListOfRobots:
+                robot.move()
         
     def reset(self):
         print "Reset"
@@ -248,7 +255,8 @@ class treasures:
         elif self.type=="Triangle":
             self.name=canvas.create_polygon(self.x,self.y-20,self.x-10,self.y,self.x+10,self.y,fill='green')
             self.score=100
-
+    def delete(self):
+        canvas.itemconfig(self.name,fill="white",width=0)
 class robots:
     def __init__(self,x,y):
         self.x1=x-10
@@ -258,10 +266,11 @@ class robots:
         self.x=x
         self.y=y
         self.speed=1
-        canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
-    def distancetorobot(self):
+        self.canvas=canvas
+        self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
+    def closesttreasure(self):
         lowestdistance=100000
-        for i in ListOfTreasures
+        for i in ListOfTreasures:
             if i.x>self.x:
                 xdistance=i.x-self.x
             elif i.x<self.x:
@@ -275,12 +284,10 @@ class robots:
             else:
                 ydistance=0
             totaldistance=(ydistance**2+xdistance**2)**0.5
-            if totaldistance<highestdistance:
+            if totaldistance<lowestdistance:
                 lowestdistance=totaldistance
-                closesttreasure=i
-        return closesttreasure
-            
-'''    def moveto(self,xdest,ydest):
+                self.ClosestTreasure=i
+    def moveto(self,xdest,ydest):
         if xdest>self.x:
             xdistance=xdest-self.x
         elif xdest<self.x:
@@ -294,13 +301,44 @@ class robots:
         else:
             ydistance=0
         totaldistance=(ydistance**2+xdistance**2)**0.5
+        if xdest>self.x:
+            self.vx=xdistance/totaldistance
+        elif xdest<self.x:
+            self.vx=0-(xdistance/totaldistance)
+        else:
+            self.vx=0
+        if ydest>self.y:
+            self.vy=ydistance/totaldistance
+        elif ydest<self.y:
+            self.vy=0-(ydistance/totaldistance)
+        else:
+            self.vy=0
         print str(totaldistance)
-        self.x1+=self.vx
-        self.x2+=self.vx
-        self.y1+=self.vy
-        self.y2+=self.vy
-        self.canvas.coords(self.shape,self.x1,self.y1,self.x2,self.y2)
-        self.canvas.update()'''
+        self.distanceleft=int(totaldistance)
+    def move(self):
+        global TreasuresRemaining
+        if self.distanceleft>0:
+            self.x1+=self.vx
+            self.x2+=self.vx
+            self.y1+=self.vy
+            self.y2+=self.vy
+            self.x+=self.vx
+            self.y+=self.vy
+            self.canvas.coords(self.shape,self.x1,self.y1,self.x2,self.y2)
+            self.canvas.update()
+            self.distanceleft-=1
+            time.sleep(0.01)
+        else:
+            self.ClosestTreasure.delete()
+            ListOfTreasures.remove(self.ClosestTreasure)
+            TreasuresRemaining-=1
+            if TreasuresRemaining>0:
+                self.closesttreasure()
+                self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
+            else:
+                self.vx=0
+                self.vy=0
+            
 interface = interface(level1)
 interface.MaxTreasures=0
 interface.MaxRobots=0
