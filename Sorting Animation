@@ -1,15 +1,18 @@
 from Tkinter import*
 import random
 import time
-global g
+import tkMessageBox
+global g,main
+RoboFinished = True
 
 main = Tk(className = "sorting animation")
 canvas = Canvas(main, width = 700, height = 400, bg = "white")
 canvas.pack()
-PointsList=[]
+
 
 class Treasure:
-    global g
+    global treasurePointsList
+    treasurePointsList=[]
     def __init__(self,x,y,length,width,colour,canvas,points):
         self.x=x
         self.y=y
@@ -19,28 +22,11 @@ class Treasure:
         self.canvas=canvas
         self.points=points
         self.object=canvas.create_rectangle(self.x,self.y,self.x+self.length,self.y+self.width,fill=self.colour)
-        PointsList.append(points)
-
-    def moveAnimation(self):
-        vx = 20.0
-        vy = 20.0
-        for i in range (1,len(treasureList)):
-            for treasure in treasurePointsList:
-                x1,y1,x2,y2 = canvas.coords(i)
-                canvas.coords(i,x1+vx,y1+vy,x2+vx,y2+vx)
-                canvas.update()
-                x1,y1,x2,y2 = canvas.coords(i)
-                time.sleep(0.1)
-
-
-        
-
-        
-        
-
-
+        treasurePointsList.append(points)
+   
     
 def mergeSortAsc(List):
+    treasureList.sort(key=lambda x: x.points,reverse=False)
     if len(List) > 1:
         midMA = len(List) // 2
         lHalfMA = List[:midMA]
@@ -56,7 +42,7 @@ def mergeSortAsc(List):
 
         while aMA < len(lHalfMA) and bMA < len(rHalfMA):
             if lHalfMA[aMA] < rHalfMA[bMA]:
-                List[cMA] = lHalfMA[aMA]
+                List[cMA] = lHalfMA[aMA]                               
                 aMA += 1
                 
             else:
@@ -74,6 +60,44 @@ def mergeSortAsc(List):
             bMA += 1
             cMA += 1
 
+def mergeSortDes(List):
+    treasureList.sort(key=lambda x: x.points,reverse=False)
+    if len(List) > 1:
+        midMD = len(List) // 2
+        lHalfMD = List[:midMD]
+        rHalfMD = List[midMD:]
+
+        mergeSortDes(lHalfMD)
+        mergeSortDes(rHalfMD)
+        
+
+        aMD = 0
+        bMD = 0
+        cMD = 0
+
+        while aMD < len(lHalfMD) and bMD < len(rHalfMD):
+            if lHalfMD[aMD] > rHalfMD[bMD]:
+                List[cMD] = lHalfMD[aMD]                               
+                aMD += 1
+                
+            else:
+                List[cMD] = rHalfMD[bMD]
+                bMD += 1
+            cMD += 1
+
+        while aMD < len(lHalfMD):
+            List[cMD] = lHalfMD[aMD]
+            aMD += 1
+            cMD += 1
+
+        while bMD < len(rHalfMD):
+            List[cMD] = rHalfMD[bMD]
+            bMD += 1
+            cMD += 1
+
+
+
+
     
  
             
@@ -82,18 +106,53 @@ Treasure1 = Treasure(50.0, 160.0, 20.0, 20.0, "red", canvas, 50)
 Treasure2 = Treasure(75.0, 160.0, 20.0, 20.0, "yellow", canvas, 1000)
 Treasure3 = Treasure(125.0, 160.0, 20.0, 20.0, "blue", canvas, 200)
 Treasure4 = Treasure(100.0, 160.0, 20.0, 20.0, "green", canvas, 20)
-treasurePointsList=[Treasure1.points,Treasure2.points,Treasure3.points,Treasure4.points]
 treasureList=[Treasure1,Treasure2,Treasure3,Treasure4]
-treasureList.sort(key=lambda x: x.points,reverse=False)
 
-print treasureList[0].colour
-
+print treasurePointsList
 mergeSortAsc(treasurePointsList)
 print treasurePointsList
-Treasure3.moveAnimation()
+
+print treasurePointsList
+mergeSortDes(treasurePointsList)
+print treasurePointsList
+
+if RoboFinished != False:
+    xAxis = 100
+    yAxis = 100
+    idx = 0
+    main.destroy()
+    main = Tk(className = "sorting animation")
+    canvas = Canvas(main, width = 300, height = 200, bg = "white")
+    canvas.pack()
+    for i in range (0, len(treasureList)):
+        if Treasure1.points == treasurePointsList[idx]:
+            Treasure1 = Treasure(xAxis,yAxis, 20.0, 20.0, "Red", canvas, 50)
+            xAxis += 25
+            idx += 1
+            canvas.update()
+            canvas.after(1000)
+            
+        elif Treasure2.points == treasurePointsList[idx]:
+            Treasure2 = Treasure(xAxis,yAxis, 20.0, 20.0, "Yellow", canvas, 1000)
+            xAxis += 25
+            idx += 1
+            canvas.update()
+            canvas.after(1000)
+            
+        elif Treasure3.points == treasurePointsList[idx]:
+            Treasure3 = Treasure(xAxis,yAxis, 20.0, 20.0, "Blue", canvas, 200)
+            xAxis += 25
+            idx += 1
+            canvas.update()
+            canvas.after(1000)
+        elif Treasure4.points == treasurePointsList[idx]:
+            Treasure4 = Treasure(xAxis,yAxis, 20.0, 20.0, "Green", canvas, 20)
+            xAxis += 25
+            idx += 1
+            canvas.update()
+            canvas.after(1000)
+    tkMessageBox.showinfo("Level complete!", "Treasures sorted")        
 
 
-
-canvas.mainloop()
-
+main.mainloop()
 
