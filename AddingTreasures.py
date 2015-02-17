@@ -62,11 +62,11 @@ class interface:
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
         self.scoreShowLabel.place(x = 1140, y = 290)
 
-        self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
+        self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
         self.treasureCollectedLabel.place(x = 1020, y = 350)
+        self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
+        self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
-        self.treasureBackgroundLabel = Label(name, width = 20, height = 8, font = ("Arial", 16), bg = "LightGray")
-        self.treasureBackgroundLabel.place(x = 1020, y = 380)
         
         #Create DropDown List for selecting which type of treasure to create
         self.OPTIONS = [
@@ -185,6 +185,8 @@ class interface:
             counter=int(interface.timeEntry.get())
         interface.timerShow(interface)
         timerWindow.destroy()
+        ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1145,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
+        ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1145,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
         for robot in ListOfRobots:
             robot.closesttreasure()
             robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
@@ -246,6 +248,7 @@ class treasures:
         self.x=x
         self.y=y
         self.name="Treasure"+str(NumberOfTreasures)
+        self.found=False
         if self.type=="Rectangle":
             self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
             self.score=50
@@ -268,25 +271,29 @@ class robots:
         self.speed=1
         self.canvas=canvas
         self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
+        self.TreasuresFound=[]
+        self.TreasuresFoundPositions=[]
+        self.NumberOfTreasuresFound=0
     def closesttreasure(self):
         lowestdistance=100000
         for i in ListOfTreasures:
-            if i.x>self.x:
-                xdistance=i.x-self.x
-            elif i.x<self.x:
-                xdistance=self.x-i.x
-            else:
-                xdistance=0
-            if i.y>self.y:
-                ydistance=i.y-self.y
-            elif i.y<self.y:
-                ydistance=self.y-i.y
-            else:
-                ydistance=0
-            totaldistance=(ydistance**2+xdistance**2)**0.5
-            if totaldistance<lowestdistance:
-                lowestdistance=totaldistance
-                self.ClosestTreasure=i
+            if i.found==False:
+                if i.x>self.x:
+                    xdistance=i.x-self.x
+                elif i.x<self.x:
+                    xdistance=self.x-i.x
+                else:
+                    xdistance=0
+                if i.y>self.y:
+                    ydistance=i.y-self.y
+                elif i.y<self.y:
+                    ydistance=self.y-i.y
+                else:
+                    ydistance=0
+                totaldistance=(ydistance**2+xdistance**2)**0.5
+                if totaldistance<lowestdistance:
+                    lowestdistance=totaldistance
+                    self.ClosestTreasure=i
     def moveto(self,xdest,ydest):
         if xdest>self.x:
             xdistance=xdest-self.x
@@ -317,7 +324,7 @@ class robots:
         self.distanceleft=int(totaldistance)
     def move(self):
         global TreasuresRemaining
-        if self.distanceleft>0:
+        if self.distanceleft>0 and self.ClosestTreasure.found==False:
             self.x1+=self.vx
             self.x2+=self.vx
             self.y1+=self.vy
@@ -329,16 +336,19 @@ class robots:
             self.distanceleft-=1
             time.sleep(0.01)
         else:
-            self.ClosestTreasure.delete()
-            ListOfTreasures.remove(self.ClosestTreasure)
-            TreasuresRemaining-=1
+            if self.ClosestTreasure.found==False:
+                self.ClosestTreasure.found=True
+                self.TreasuresFound.append(self.ClosestTreasure)
+                self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                self.canvas.update()
+                TreasuresRemaining-=1
+                self.NumberOfTreasuresFound+=1
             if TreasuresRemaining>0:
                 self.closesttreasure()
                 self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
             else:
                 self.vx=0
                 self.vy=0
-            
 interface = interface(level1)
 interface.MaxTreasures=0
 interface.MaxRobots=0
