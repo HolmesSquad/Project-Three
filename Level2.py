@@ -5,6 +5,7 @@ level2.title("Level 2")
 level2.resizable(0,0)
 canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
 canvas.pack()
+resetPressed=False
 
 level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
@@ -45,13 +46,21 @@ class interface:
         self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
         self.treasureBackgroundLabel.place(x = 1020, y = 330)
 
+        
+
     def timer(level2):
-         global counter, resetpressed, pausepressed
+         global counter, resetPressed, pausepressed
          counter==counter
-         if (counter != 0):
+         if (counter != 0) and (resetPressed!=True):
             counter=counter-1
             interface.minuteConvert()
+            print resetPressed
             level2.secShowLabel.after(1000, level2.timer)
+         elif (resetPressed==True):
+             counter="0"
+             level2.secShowLabel.config(text = str(0))
+             level2.minShowLabel.config(text = str(0))
+             resetPressed=False
          else:
             level2.counter_stop()
 
@@ -168,12 +177,12 @@ class interface:
         interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
         interface.multiplicationLabel3.place(x = 90, y = 138)
 
-        interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
-        interface.trapLabel.place(x = 10, y = 180)
+        #interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
+        #interface.trapLabel.place(x = 10, y = 180)
 
-        interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
-        interface.trapQuantity.insert(0,"0")
-        interface.trapQuantity.place(x = 80,y = 210)
+        #interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+        #interface.trapQuantity.insert(0,"0")
+        #interface.trapQuantity.place(x = 80,y = 210)
 
 
         wishlistCanvas.pack()
@@ -195,11 +204,11 @@ class interface:
             squareNum=int(interface.squareQuantity.get())
             triangleNum=int(interface.triangleQuantity.get())
             circleNum=int(interface.circleQuantity.get())
-            trapNum=int(interface.trapQuantity.get())
+            #trapNum=int(interface.trapQuantity.get())
             print squareNum
             print triangleNum
             print circleNum
-            print trapNum
+           #print trapNum
             self.timerWindow()
         
     def start(self):
@@ -208,9 +217,12 @@ class interface:
         interface.pauseButton.place(x = 1020, y = 80)
 
     def reset(self):
+        global resetPressed
         interface.pauseButton.place_forget()
         interface.startButton.place(x = 1020, y = 80)
         counter = 0
+        resetPressed=True
+        print "Reset"
 
     def pause(self):
         print "Pause"
