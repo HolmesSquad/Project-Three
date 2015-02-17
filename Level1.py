@@ -186,7 +186,8 @@ class interface:
         interface.timerShow(interface)
         timerWindow.destroy()
         ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
-        ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1135,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
+        if NumberOfRobots==2:
+            ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1135,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
         interface.pauseButton['state']='normal'
         for robot in ListOfRobots:
             robot.closesttreasure()
@@ -267,15 +268,24 @@ class treasures:
         self.WorthLabel = Label(level1, text = "Worth = "+str(self.score), bg = "White", font = ("Arial", 10))
         canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
         canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
+        
     def MouseRollover(self,level1):
-        self.ShapeLabel.place(x = self.x + 20, y = self.y - 20)
-        self.ColourLabel.place(x = self.x + 20, y = self.y)
-        self.WorthLabel.place(x = self.x + 20, y = self.y+20)
+        if self.ShapeLabel != None and self.ColourLabel != None and self.WorthLabel != None:
+            self.ShapeLabel.place(x = self.x + 20, y = self.y - 20)
+            self.ColourLabel.place(x = self.x + 20, y = self.y)
+            self.WorthLabel.place(x = self.x + 20, y = self.y+20)
 
     def MouseOff(self,level1):
-        self.ShapeLabel.place_forget()
-        self.ColourLabel.place_forget()
-        self.WorthLabel.place_forget()
+        if self.ShapeLabel != None and self.ColourLabel != None and self.WorthLabel != None:
+            self.ShapeLabel.place_forget()
+            self.ColourLabel.place_forget()
+            self.WorthLabel.place_forget()
+
+    def destroylabels(self):
+        self.ShapeLabel = None
+        self.ColourLabel = None
+        self.WorthLabel = None
+
 class robots:
     def __init__(self,x,y):
         self.x1=x-10
@@ -354,8 +364,12 @@ class robots:
         else:
             if self.ClosestTreasure.found==False:
                 self.ClosestTreasure.found=True
+                self.ClosestTreasure.destroylabels()
                 self.TreasuresFound.append(self.ClosestTreasure)
-                self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                if self.ClosestTreasure.type=="Triangle":
+                    self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                else:
+                    self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                 self.canvas.update()
                 TreasuresRemaining-=1
                 self.NumberOfTreasuresFound+=1
