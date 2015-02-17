@@ -19,7 +19,7 @@ class interface:
         self.secShowLabel = Label(name, text = "00", width = 5, height = 2, font = ("Arial", 16), bg = "Gray")
         self.secShowLabel.place(x = 1200, y = 20)
 
-        self.startButton = Button(name, text = "Start", width = 20, command = '', font = ("Arial", 16), bg = "LightGreen")
+        self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16), bg = "LightGreen")
         self.startButton.place(x = 1020, y = 80)
 
         self.resetButton = Button(name, text = "Reset", width = 20, command = '', font = ("Arial", 16), bg = "Orange")
@@ -42,6 +42,71 @@ class interface:
 
         self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
         self.treasureBackgroundLabel.place(x = 1020, y = 380)
+
+
+    def Timer(main):
+         global counter, resetpressed, pausepressed
+         counter==counter
+         if (counter != 0):
+            counter=counter-1
+            interface.minuteconvert()
+            main.secShowLabel.after(1000, main.Timer)
+         else:
+            main.counter_stop()
+
+    def Timer_label(main,self):
+        
+            global counter, RoboFinished
+            
+            RoboFinished=False
+            interface.Timer()
+                
+
+    def minuteconvert(main):
+        
+        main.secShowLabel.config(text = str(counter%60))
+        main.minShowLabel.config(text = str(counter//60))
+
+
+    def timerwin(main):
+        timerwin = Tk(className = "Timer Window")
+        timercanvas = Canvas(timerwin, width = 205, height = 320, bg = "Grey")
+        interface.timerselect_label = Label(timercanvas, text = "Please Enter Robot Running Time", width = 26, font = ("Arial", 9))
+        interface.timerselect_label.place(x = 10, y = 30)
+        interface.time_entry=Entry(timercanvas,text= "0" ,bd=5)
+        interface.time_entry.place(x=50,y=150)
+        interface.time_entry_button = Button(timercanvas, text="Start", width = 8, font = ("Arial", 10),command=interface.timerwinget, bg = "Yellow")
+        interface.time_entry_button.place(x = 50, y = 200)
+        timercanvas.pack()
+
+    def start(self):
+        self.timerwin()
+        interface.startButton.place_forget()
+        
+
+    def timerwinget(main):
+        global counter
+        if (interface.time_entry.get())=="":
+            counter=0
+        else:
+            counter=int(interface.time_entry.get())
+        interface.Timer_label(interface)
+
+        def start(self):
+            print "Start"
+
+        def reset(self):
+            print "Reset"
+
+        def pause(self):
+            print "Pause"
+
+        def levelSelect(self):
+            print "Level Select"
+            '''level = Tk()
+            level.title("Level Select")
+            levelCanvas = Canvas(level, width = 100'''
+           
         
 interface = interface(main)
 
