@@ -30,6 +30,7 @@ def callback(event):
             interface.startButton['state']='normal'
             '''
             
+            
 canvas.tag_bind(level1Map,"<Button-1>", callback)
 canvas.pack()
 
@@ -205,6 +206,7 @@ class interface:
         interface.timeEntryButton.place(x = 65, y = 100)
         
         timerCanvas.pack()
+      
     def assignmaxtreasures(self):
         if int(interface.treasureEntry.get())>10:
             print "No more than ten treasures can be created"
@@ -226,9 +228,8 @@ class interface:
         timerWindow.destroy()
         
     def reset(self):
-        print "Reset"
-        print event.x
-        print event.y
+        print ListOfTreasures
+
     def pause(self):
         print "Pause"
 
@@ -271,10 +272,10 @@ class interface:
         level1.destroy()
         import Level3
 
-for i in ListOfTreasures:
-    i = interface(event.x, enent.y)
-    print event.x
-    print event.y
 interface = interface(level1)
-
+'''treasure1 = treasure(100, 100, 120, 120, "LightBlue", canvas, 100)
+treasure1.bindLabel()'''
+for i in ListOfTreasures:
+   i = treasure
+   i.bindLabel()
 level1.mainloop()    
