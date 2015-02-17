@@ -62,9 +62,9 @@ class interface:
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
         self.scoreShowLabel.place(x = 1140, y = 290)
 
-        self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
+        self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
         self.treasureCollectedLabel.place(x = 1020, y = 350)
-        self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
+        self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
         self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
         
@@ -187,6 +187,7 @@ class interface:
         timerWindow.destroy()
         ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1145,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
         ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1145,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
+        interface.pauseButton['state']='normal'
         for robot in ListOfRobots:
             robot.closesttreasure()
             robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
@@ -309,15 +310,15 @@ class robots:
             ydistance=0
         totaldistance=(ydistance**2+xdistance**2)**0.5
         if xdest>self.x:
-            self.vx=xdistance/totaldistance
+            self.vx=(xdistance/totaldistance)*self.speed
         elif xdest<self.x:
-            self.vx=0-(xdistance/totaldistance)
+            self.vx=(0-(xdistance/totaldistance))*self.speed
         else:
             self.vx=0
         if ydest>self.y:
-            self.vy=ydistance/totaldistance
+            self.vy=(ydistance/totaldistance)*self.speed
         elif ydest<self.y:
-            self.vy=0-(ydistance/totaldistance)
+            self.vy=(0-(ydistance/totaldistance))*self.speed
         else:
             self.vy=0
         print str(totaldistance)
