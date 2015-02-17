@@ -200,6 +200,8 @@ class interface:
             return 5 #returns 5 if circles are selected but no value input
         elif ((interface.c1==1) and (interface.c2==1) and (interface.c2==1)):
             return 6 #returns 6 if no objects are selected
+        elif (int((interface.squareQuantity.get())<"0")) or int((interface.triangleQuantity.get())<"0") or (int((interface.circleQuantity.get())<"0")):
+            return 7 #returns 7 if a negative value is entered
         else: #continues the program if there are no errors
             squareNum=int(interface.squareQuantity.get())
             triangleNum=int(interface.triangleQuantity.get())
