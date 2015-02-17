@@ -120,31 +120,31 @@ class interface:
 
         wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 280, bg = "White")
 
-        Boarder1 = wishlistCanvas.create_rectangle(105, 50, 108, 165, fill = 'Black', width = 2)
-        Boarder2 = wishlistCanvas.create_rectangle(11, 65, 211, 60, fill = 'Black', width = 2)
-        Boarder3 = wishlistCanvas.create_rectangle(11, 94, 211, 99, fill = 'Black', width = 2)        
-        Boarder4 = wishlistCanvas.create_rectangle(11, 129, 211, 133, fill = 'Black', width = 2)
-        Boarder5 = wishlistCanvas.create_rectangle(11, 164, 211, 167, fill = 'Black', width = 2)
+        #Boarder1 = wishlistCanvas.create_rectangle(105, 50, 108, 165, fill = 'Black', width = 2)
+        #Boarder2 = wishlistCanvas.create_rectangle(11, 65, 211, 60, fill = 'Black', width = 2)
+        #Boarder3 = wishlistCanvas.create_rectangle(11, 94, 211, 99, fill = 'Black', width = 2)        
+        #Boarder4 = wishlistCanvas.create_rectangle(11, 129, 211, 133, fill = 'Black', width = 2)
+        #Boarder5 = wishlistCanvas.create_rectangle(11, 164, 211, 167, fill = 'Black', width = 2)
 
-        interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = self.timerWindow, bg = "LightGray")
+        interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGray")
         interface.wishlistEntryButton.place(x = 60, y = 250)
 
-        interface.wishlistEntryLabel = Label(wishlistCanvas, text = "Please select your desired items", width = 24, font = ("Arial", 10),  bg = "LightGray")
+        interface.wishlistEntryLabel = Label(wishlistCanvas, text = "Please select your desired items", width = 24, font = ("Arial", 10),  bg = "White")
         interface.wishlistEntryLabel.place(x = 10, y = 10)
 
-        C1=Checkbutton(wishlistWindow,text="Square  ",onvalue=1,offvalue=0,height=1,width=11)
-        C1.place(x=110,y=65)
+        interface.c1=Checkbutton(wishlistWindow,text="Square  ",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+        interface.c1.place(x=110,y=65)
 
-        c2=Checkbutton(wishlistWindow,text="Triangle",onvalue=1,offvalue=0,height=1,width=11)
-        c2.place(x=110,y=100)
+        interface.c2=Checkbutton(wishlistWindow,text="Triangle",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+        interface.c2.place(x=110,y=100)
 
-        c3=Checkbutton(wishlistWindow,text="Circle    ",onvalue=1,offvalue=0,height=1,width=11)
-        c3.place(x=110,y=135)
+        interface.c3=Checkbutton(wishlistWindow,text="Circle    ",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+        interface.c3.place(x=110,y=135)
 
-        interface.wishlistQuantityLabel=Label(wishlistCanvas,text="Quantity",width=12,font=("Arial",10), bg="LightGray")
-        interface.wishlistQuantityLabel.place(x = 10, y = 38)
+        interface.wishlistQuantityLabel=Label(wishlistCanvas,text="Quantity",width=9,font=("Arial",10), bg="White")
+        interface.wishlistQuantityLabel.place(x = 1, y = 38)
 
-        interface.wishlistShapeLabel=Label(wishlistCanvas,text="Objects",width=12,font=("Arial",10), bg="LightGray")
+        interface.wishlistShapeLabel=Label(wishlistCanvas,text="Objects",width=12,font=("Arial",10), bg="White")
         interface.wishlistShapeLabel.place(x = 110, y = 38)
 
         interface.squareQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
@@ -159,56 +159,48 @@ class interface:
         interface.circleQuantity.insert(0,"0")
         interface.circleQuantity.place(x = 10,y = 136)
 
-        interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
-        interface.multiplicationLabel1.place(x = 75, y = 67)
+        interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+        interface.multiplicationLabel1.place(x = 90, y = 67)
         
-        interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
-        interface.multiplicationLabel2.place(x = 75, y = 102)
+        interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+        interface.multiplicationLabel2.place(x = 90, y = 102)
 
-        interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="LightGray")
-        interface.multiplicationLabel3.place(x = 75, y = 138)
+        interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+        interface.multiplicationLabel3.place(x = 90, y = 138)
 
-        interface.wishlistColourSelectLabel = Label(wishlistCanvas, text = "Choose the item colours", width = 24, font = ("Arial", 10),  bg = "LightGray")
-        interface.wishlistColourSelectLabel.place(x = 10, y = 170)
-        
+        interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
+        interface.trapLabel.place(x = 10, y = 180)
 
-        yellowRec = wishlistCanvas.create_rectangle(10, 200, 25, 215, fill = 'Yellow')
-        redRec = wishlistCanvas.create_rectangle(65, 200, 80, 215, fill = 'Red')
-        greenRec = wishlistCanvas.create_rectangle(125, 200, 140, 215, fill = 'Green')
-        blueRec = wishlistCanvas.create_rectangle(185, 200, 200, 215, fill = 'Blue')
-
-        yellowCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
-        yellowCheck.place(x=7,y=220)
-
-        redCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
-        redCheck.place(x=62,y=220)
-
-        greenCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
-        greenCheck.place(x=122,y=220)
-
-        blueCheck=Checkbutton(wishlistWindow,onvalue=1,offvalue=0,height=1,font=("Arial",3))
-        blueCheck.place(x=182,y=220)
+        interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+        interface.trapQuantity.insert(0,"0")
+        interface.trapQuantity.place(x = 80,y = 210)
 
 
         wishlistCanvas.pack()
         
     def wishlistChecker(self):
-        if ((interface.multiplicationLabel1.get())=="0" and ((interface.multiplicationLabel2.get())=="0") and ((interface.multiplicationLabel3.get())=="0")) or ((interface.multiplicationLabel1.get())=="" and ((interface.multiplicationLabel2.get())=="") and ((interface.multiplicationLabel3.get())=="")) :
+        if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
             return 1 #returns 1 if no value is entered in wishlist
-        elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0):
+        elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
             return 2 #returns 2 if no objects are selected
-        elif ((interface.c1==1) and ((interface.multiplicationLabel1.get())=="0") or (interface.multiplicationLabel1.get())==""):
+        elif ((interface.c1==1) and ((interface.squareQuantity.get())=="0") or (interface.squareQuantity.get())==""):
             return 3 #returns 3 if squares are selected but no value input
-        elif 
-    
+        elif ((interface.c2==1) and ((interface.triangleQuantity.get())=="0") or (interface.triangleQuantity.get())==""):
+            return 4 #returns 4 if triangles are selected but no value input
+        elif ((interface.c3==1) and ((interface.circleQuantity.get())=="0") or (interface.circleQuantity.get())==""):
+            return 5 #returns 5 if circles are selected but no value input
+        elif ((interface.c1==1) and (interface.c2==1) and (interface.c2==1)):
+            return 6 #returns 6 if no objects are selected
         else: #continues the program if there are no errors
-            squareNum=int(interface.multiplicationLabel1.get())
-            triangleNum=int(interface.multiplicationLabel2.get())
-            circleNum=int(interface.multiplicationLabel3.get())
-            
-            
-            print "Run this"
-            timerWindow.destroy()
+            squareNum=int(interface.squareQuantity.get())
+            triangleNum=int(interface.triangleQuantity.get())
+            circleNum=int(interface.circleQuantity.get())
+            trapNum=int(interface.trapQuantity.get())
+            print squareNum
+            print triangleNum
+            print circleNum
+            print trapNum
+            self.timerWindow()
         
     def start(self):
         self.wishlistWindow()
