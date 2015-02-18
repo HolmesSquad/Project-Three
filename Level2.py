@@ -118,6 +118,11 @@ class interface:
             interface.timerShow(interface)
             print "Run this 2"
             timerWindow.destroy()
+        elif (int((interface.timeEntrysec.get())=="")):
+            counter=((int(interface.timeEntrymin.get())*60))
+            interface.timerShow(interface)
+            print "Run this 3"
+            timerWindow.destroy()
         else:
             counter=int(interface.timeEntrysec.get())
             counter=counter+((int(interface.timeEntrymin.get())*60))
