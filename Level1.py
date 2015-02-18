@@ -7,17 +7,22 @@ canvas = Canvas(level1, width = 1280, height = 720, bg = "White")
 canvas.pack()
 level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 ListOfTreasures=[]
-
+d = 0
 ScoreBank=[]
+global ListOfRobots
 ListOfRobots=[]
 NumberOfTreasures=0
 NumberOfRobots=0
 ProgramActive=False
-global RoboFinish
+global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound
+ListofCoords = []
+CoordsBank = []
+abcdefg = 0
 RoboFinish = False
 def callback(event):
     global NumberOfTreasures
     global NumberOfRobots
+    global ListofRobots
     if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
         ListOfTreasures.append(treasures(event.x,event.y))
         NumberOfTreasures+=1
@@ -30,6 +35,7 @@ def callback(event):
         NumberOfRobots+=1
         if NumberOfRobots==int(interface.MaxRobots):
             interface.startButton['state']='normal'
+            
 #Merge Sort Algorithms
 #ascending
 def mergeSortAsc(List):
@@ -218,6 +224,7 @@ class interface:
         interface.startButton.place_forget()
 
     def timerwinget(level1):
+        global ListOfRobots
         global counter, timerWindow
         if (interface.timeEntry.get())=="":
             counter=0
@@ -364,7 +371,8 @@ class robots:
         print str(totaldistance)
         self.distanceleft=int(totaldistance)
     def move(self):
-        global TreasuresRemaining,RoboFinish
+        global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords
+        
         if self.distanceleft>0 and self.ClosestTreasure.found==False:
             self.x1+=self.vx
             self.x2+=self.vx
@@ -384,22 +392,41 @@ class robots:
                 self.canvas.update()
                 TreasuresRemaining-=1
                 ScoreBank.append(self.ClosestTreasure.score)
+                print ScoreBank                
+                ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,470,60],[460,40,480,60],[490,40,510,60],[520,40,540,60])
+                print ListofCoords[0]
+                CoordsBank.append(ListofCoords[abcdefg])
+                abcdefg += 1                                  
                 self.NumberOfTreasuresFound+=1
             if TreasuresRemaining>0:
                 self.closesttreasure()
+                 
                 self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
             else:
                 self.vx=0
                 self.vy=0
-                print ScoreBank
                 mergeSortAsc(ScoreBank)
-                print ScoreBank
                 RoboFinish=True
-            if RoboFinish == True:
-                level1.destroy()
-                canvas = Tk(className = "sorting animation")
-                canvas = Canvas(canvas, width = 300, height = 900, bg = "white")
-                canvas.pack()
+                global d,ListOfRobots,TreasuresFound
+                
+        if RoboFinish == True:
+           canvas.delete(self.shape)
+           print CoordsBank
+           #Initial Set-Up
+           for i in self.TreasuresFound:
+               self.canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
+               d += 1
+               time.sleep(1)                
+               canvas.update()
+               
+           for i in range(0,len(self.TreasuresFound)):                
+                print "Hello"
+                time.sleep(1)
+                           
+               
+                   
+                   
+                
 
 
     
@@ -408,4 +435,4 @@ interface.MaxTreasures=0
 interface.MaxRobots=0
 interface.treasureWindow()
 
-level1.mainloop()   
+level1.mainloop() 
