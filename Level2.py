@@ -6,6 +6,8 @@ level2.resizable(0,0)
 canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
 canvas.pack()
 resetPressed=False
+pauseCounter=0
+pausepressed=False
 
 level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
@@ -29,7 +31,7 @@ class interface:
         self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
         self.resetButton.place(x = 1020, y = 130)
 
-        self.pauseButton = Button(name, text = "Pause", width = 20, command = '', font = ("Arial", 16), bg = "Yellow")
+        self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
 
         self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
         self.levelSelectButton.place(x = 1020, y = 180)
@@ -49,18 +51,20 @@ class interface:
         
 
     def timer(level2):
-         global counter, resetPressed, pausepressed
+         global counter, resetPressed, pausepressed ,pauseCounter
          counter==counter
-         if (counter != 0) and (resetPressed!=True):
+         if (counter != 0) and (resetPressed!=True) and (pausepressed!=True):
             counter=counter-1
             interface.minuteConvert()
-            print resetPressed
+
             level2.secShowLabel.after(1000, level2.timer)
          elif (resetPressed==True):
              counter="0"
              level2.secShowLabel.config(text = str(0))
              level2.minShowLabel.config(text = str(0))
              resetPressed=False
+         elif (pausepressed==True):
+             pauseCounter=counter
          else:
             level2.counter_stop()
 
@@ -236,7 +240,13 @@ class interface:
         print "Reset"
 
     def pause(self):
-        print "Pause"
+        global counter, pausepressed
+        if pausepressed==False:
+            pausepressed=True
+        else:
+            pausepressed=False
+            counter=pauseCounter
+            interface.timer()
         
     def levelSelect(self):
         global levelWindow
