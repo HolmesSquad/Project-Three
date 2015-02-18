@@ -288,9 +288,12 @@ class interface:
         level2.destroy()
         import Level3
 
-    #def wishlistquitconfirm(self):
-    #Red,Green,yellow,Blue
+    #def programquitconfirm(self):
+        #if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
+            #level2.quit()
 
+        
 interface = interface(level2)
+#level2.protocol("WM_DELETE_WINDOW",programquitconfirm) DO NOT ADD THIS IN YET!!!
 
 level2.mainloop()    
