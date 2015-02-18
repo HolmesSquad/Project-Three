@@ -40,11 +40,11 @@ class interface:
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
         self.scoreShowLabel.place(x = 1140, y = 240)
 
-        self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
-        self.treasureCollectedLabel.place(x = 1020, y = 300)
+        self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+        self.treasureCollectedLabel.place(x = 1020, y = 350)
 
-        self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
-        self.treasureBackgroundLabel.place(x = 1020, y = 330)
+        self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+        self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
         
 
