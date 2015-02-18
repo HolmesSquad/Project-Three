@@ -13,6 +13,7 @@ ListOfRobots=[]
 NumberOfTreasures=0
 NumberOfRobots=0
 ProgramActive=False
+roboFinished=False
 def callback(event):
     global NumberOfTreasures
     global NumberOfRobots
@@ -81,12 +82,14 @@ class interface:
         self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
     def timer(level1):
-         global counter, resetpressed, pausepressed
+         global counter, resetpressed, pausepressed,roboFinished
          counter==counter
-         if (counter != 0):
+         if (counter != 0)and (roboFinished==False):
             counter=counter-1
             interface.minuteConvert()
             level1.secShowLabel.after(1000, level1.timer)
+         elif (roboFinished==True):
+             return False
          else:
             return False
 
@@ -370,7 +373,7 @@ class robots:
         self.distanceleft=int(totaldistance)
 
     def move(self):
-        global TreasuresRemaining
+        global TreasuresRemaining, roboFinished
         if self.distanceleft>0 and self.ClosestTreasure.found==False:
             self.x1+=self.vx
             self.x2+=self.vx
@@ -400,7 +403,7 @@ class robots:
             else:
                 self.vx=0
                 self.vy=0
-                RoboFinished = True
+                roboFinished = True
 
 
 interface = interface(level1)
