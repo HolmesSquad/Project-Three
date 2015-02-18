@@ -309,6 +309,8 @@ class treasures:
     def delete(self):
         canvas.itemconfig(self.name,fill="white",width=0)
 class robots:
+    global TreasuresFound
+    TreasuresFound = []
     def __init__(self,x,y):
         self.x1=x-10
         self.y1=y-10
@@ -319,7 +321,6 @@ class robots:
         self.speed=1
         self.canvas=canvas
         self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
-        self.TreasuresFound=[]
         self.TreasuresFoundPositions=[]
         self.NumberOfTreasuresFound=0
     def closesttreasure(self):
@@ -372,6 +373,8 @@ class robots:
         self.distanceleft=int(totaldistance)
     def move(self):
         global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords
+        global d,ListOfRobots,TreasuresFound
+
         
         if self.distanceleft>0 and self.ClosestTreasure.found==False:
             self.x1+=self.vx
@@ -387,7 +390,7 @@ class robots:
         else:
             if self.ClosestTreasure.found==False:
                 self.ClosestTreasure.found=True
-                self.TreasuresFound.append(self.ClosestTreasure)
+                TreasuresFound.append(self.ClosestTreasure)
                 self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                 self.canvas.update()
                 TreasuresRemaining-=1
@@ -407,28 +410,20 @@ class robots:
                 self.vy=0
                 mergeSortAsc(ScoreBank)
                 RoboFinish=True
-                global d,ListOfRobots,TreasuresFound
                 
         if RoboFinish == True:
-           canvas.delete(self.shape)
-           print CoordsBank
-           #Initial Set-Up
-           for i in self.TreasuresFound:
-               self.canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
-               d += 1
-               time.sleep(1)                
-               canvas.update()
-               
-           for i in range(0,len(self.TreasuresFound)):                
+            for i in ListOfRobots:
+               canvas.delete(i.shape)
+               print CoordsBank
+               #Initial Set-Up
+            for i in TreasuresFound:
+                self.canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
+                d += 1
+                time.sleep(0.5)                
+                canvas.update()
+
+            for t in TreasuresFound:
                 print "Hello"
-                time.sleep(1)
-                           
-               
-                   
-                   
-                
-
-
     
 interface = interface(level1)
 interface.MaxTreasures=0
