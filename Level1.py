@@ -79,7 +79,6 @@ class interface:
         self.variable.set(self.OPTIONS[0]) # default value
 
         self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
-        self.w.place(x = 1020, y = 550)
 
     def timer(level1):
          global counter, resetpressed, pausepressed
@@ -191,6 +190,7 @@ class interface:
         self.treasureWindow()
         interface.startButton.place_forget()
         interface.pauseButton.place(x = 1020, y = 80)
+        self.w.place(x = 1020, y = 550)
         
     def timerWindowGet(self):
         global counter, timerWindow
@@ -400,6 +400,7 @@ class robots:
             else:
                 self.vx=0
                 self.vy=0
+                RoboFinished = True
 
 
 interface = interface(level1)
