@@ -6,6 +6,8 @@ level2.resizable(0,0)
 canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
 canvas.pack()
 resetPressed=False
+pauseCounter=0
+pausepressed=False
 
 level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
@@ -29,7 +31,7 @@ class interface:
         self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
         self.resetButton.place(x = 1020, y = 130)
 
-        self.pauseButton = Button(name, text = "Pause", width = 20, command = '', font = ("Arial", 16), bg = "Yellow")
+        self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
 
         self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
         self.levelSelectButton.place(x = 1020, y = 180)
@@ -40,27 +42,29 @@ class interface:
         self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
         self.scoreShowLabel.place(x = 1140, y = 240)
 
-        self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 20, height = 1, font = ("Arial", 16), bg = "LightGray")
-        self.treasureCollectedLabel.place(x = 1020, y = 300)
+        self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+        self.treasureCollectedLabel.place(x = 1020, y = 350)
 
-        self.treasureBackgroundLabel = Label(name, width = 34, height = 7, bg = "LightGray")
-        self.treasureBackgroundLabel.place(x = 1020, y = 330)
+        self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+        self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
         
 
     def timer(level2):
-         global counter, resetPressed, pausepressed
+         global counter, resetPressed, pausepressed ,pauseCounter
          counter==counter
-         if (counter != 0) and (resetPressed!=True):
+         if (counter != 0) and (resetPressed!=True) and (pausepressed!=True):
             counter=counter-1
             interface.minuteConvert()
-            print resetPressed
+
             level2.secShowLabel.after(1000, level2.timer)
          elif (resetPressed==True):
              counter="0"
              level2.secShowLabel.config(text = str(0))
              level2.minShowLabel.config(text = str(0))
              resetPressed=False
+         elif (pausepressed==True):
+             pauseCounter=counter
          else:
             level2.counter_stop()
 
@@ -113,7 +117,16 @@ class interface:
         global counter, timerWindow
         if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
             counter=0
-    
+        elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
+            counter=int(interface.timeEntrysec.get())
+            interface.timerShow(interface)
+            print "Run this 2"
+            timerWindow.destroy()
+        elif (int((interface.timeEntrysec.get())=="")):
+            counter=((int(interface.timeEntrymin.get())*60))
+            interface.timerShow(interface)
+            print "Run this 3"
+            timerWindow.destroy()
         else:
             counter=int(interface.timeEntrysec.get())
             counter=counter+((int(interface.timeEntrymin.get())*60))
@@ -227,7 +240,13 @@ class interface:
         print "Reset"
 
     def pause(self):
-        print "Pause"
+        global counter, pausepressed
+        if pausepressed==False:
+            pausepressed=True
+        else:
+            pausepressed=False
+            counter=pauseCounter
+            interface.timer()
         
     def levelSelect(self):
         global levelWindow
@@ -269,9 +288,12 @@ class interface:
         level2.destroy()
         import Level3
 
-    #def wishlistquitconfirm(self):
-    #Red,Green,yellow,Blue
+    #def programquitconfirm(self):
+        #if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
+            #level2.quit()
 
+        
 interface = interface(level2)
+#level2.protocol("WM_DELETE_WINDOW",programquitconfirm) DO NOT ADD THIS IN YET!!!
 
 level2.mainloop()    
