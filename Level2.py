@@ -1,5 +1,6 @@
 from Tkinter import *
 import tkMessageBox
+import time
 level2 = Tk()
 level2.title("Level 2")
 level2.resizable(0,0)
@@ -16,6 +17,7 @@ NumberOfRobots=0
 resetPressed=False
 pauseCounter=0
 pausepressed=False
+ProgramActive=False
 
 def callback(event):
         global NumberOfTreasures
@@ -80,10 +82,10 @@ class interface:
             "Triangle"
         ]
 
-        self.variable = StringVar(level1)
+        self.variable = StringVar(level2)
         self.variable.set(self.OPTIONS[0]) # default value
 
-        self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS)) 
+        self.w = apply(OptionMenu, (level2, self.variable) + tuple(self.OPTIONS)) 
 
     def timer(level2):
          global counter, resetPressed, pausepressed ,pauseCounter
@@ -142,7 +144,6 @@ class interface:
         interface.timeEntryButton.place(x = 65, y = 170)
         
         timerCanvas.pack()
-        wishlistWindow.destroy()
         timerWindow.grab_set() #these dont work 100% yet
         timerWindow.focus_force()
 
@@ -195,6 +196,16 @@ class interface:
             interface.timerShow(interface)
             print "Run this"
             timerWindow.destroy()
+        ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
+        if NumberOfRobots==2:
+                ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1135,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
+        interface.pauseButton['state']='normal'
+        for robot in ListOfRobots:
+                robot.closesttreasure()
+                robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
+        while TreasuresRemaining>0:
+                for robot in ListOfRobots:
+                    robot.move()
 
     def robotWindow(level2):
         global robotWindow, timerWindow
@@ -290,6 +301,7 @@ class interface:
         wishlistCanvas.pack()
         
     def wishlistChecker(self):
+        global wishlistWindow          
         if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
             return 1 #returns 1 if no value is entered in wishlist
         elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
@@ -313,7 +325,9 @@ class interface:
             print triangleNum
             print circleNum
            #print trapNum
-            self.timerWindow()
+            self.treasureWindow()
+        wishlistWindow.destroy()
+        self.w.place(x = 1020, y = 550)
         
     def start(self):
         self.wishlistWindow()
@@ -380,6 +394,149 @@ class interface:
     #def programquitconfirm(self):
         #if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
             #level2.quit()
+
+class treasures:
+        global canvas
+        global NumberOfTreasures
+        def __init__(self,x,y):
+            global NumberOfTreasures
+            self.type=interface.variable.get()
+            self.x=x
+            self.y=y
+            self.name="Treasure"+str(NumberOfTreasures)
+            self.found=False
+            if self.type=="Rectangle":
+                self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
+                self.score=50
+                self.colour='Blue'
+            elif self.type=="Circle":
+                self.name=canvas.create_oval(self.x-10,self.y-10,self.x+10,self.y+10,fill='yellow')
+                self.score=75
+                self.colour='Yellow'
+            elif self.type=="Triangle":
+                self.name=canvas.create_polygon(self.x,self.y-10,self.x-10,self.y+10,self.x+10,self.y+10,fill='green')
+                self.score=100
+                self.colour='Green'
+            self.ShapeLabel = Label(level2, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
+            self.ColourLabel = Label(level2, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
+            self.WorthLabel = Label(level2, text = "Worth = "+str(self.score), bg = "White", font = ("Arial", 10))
+            canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
+            canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
+            
+        def MouseRollover(self,level2):
+            if self.ShapeLabel != None and self.ColourLabel != None and self.WorthLabel != None:
+                self.ShapeLabel.place(x = self.x + 20, y = self.y - 20)
+                self.ColourLabel.place(x = self.x + 20, y = self.y)
+                self.WorthLabel.place(x = self.x + 20, y = self.y+20)
+
+        def MouseOff(self,level2):
+            if self.ShapeLabel != None and self.ColourLabel != None and self.WorthLabel != None:
+                self.ShapeLabel.place_forget()
+                self.ColourLabel.place_forget()
+                self.WorthLabel.place_forget()
+
+        def destroylabels(self):
+            self.ShapeLabel = None
+            self.ColourLabel = None
+            self.WorthLabel = None
+
+class robots:
+        def __init__(self,x,y):
+            self.x1=x-10
+            self.y1=y-10
+            self.x2=x+10
+            self.y2=y+10
+            self.x=x
+            self.y=y
+            self.speed=1
+            self.canvas=canvas
+            self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
+            self.TreasuresFound=[]
+            self.TreasuresFoundPositions=[]
+            self.NumberOfTreasuresFound=0
+            
+        def closesttreasure(self):
+            lowestdistance=100000
+            for i in ListOfTreasures:
+                if i.found==False:
+                    if i.x>self.x:
+                        xdistance=i.x-self.x
+                    elif i.x<self.x:
+                        xdistance=self.x-i.x
+                    else:
+                        xdistance=0
+                    if i.y>self.y:
+                        ydistance=i.y-self.y
+                    elif i.y<self.y:
+                        ydistance=self.y-i.y
+                    else:
+                        ydistance=0
+                    totaldistance=(ydistance**2+xdistance**2)**0.5
+                    if totaldistance<lowestdistance:
+                        lowestdistance=totaldistance
+                        self.ClosestTreasure=i
+                        
+        def moveto(self,xdest,ydest):
+            if xdest>self.x:
+                xdistance=xdest-self.x
+            elif xdest<self.x:
+                xdistance=self.x-xdest
+            else:
+                xdistance=0
+            if ydest>self.y:
+                ydistance=ydest-self.y
+            elif ydest<self.y:
+                ydistance=self.y-ydest
+            else:
+                ydistance=0
+            totaldistance=(ydistance**2+xdistance**2)**0.5
+            if xdest>self.x:
+                self.vx=(xdistance/totaldistance)*self.speed
+            elif xdest<self.x:
+                self.vx=(0-(xdistance/totaldistance))*self.speed
+            else:
+                self.vx=0
+            if ydest>self.y:
+                self.vy=(ydistance/totaldistance)*self.speed
+            elif ydest<self.y:
+                self.vy=(0-(ydistance/totaldistance))*self.speed
+            else:
+                self.vy=0
+            print str(totaldistance)
+            self.distanceleft=int(totaldistance)
+
+        def move(self):
+            global TreasuresRemaining
+            if self.distanceleft>0 and self.ClosestTreasure.found==False:
+                self.x1+=self.vx
+                self.x2+=self.vx
+                self.y1+=self.vy
+                self.y2+=self.vy
+                self.x+=self.vx
+                self.y+=self.vy
+                self.canvas.coords(self.shape,self.x1,self.y1,self.x2,self.y2)
+                self.canvas.update()
+                self.distanceleft-=1
+                time.sleep(0.01)
+            else:
+                if self.ClosestTreasure.found==False:
+                    self.ClosestTreasure.found=True
+                    self.ClosestTreasure.destroylabels()
+                    self.TreasuresFound.append(self.ClosestTreasure)
+                    if self.ClosestTreasure.type=="Triangle":
+                        self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                    else:
+                        self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                    self.canvas.update()
+                    TreasuresRemaining-=1
+                    self.NumberOfTreasuresFound+=1
+                if TreasuresRemaining>0:
+                    self.closesttreasure()
+                    self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
+                else:
+                    self.vx=0
+                    self.vy=0
+                    print "Finished"
 
         
 interface = interface(level2)
