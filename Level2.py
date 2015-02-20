@@ -5,11 +5,36 @@ level2.title("Level 2")
 level2.resizable(0,0)
 canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
 canvas.pack()
+
+level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
+
+global NumberOfTreasures, NumberOfRobots, resetPressed
+ListOfTreasures=[]
+ListOfRobots=[]
+NumberOfTreasures=0
+NumberOfRobots=0
 resetPressed=False
 pauseCounter=0
 pausepressed=False
 
-level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
+def callback(event):
+        global NumberOfTreasures
+        global NumberOfRobots
+        if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
+            ListOfTreasures.append(treasures(event.x,event.y))
+            NumberOfTreasures+=1
+            print interface.MaxTreasures
+            print NumberOfTreasures
+            if NumberOfTreasures==int(interface.MaxTreasures):
+                interface.robotWindow()
+        elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
+            ListOfRobots.append(robots(event.x,event.y))
+            NumberOfRobots+=1
+            if NumberOfRobots==int(interface.MaxRobots):
+                    interface.timerWindow()
+
+canvas.tag_bind(level2Map,"<Button-1>", callback)
+canvas.pack()
 
 class interface:
     def __init__(self, name):
@@ -48,7 +73,17 @@ class interface:
         self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
         self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
-        
+        #Create DropDown List for selecting which type of treasure to create
+        self.OPTIONS = [
+            "Rectangle",
+            "Circle",
+            "Triangle"
+        ]
+
+        self.variable = StringVar(level1)
+        self.variable.set(self.OPTIONS[0]) # default value
+
+        self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS)) 
 
     def timer(level2):
          global counter, resetPressed, pausepressed ,pauseCounter
@@ -111,7 +146,34 @@ class interface:
         timerWindow.grab_set() #these dont work 100% yet
         timerWindow.focus_force()
 
-
+    def treasureWindow(level2):
+        
+        global treasureWindow
+        treasureWindow = Tk()
+        treasureWindow.title("Number of Treasures")
+        treasureWindow.resizable(0,0)
+            
+        treasureCanvas = Canvas(treasureWindow, width = 210, height = 200, bg = "White")
+            
+        interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures (Max:10)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.treasure_label.place(x = 35, y = 10)
+            
+        interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
+        interface.treasureEntry.place(x = 45,y = 60)
+            
+        interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
+        interface.treasureEntryButton.place(x = 65, y = 100)
+            
+        treasureCanvas.pack()
+            
+    def assignmaxtreasures(self):
+        global TreasuresRemaining
+        if int(interface.treasureEntry.get())>15:
+            print "No more than ten treasures can be created"
+        else:
+            self.MaxTreasures=interface.treasureEntry.get()
+            TreasuresRemaining=int(self.MaxTreasures)
+            treasureWindow.destroy()
         
     def timerWindowGet(level2):
         global counter, timerWindow
@@ -133,6 +195,33 @@ class interface:
             interface.timerShow(interface)
             print "Run this"
             timerWindow.destroy()
+
+    def robotWindow(level2):
+        global robotWindow, timerWindow
+        robotWindow = Tk()
+        robotWindow.title("Number of Robots")
+        robotWindow.resizable(0,0)
+            
+        robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
+            
+        interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+        interface.robot_label.place(x = 35, y = 10)
+            
+        interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
+        interface.robotEntry.place(x = 45,y = 60)
+            
+        interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
+        interface.robotEntryButton.place(x = 65, y = 100)
+            
+        robotCanvas.pack()
+        interface.w.place_forget()
+            
+    def assignmaxrobots(self):
+        if int(interface.robotEntry.get())>2:
+            print "No more than two robots can be created"
+        else:
+            self.MaxRobots=interface.robotEntry.get()
+            robotWindow.destroy()
 
     def wishlistWindow(self):
         global wishlistWindow, timerWindow

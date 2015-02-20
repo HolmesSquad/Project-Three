@@ -86,18 +86,22 @@ def Level1():
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
         def timer(level1):
-             global counter, resetPressed, pausepressed
-             counter==counter
-             if (counter != 0) and (resetPressed!=True):
+            global counter, resetPressed, pausepressed
+            counter==counter
+            if (counter != 0) and (resetPressed!=True):
+                
                 counter=counter-1
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
-             elif (resetPressed==True):
-                 counter="0"
-                 level1.secShowLabel.config(text = str(0))
-                 level1.minShowLabel.config(text = str(0))
-                 resetPressed=False
-             else:
+            elif (resetPressed==True):
+                
+                counter="0"
+                level1.secShowLabel.config(text = str(0))
+                level1.minShowLabel.config(text = str(0))
+                resetPressed=False
+            elif (pausepressed==True):
+                pauseCounter=counter
+            else:
                 return False
 
         def timerShow(level1,self):
@@ -162,7 +166,7 @@ def Level1():
             
         def assignmaxtreasures(self):
             global TreasuresRemaining
-            if int(interface.treasureEntry.get())>10:
+            if int(interface.treasureEntry.get())>15:
                 print "No more than ten treasures can be created"
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
@@ -222,15 +226,12 @@ def Level1():
                 for robot in ListOfRobots:
                     robot.move()
             
-        def reset(self):
+        def reset(self):           
             global resetPressed
-            resetPressed = True
-            
-            '''global resetPressed
             interface.pauseButton.place_forget()
             interface.startButton.place(x = 1020, y = 80)
             counter = 0
-            resetPressed=True'''
+            resetPressed=True
             '''canvas.delete("all")
             level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
             ListOfTreasures=[]
@@ -240,6 +241,21 @@ def Level1():
             
         def pause(self):
             print "Pause"
+
+        def sortByWindow(self):
+            sortByWindow = Tk()
+            sortByWindow.title("Sort By")
+            sortByWindow.resizable(0,0)
+
+            sortByCanvas = Canvas(sortByWindow, width = 200, height = 100, bg = "White")
+
+            interface.sortByAscendingButton = Button(sortByCanvas, text = "Ascending", width = 20, font = ("Arial", 10), command = '', bg = "LightBlue")
+            interface.sortByAscendingButton.place (x = 20, y = 20)
+
+            interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = '', bg = "LightGreen")
+            interface.sortByDescendingButton.place(x = 20, y = 60)
+            
+            sortByCanvas.pack()
 
         def levelSelect(self):
             global levelWindow
