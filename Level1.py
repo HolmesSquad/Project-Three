@@ -1,7 +1,10 @@
 from Tkinter import *
 import time
-import sys
-def Level1():  
+import tkMessageBox
+import Level1
+
+def main():
+       
     level1 = Tk()
     level1.title("Level 1")
     level1.resizable(0,0)
@@ -56,6 +59,8 @@ def Level1():
 
             self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
             self.resetButton.place(x = 1020, y = 130)
+
+            '''self.QuitButton = Button(name, text = "Quit", width = 20, command = self.quit, font = '''
 
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
             
@@ -153,7 +158,7 @@ def Level1():
             
             treasureCanvas = Canvas(treasureWindow, width = 210, height = 200, bg = "White")
             
-            interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures (Max:10)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures (Max:15)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
             interface.treasure_label.place(x = 35, y = 10)
             
             interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
@@ -226,19 +231,10 @@ def Level1():
                 for robot in ListOfRobots:
                     robot.move()
             
-        def reset(self):           
-            global resetPressed
-            interface.pauseButton.place_forget()
-            interface.startButton.place(x = 1020, y = 80)
-            counter = 0
-            resetPressed=True
-            '''canvas.delete("all")
-            level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
-            ListOfTreasures=[]
-            ListOfRobots=[]
-            NumberOfTreasures=0
-            NumberOfRobots=0'''
-            
+        def reset(self):            
+            level1.destroy()
+            Level1.main()
+
         def pause(self):
             print "Pause"
 
@@ -283,18 +279,25 @@ def Level1():
             levelWindow.destroy()
             level1.destroy()
             import Level1
+            Level1.main()
 
         def levelSelectLevel2(self):
             global levelWindow
             levelWindow.destroy()
             level1.destroy()
             import Level2
+            Level2.main()
 
         def levelSelectLevel3(self):
             global levelWindow
             levelWindow.destroy()
             level1.destroy()
             import Level3
+            Level3.main()
+
+        '''def programquitconfirm(self):
+            if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
+                level1.quit()'''
 
     class treasures:
         global canvas
@@ -427,7 +430,7 @@ def Level1():
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     else:
-                        self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
+                        self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][4])
                     self.canvas.update()
                     TreasuresRemaining-=1
                     self.NumberOfTreasuresFound+=1
@@ -442,6 +445,7 @@ def Level1():
     interface = interface(level1)
     interface.MaxTreasure=0
     interface.MaxRobots=0
-
+    #level1.protocol("WM_DELETE_WINDOW",interface.programquitconfirm)
     level1.mainloop()
-Level1()
+    
+main()
