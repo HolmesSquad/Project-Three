@@ -33,7 +33,8 @@ def callback(event):
             ListOfRobots.append(robots(event.x,event.y))
             NumberOfRobots+=1
             if NumberOfRobots==int(interface.MaxRobots):
-                    interface.timerWindow()
+                    
+                    interface.robotWindow()
 
 canvas.tag_bind(level2Map,"<Button-1>", callback)
 canvas.pack()
@@ -174,6 +175,7 @@ class interface:
         else:
             self.MaxTreasures=interface.treasureEntry.get()
             TreasuresRemaining=int(self.MaxTreasures)
+            interface.robotWindow()
             treasureWindow.destroy()
         
     def timerWindowGet(level2):
@@ -232,6 +234,7 @@ class interface:
             print "No more than two robots can be created"
         else:
             self.MaxRobots=interface.robotEntry.get()
+            self.wishlistWindow()
             robotWindow.destroy()
 
     def wishlistWindow(self):
@@ -301,7 +304,7 @@ class interface:
         wishlistCanvas.pack()
         
     def wishlistChecker(self):
-        global wishlistWindow          
+        global wishlistWindow,TreasuresRemaining      
         if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
             return 1 #returns 1 if no value is entered in wishlist
         elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
@@ -325,12 +328,36 @@ class interface:
             print triangleNum
             print circleNum
            #print trapNum
-            self.treasureWindow()
-        wishlistWindow.destroy()
-        self.w.place(x = 1020, y = 550)
+            if (TreasuresRemaining<=(squareNum+triangleNum+circleNum)):
+                print ("You have asked for more Treasures than will be created")
+            else:
+                interface.timerWindow()
+                wishlistWindow.destroy()
+                self.w.place(x = 1020, y = 550)
+
+    def mergeSortWindow(self):
+        global wishlistWindow, timerWindow
+        mergeSortWindow = Tk()
+        mergeSortWindow.title("MergeSort")
+        mergeSortWindow.resizable(0,0)
+        mergeSortCanvas = Canvas(mergeSortWindow, width = 210, height = 280, bg = "White")
+
+        interface.MergeAscendingButton = Button(mergeSortCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGray")
+        interface.MergeAscendingButton.place(x = 60, y = 250)
+
+        interface.MergeDescendingButton = Button(mergeSortCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGray")
+        interface.MergeDescendingButton.place(x = 60, y = 250)
+
+        interface.MergeChoiceLabel = Label(mergeSortCanvas, text = "Please select the search method", width = 24, font = ("Arial", 10),  bg = "White")
+        interface.MergeChoiceLabel.place(x = 10, y = 10)
+        print "hello"
+        mergeSortCanvas.pack()
+
+        
         
     def start(self):
-        self.wishlistWindow()
+        #self.treasureWindow()
+        interface.mergeSortWindow()
         interface.startButton.place_forget()
         interface.pauseButton.place(x = 1020, y = 80)
 
@@ -537,6 +564,7 @@ class robots:
                     self.vx=0
                     self.vy=0
                     print "Finished"
+                    #interface.mergeSortWindow()
 
         
 interface = interface(level2)
