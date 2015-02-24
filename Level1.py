@@ -40,9 +40,12 @@ def main():
     def callback(event):
         global NumberOfTreasures
         global NumberOfRobots
+        global TreasurePromptLabel
         if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
             ListOfTreasures.append(treasures(event.x,event.y))
             NumberOfTreasures+=1
+            interface.TreasurePromptLabel.place_forget()
+            interface.ChangePromptLabel.place_forget()
             print interface.MaxTreasures
             print NumberOfTreasures
             if NumberOfTreasures==int(interface.MaxTreasures):
@@ -170,6 +173,9 @@ def main():
         def __init__(self, name):
             self.timerLabel = Label(name, text = "Timer:", width = 10, height = 2, font = ("Arial", 16), bg = "Gray")
             self.timerLabel.place(x = 1020, y = 20)
+            
+            self.PressStartLabel = Label(name, text = "Press Start to Begin", width = 20, height = 2, font = ("Arial", 16), bg = "White")
+            self.PressStartLabel.place(x=400, y=300)
 
             self.minShowLabel = Label(name, text = "00", width = 5, height = 2, font = ("Arial", 16), bg = "Gray")
             self.minShowLabel.place(x = 1120, y = 20)
@@ -303,6 +309,8 @@ def main():
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
                 treasureWindow.destroy()
+                self.TreasurePromptLabel = Label(text = "Click anywhere to place an object", width = 30, height = 2, font = ("Arial", 16), bg = "White")
+                self.TreasurePromptLabel.place(x=350, y=300)
 
         def robotWindow(level1):
             global robotWindow, timerWindow
@@ -336,6 +344,9 @@ def main():
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             self.w.place(x = 1020, y = 550)
+            self.PressStartLabel.place_forget()
+            self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
+            self.ChangePromptLabel.place(x=510, y= 540)
             
         def timerWindowGet(self):
             global counter, timerWindow
