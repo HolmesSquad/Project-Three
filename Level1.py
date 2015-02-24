@@ -1,7 +1,7 @@
 from Tkinter import *
 import time
 import tkMessageBox
-import Level1
+
 
 def main():
        
@@ -55,7 +55,7 @@ def main():
                 
     canvas.tag_bind(level1Map,"<Button-1>", callback)
     canvas.pack()
-
+    #Ascending`
     def mergeSortAsc(List,anotherList):
     
         if len(List) > 1:
@@ -110,7 +110,7 @@ def main():
                 abMA += 1
                 acMA += 1
 
-            #Descending 
+    #Descending 
     def mergeSortDes(List,anotherList):
     
         if len(List) > 1:
@@ -556,7 +556,7 @@ def main():
                     self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     self.canvas.update()
                     ScoreBank.append(self.ClosestTreasure.score)
-                    ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60])
+                    ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
                     CoordsBank.append(ListofCoords[abcdefg])
                     abcdefg += 1    
                     self.ClosestTreasure.destroylabels()
@@ -581,11 +581,15 @@ def main():
                    canvas.delete(i.shape)
                    #Initial Set-Up
                 for i in TreasuresFound:
-                    if i.type == "Rectangle" or "Circle":
+                    if i.type == "Triangle":
+                        self.canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
+                    else:
                         self.canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
-                        d += 1
-                        time.sleep(0.5)                
-                        canvas.update()
+                        
+                    d += 1
+                    time.sleep(0.5)                
+                    canvas.update()
+                
 
     interface = interface(level1)
     #interface.MaxTreasure=0
