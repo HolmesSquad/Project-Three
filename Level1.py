@@ -14,7 +14,7 @@ def main():
     level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
 
     global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
-    global NumberOfTreasures, NumberOfRobots, resetPressed, score
+    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed
     score = 0
     ListOfTreasures=[]
     d = 0
@@ -25,6 +25,8 @@ def main():
     NumberOfRobots=0
     ProgramActive=False
     resetPressed = False
+    pauseCounter=0
+    pausepressed=False
     TreasuresFound=[]
     ListofCoords = []
     CoordsBank = []
@@ -35,8 +37,6 @@ def main():
     ListOfRobots=[]
     NumberOfTreasures=0
     NumberOfRobots=0
-    ProgramActive=False
-    resetPressed = False
     
     def sortAnimation():
         global d
@@ -461,7 +461,13 @@ def main():
             Level1.main()
 
         def pause(self):
-            print "Pause"
+            global counter, pausepressed
+            if pausepressed==False:
+                pausepressed=True
+            else:
+                pausepressed=False
+                counter=pauseCounter
+                interface.timer()
 
         def sortByWindow(self):
             sortByWindow = Tk()
