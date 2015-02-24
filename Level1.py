@@ -469,7 +469,15 @@ def main():
             self.ShapeLabel = None
             self.ColourLabel = None
             self.ScoreLabel = None
-
+            
+        def showLabels(self):
+            self.x1,self.y1,self.x2,self.y2=self.canvas.coords(self.name)
+            self.x=self.x1-60
+            self.y=self.y2+25
+            self.ShapeLabel = Label(level1, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
+            self.ColourLabel = Label(level1, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
+            self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))   
+            
     class robots:
         def __init__(self,x,y):
             self.x1=x-10
@@ -586,7 +594,8 @@ def main():
                         d += 1
                         time.sleep(0.5)                
                         canvas.update()
-
+                for i in TreasuresFound:
+                    i.showLabels()
     interface = interface(level1)
     #interface.MaxTreasure=0
     #interface.MaxRobots=0
