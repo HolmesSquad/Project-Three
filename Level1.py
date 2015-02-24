@@ -13,7 +13,7 @@ def main():
 
     level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
 
-    global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d
+    global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
     global NumberOfTreasures, NumberOfRobots, resetPressed
     ListOfTreasures=[]
     d = 0
@@ -36,28 +36,77 @@ def main():
     NumberOfRobots=0
     ProgramActive=False
     resetPressed = False
-
-    def callback(event):
-        global NumberOfTreasures
-        global NumberOfRobots
-        if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
-            ListOfTreasures.append(treasures(event.x,event.y))
-            NumberOfTreasures+=1
-            print interface.MaxTreasures
-            print NumberOfTreasures
-            if NumberOfTreasures==int(interface.MaxTreasures):
-                interface.robotWindow()
-        elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
-            ListOfRobots.append(robots(event.x,event.y))
-            NumberOfRobots+=1
-            if NumberOfRobots==int(interface.MaxRobots):
-                    interface.timerWindow()
-                
-    canvas.tag_bind(level1Map,"<Button-1>", callback)
-    canvas.pack()
-
-    def mergeSortAsc(List,anotherList):
     
+    def sortAnimation():
+        global d
+        print "Test 2"
+        for i in ListOfRobots:
+           canvas.delete(i.shape)
+       #Initial Set-Up
+        for i in TreasuresFound:
+            if i.type == "Rectangle" or "Circle":
+                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
+                d += 1
+                time.sleep(0.5)                
+                canvas.update()
+
+    def mergeSortDes(List, anotherList):
+            
+            if len(List) > 1:
+                midMD = len(List) // 2
+                lHalfMD = List[:midMD]
+                rHalfMD = List[midMD:]
+                amidMD = len(anotherList) // 2
+                alHalfMD = anotherList[:amidMD]
+                arHalfMD = anotherList[amidMD:]
+        
+                mergeSortDes(lHalfMD,alHalfMD)
+                mergeSortDes(rHalfMD,arHalfMD)
+                
+                aMD = 0
+                bMD = 0
+                cMD = 0
+                aaMD = 0
+                abMD = 0
+                acMD = 0
+        
+                while aMD < len(lHalfMD) and bMD < len(rHalfMD):
+                    if lHalfMD[aMD] > rHalfMD[bMD]:
+                        List[cMD] = lHalfMD[aMD]                               
+                        aMD += 1
+                        anotherList[acMD] = alHalfMD[aaMD]                               
+                        aaMD += 1
+
+                        
+                    else:
+                        List[cMD] = rHalfMD[bMD]
+                        bMD += 1
+                        anotherList[acMD] = arHalfMD[abMD]
+                        abMD += 1
+                    cMD += 1
+                    acMD += 1
+        
+                while aMD < len(lHalfMD):
+                    List[cMD] = lHalfMD[aMD]
+                    aMD += 1
+                    cMD += 1
+                    anotherList[acMD] = alHalfMD[aaMD]
+                    aaMD += 1
+                    acMD += 1
+        
+                while bMD < len(rHalfMD):
+                    List[cMD] = rHalfMD[bMD]
+                    bMD += 1
+                    cMD += 1
+                    anotherList[acMD] = arHalfMD[abMD]
+                    abMD += 1
+                    acMD += 1
+
+            sortAnimation()
+
+    def mergeSortAsc(List, anotherList):
+        print "Test"
+        
         if len(List) > 1:
             midMA = len(List) // 2
             lHalfMA = List[:midMA]
@@ -65,7 +114,7 @@ def main():
             amidMA = len(anotherList) // 2
             alHalfMA = anotherList[:amidMA]
             arHalfMA = anotherList[amidMA:]
-    
+        
             mergeSortAsc(lHalfMA,alHalfMA)
             mergeSortAsc(rHalfMA,arHalfMA)
             
@@ -110,59 +159,24 @@ def main():
                 abMA += 1
                 acMA += 1
 
-            #Descending 
-    def mergeSortDes(List,anotherList):
-    
-        if len(List) > 1:
-            midMD = len(List) // 2
-            lHalfMD = List[:midMD]
-            rHalfMD = List[midMD:]
-            amidMD = len(anotherList) // 2
-            alHalfMD = anotherList[:amidMD]
-            arHalfMD = anotherList[amidMD:]
-    
-            mergeSortDes(lHalfMD,alHalfMD)
-            mergeSortDes(rHalfMD,arHalfMD)
-            
-    
-            aMD = 0
-            bMD = 0
-            cMD = 0
-            aaMD = 0
-            abMD = 0
-            acMD = 0
-    
-            while aMD < len(lHalfMD) and bMD < len(rHalfMD):
-                if lHalfMD[aMD] > rHalfMD[bMD]:
-                    List[cMD] = lHalfMD[aMD]                               
-                    aMD += 1
-                    anotherList[acMD] = alHalfMD[aaMD]                               
-                    aaMD += 1
-
-                    
-                else:
-                    List[cMD] = rHalfMD[bMD]
-                    bMD += 1
-                    anotherList[acMD] = arHalfMD[abMD]
-                    abMD += 1
-                cMD += 1
-                acMD += 1
-    
-            while aMD < len(lHalfMD):
-                List[cMD] = lHalfMD[aMD]
-                aMD += 1
-                cMD += 1
-                anotherList[acMD] = alHalfMD[aaMD]
-                aaMD += 1
-                acMD += 1
-    
-            while bMD < len(rHalfMD):
-                List[cMD] = rHalfMD[bMD]
-                bMD += 1
-                cMD += 1
-                anotherList[acMD] = arHalfMD[abMD]
-                abMD += 1
-                acMD += 1
+        sortAnimation()
+                
+    def callback(event):
+        global NumberOfTreasures
+        global NumberOfRobots
+        if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
+            ListOfTreasures.append(treasures(event.x,event.y))
+            NumberOfTreasures+=1
+            print interface.MaxTreasures
+            print NumberOfTreasures
+            if NumberOfTreasures==int(interface.MaxTreasures):
+                interface.robotWindow()
+        elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
+            ListOfRobots.append(robot(event.x,event.y))
+            NumberOfRobots+=1
+            if NumberOfRobots==int(interface.MaxRobots):
+                    interface.timerWindow()
+                
     canvas.tag_bind(level1Map,"<Button-1>", callback)
     canvas.pack()
 
@@ -371,10 +385,10 @@ def main():
 
             sortByCanvas = Canvas(sortByWindow, width = 200, height = 100, bg = "White")
 
-            interface.sortByAscendingButton = Button(sortByCanvas, text = "Ascending", width = 20, font = ("Arial", 10), command = '', bg = "LightBlue")
+            interface.sortByAscendingButton = Button(sortByCanvas, text = "Ascending", width = 20, font = ("Arial", 10), command = self.sortAsc , bg = "LightBlue")
             interface.sortByAscendingButton.place (x = 20, y = 20)
 
-            interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = '', bg = "LightGreen")
+            interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = self.sortDes , bg = "LightGreen")
             interface.sortByDescendingButton.place(x = 20, y = 60)
             
             sortByCanvas.pack()
@@ -399,6 +413,12 @@ def main():
             interface.levelCancelButton.place(x = 50, y = 140)
             
             levelCanvas.pack()
+
+        def sortAsc(self):
+            mergeSortAsc(ScoreBank,TreasuresFound)
+
+        def sortDes(self):
+            mergeSortDes(ScoreBank,TreasuresFound)
 
         def levelSelectLevel1(self):
             global levelWindow
@@ -470,7 +490,7 @@ def main():
             self.ColourLabel = None
             self.ScoreLabel = None
 
-    class robots:
+    class robot:
         def __init__(self,x,y):
             self.x1=x-10
             self.y1=y-10
@@ -574,18 +594,14 @@ def main():
                 else:
                     self.vx=0
                     self.vy=0
-                    RoboFinish=True
-            if RoboFinish == True:
-                mergeSortAsc(ScoreBank,TreasuresFound)
-                for i in ListOfRobots:
-                   canvas.delete(i.shape)
-                   #Initial Set-Up
-                for i in TreasuresFound:
-                    if i.type == "Rectangle" or "Circle":
-                        self.canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
-                        d += 1
-                        time.sleep(0.5)                
-                        canvas.update()
+                    interface.sortByWindow()
+        
+                    
+
+    #mergeSortAsc(ScoreBank,TreasuresFound)
+    
+
+
 
     interface = interface(level1)
     #interface.MaxTreasure=0
