@@ -463,9 +463,9 @@ def main():
                 counter=counter+((int(interface.timeEntrymin.get())*60))
                 interface.timerShow(interface)
                 timerWindow.destroy()
-            ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
+            ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440],[1085,420,1105,440],[1115,420,1135,440],[1145,420,1165,440],[1175,420,1195,440],[1205,420,1225,440]]
             if NumberOfRobots==2:
-                ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1135,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540]]
+                ListOfRobots[1].TreasuresFoundPositions=[[1025,490,1045,510],[1055,490,1075,510],[1085,490,1105,510],[1115,490,1135,510],[1145,490,1165,510],[1175,490,1195,510],[1205,490,1225,510],[1235,490,1255,510],[1025,520,1045,540],[1055,520,1075,540],[1085,520,1105,540],[1115,520,1135,540],[1145,520,1165,540],[1175,520,1195,540],[1205,520,1225,540]]
             interface.pauseButton['state']='normal'
             for robot in ListOfRobots:
                 robot.closesttreasure()
@@ -519,10 +519,12 @@ def main():
 
         def sortAsc(self):
             mergeSortAsc(ScoreBank,TreasuresFound)
-
+            for i in TreasuresFound:
+                   i.showLabels()
         def sortDes(self):
             mergeSortDes(ScoreBank,TreasuresFound)
-
+            for i in TreasuresFound:
+                   i.showLabels()
         def levelSelectLevel1(self):
             global levelWindow
             levelWindow.destroy()
@@ -575,6 +577,13 @@ def main():
             self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))
             canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
             canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
+        def showLabels(self):
+            self.x1,self.y1,self.x2,self.y2=self.canvas.coords(self.name)
+            self.x=self.x1-60
+            self.y=self.y2+25
+            self.ShapeLabel = Label(level1, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
+            self.ColourLabel = Label(level1, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
+            self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))   
             
         def MouseRollover(self,level1):
             if self.ShapeLabel != None and self.ColourLabel != None and self.ScoreLabel != None:
@@ -681,7 +690,7 @@ def main():
                     score += self.ClosestTreasure.score
                     interface.scoreShowLabel.config(text = score)
                     ScoreBank.append(self.ClosestTreasure.score)
-                    ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60])
+                    ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
                     CoordsBank.append(ListofCoords[abcdefg])
                     abcdefg += 1    
                     self.ClosestTreasure.destroylabels()
