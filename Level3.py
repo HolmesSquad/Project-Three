@@ -5,6 +5,10 @@ level3.title("Level 3")
 level3.resizable(0,0)
 canvas = Canvas(level3, width = 1280, height = 720, bg = "White")
 canvas.pack()
+global roboFinished ,resetPressed,pausepressed
+roboFinished=False
+resetPressed=False
+pausepressed=False
 
 level3Canvas = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 
@@ -46,14 +50,23 @@ class interface:
         self.treasureBackgroundLabel.place(x = 1020, y = 330)
 
     def timer(level3):
-         global counter, resetpressed, pausepressed
+         global counter, resetPressed, pausepressed ,pauseCounter
          counter==counter
-         if (counter != 0):
+         if (counter != 0) and (resetPressed!=True) and (pausepressed!=True) and (roboFinished!=True):
+         
             counter=counter-1
             interface.minuteConvert()
-            level2.secShowLabel.after(1000, level2.timer)
+
+            level3.secShowLabel.after(1000, level3.timer)
+         elif (resetPressed==True):
+             counter="0"
+             level2.secShowLabel.config(text = str(0))
+             level2.minShowLabel.config(text = str(0))
+             resetPressed=False
+         elif (pausepressed==True):
+             pauseCounter=counter
          else:
-            level2.counter_stop()
+            return 1
             
     def timerShow(level3,self):
         global counter, RoboFinished  

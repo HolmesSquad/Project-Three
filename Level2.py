@@ -14,6 +14,8 @@ ListOfRobots=[]
 NumberOfTreasures=0
 NumberOfRobots=0
 ProgramActive=False
+roboFinished=False
+
 level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2) 
 def callback(event):
     global NumberOfTreasures
@@ -85,7 +87,8 @@ class interface:
     def timer(level2):
          global counter, resetPressed, pausepressed ,pauseCounter
          counter==counter
-         if (counter != 0) and (resetPressed!=True) and (pausepressed!=True):
+         if (counter != 0) and (resetPressed!=True) and (pausepressed!=True) and (roboFinished!=True):
+         
             counter=counter-1
             interface.minuteConvert()
 
@@ -98,7 +101,7 @@ class interface:
          elif (pausepressed==True):
              pauseCounter=counter
          else:
-            level2.counter_stop()
+            return 1
 
     def timerShow(level2,self):
         global counter, RoboFinished
@@ -493,7 +496,7 @@ class robots:
         self.distanceleft=int(totaldistance)
 
     def move(self):
-        global TreasuresRemaining
+        global TreasuresRemaining,roboFinished
         if self.distanceleft>0 and self.ClosestTreasure.found==False:
             self.x1+=self.vx
             self.x2+=self.vx
@@ -526,6 +529,8 @@ class robots:
                 self.vx=0
                 self.vy=0
                 print "Finished"
+                roboFinished=True
+                
             else:
                 self.closesttreasure()
                 self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
