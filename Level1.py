@@ -15,6 +15,7 @@ def main():
 
     global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
     global NumberOfTreasures, NumberOfRobots, resetPressed, score
+    
     score = 0
     ListOfTreasures=[]
     d = 0
@@ -37,6 +38,7 @@ def main():
     NumberOfRobots=0
     ProgramActive=False
     resetPressed = False
+    pausepressed=False
     
     def sortAnimation():
         global d
@@ -329,9 +331,9 @@ def main():
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
         def timer(level1):
-            global counter, resetPressed, pausepressed
+            global counter, resetPressed, pausepressed,RoboFinish
             counter==counter
-            if (counter != 0) and (resetPressed!=True):
+            if (counter != 0) and (resetPressed!=True) and (RoboFinish!=True):
                 
                 counter=counter-1
                 interface.minuteConvert()
@@ -342,8 +344,7 @@ def main():
                 level1.secShowLabel.config(text = str(0))
                 level1.minShowLabel.config(text = str(0))
                 resetPressed=False
-            elif (pausepressed==True):
-                pauseCounter=counter
+            
             else:
                 return False
 
@@ -378,7 +379,7 @@ def main():
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"0")
+            interface.timeEntrysec.insert(0,"1")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
@@ -708,6 +709,7 @@ def main():
                 else:
                     self.vx=0
                     self.vy=0
+                    RoboFinish=True
                     interface.sortByWindow()
         
                     
