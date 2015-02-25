@@ -12,7 +12,7 @@ def main():
     level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
 
     global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
-    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed
+    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     score = 0
     ListOfTreasures=[]
     d = 0
@@ -309,7 +309,7 @@ def main():
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
         def timer(level1):
-            global counter, resetPressed, pausepressed
+            global counter, resetPressed, pausepressed, pauseCounter
             counter==counter
             if (counter != 0) and (resetPressed!=True) and (pausepressed!=True):
                 counter=counter-1
@@ -448,24 +448,31 @@ def main():
             for robot in ListOfRobots:
                 robot.closesttreasure()
                 robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
+            self.initiateMovement()
+            
+        def initiateMovement(self):
             while TreasuresRemaining>0:
-                for robot in ListOfRobots:
-                    robot.move()
+                if pausepressed==False:
+                    for robot in ListOfRobots:
+                        robot.move()
+                else:
+                    break
             
         '''def reset(self):            
             level1.destroy()
             Level1.main()'''
 
         def pause(self):
-            global counter, pausepressed
+            global counter, pausepressed, pauseCounter
             if pausepressed==False:
                 pausepressed=True
-                robot.speed = pspeed
             else:
                 pausepressed=False
                 counter=pauseCounter
                 interface.timer()
-                print "Working"
+                self.initiateMovement()
+
+            print pausepressed
 
         def sortByWindow(self):
             global sortByWindow
