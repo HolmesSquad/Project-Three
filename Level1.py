@@ -1,7 +1,6 @@
 from Tkinter import *
 import time
 import tkMessageBox
-import Level1
 
 def main():
        
@@ -14,7 +13,7 @@ def main():
     level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
 
     global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
-    global NumberOfTreasures, NumberOfRobots, resetPressed, score
+    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     
     score = 0
     ListOfTreasures=[]
@@ -29,6 +28,7 @@ def main():
     TreasuresFound=[]
     ListofCoords = []
     CoordsBank = []
+    pauseCounter=0
     abcdefg = 0
     RoboFinish = False
     d=0
@@ -82,6 +82,8 @@ def main():
                     aMA += 1
                     anotherList[acMA] = alHalfMA[aaMA]                               
                     aaMA += 1
+                    iteration += 1
+
 
                     
                     
@@ -90,6 +92,7 @@ def main():
                     bMA += 1
                     anotherList[acMA] = arHalfMA[abMA]
                     abMA += 1
+                    iteration += 1
                 cMA += 1
                 acMA += 1
     
@@ -100,6 +103,7 @@ def main():
                 anotherList[acMA] = alHalfMA[aaMA]
                 aaMA += 1
                 acMA += 1
+                iteration += 1
     
             while bMA < len(rHalfMA):
                 List[cMA] = rHalfMA[bMA]
@@ -108,6 +112,10 @@ def main():
                 anotherList[acMA] = arHalfMA[abMA]
                 abMA += 1
                 acMA += 1
+                iteration += 1
+                
+        if iteration == len(TreasuresFound):
+            sortAnimation()
 
     #Descending 
     def mergeSortDes(List,anotherList):
@@ -297,21 +305,21 @@ def main():
             self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16),bg = "LightGreen")
             self.startButton.place(x = 1020, y = 80)
 
-            self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
-            self.resetButton.place(x = 1020, y = 130)
+            '''self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
+            self.resetButton.place(x = 1020, y = 130)'''
 
             '''self.QuitButton = Button(name, text = "Quit", width = 20, command = self.quit, font = '''
 
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
             
             self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
-            self.levelSelectButton.place(x = 1020, y = 180)
+            self.levelSelectButton.place(x = 1020, y = 130)
 
             self.scoreLabel = Label(name, text = "Score", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-            self.scoreLabel.place(x = 1020, y = 240)
+            self.scoreLabel.place(x = 1020, y = 180)
 
             self.scoreShowLabel = Label(name, text = score, width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-            self.scoreShowLabel.place(x = 1140, y = 240)
+            self.scoreShowLabel.place(x = 1140, y = 180)
 
             self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
@@ -331,20 +339,14 @@ def main():
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
         def timer(level1):
-            global counter, resetPressed, pausepressed,RoboFinish
+            global counter, resetPressed, pausepressed, pauseCounter
             counter==counter
-            if (counter != 0) and (resetPressed!=True) and (RoboFinish!=True):
-                
+            if (counter != 0) and (resetPressed!=True) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
-            elif (resetPressed==True):
-                
-                counter="0"
-                level1.secShowLabel.config(text = str(0))
-                level1.minShowLabel.config(text = str(0))
-                resetPressed=False
-            
+            elif (pausepressed==True):
+                pauseCounter=counter
             else:
                 return False
 
@@ -471,18 +473,31 @@ def main():
             for robot in ListOfRobots:
                 robot.closesttreasure()
                 robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
+            self.initiateMovement()
+
+        def initiateMovement(self):
             while TreasuresRemaining>0:
-                for robot in ListOfRobots:
-                    robot.move()
-            
-        def reset(self):            
+                if pausepressed==False:
+                    for robot in ListOfRobots:
+                        robot.move()
+                else:
+                    break
+        '''def reset(self):            
             level1.destroy()
-            Level1.main()
+            Level1.main()'''
 
         def pause(self):
-            print "Pause"
+            global counter, pausepressed, pauseCounter
+            if pausepressed==False:
+                pausepressed=True
+            else:
+                pausepressed=False
+                counter=pauseCounter
+                interface.timer()
+                self.initiateMovement()
 
         def sortByWindow(self):
+            global sortByWindow
             sortByWindow = Tk()
             sortByWindow.title("Sort By")
             sortByWindow.resizable(0,0)
@@ -519,13 +534,19 @@ def main():
             levelCanvas.pack()
 
         def sortAsc(self):
+            global sortByWindow
             mergeSortAsc(ScoreBank,TreasuresFound)
-            for i in TreasuresFound:
-                   i.showLabels()
+            '''for i in TreasuresFound:
+                   i.showLabels()'''
+            sortByWindow.destroy()
+            
         def sortDes(self):
+            global sortByWindow
             mergeSortDes(ScoreBank,TreasuresFound)
-            for i in TreasuresFound:
-                   i.showLabels()
+            '''for i in TreasuresFound:
+                   i.showLabels()'''
+            sortByWindow.destroy()
+                   
         def levelSelectLevel1(self):
             global levelWindow
             levelWindow.destroy()
@@ -561,6 +582,7 @@ def main():
             self.y=y
             self.name="Treasure"+str(NumberOfTreasures)
             self.found=False
+            #self.canvas = canvas
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
                 self.score=50
