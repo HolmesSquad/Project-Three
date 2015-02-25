@@ -1,10 +1,8 @@
 from Tkinter import *
 import time
 import tkMessageBox
-import Level1
 
 def main():
-       
     level1 = Tk()
     level1.title("Level 1")
     level1.resizable(0,0)
@@ -277,21 +275,21 @@ def main():
             self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16),bg = "LightGreen")
             self.startButton.place(x = 1020, y = 80)
 
-            self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
-            self.resetButton.place(x = 1020, y = 130)
+            '''self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
+            self.resetButton.place(x = 1020, y = 130)'''
 
             '''self.QuitButton = Button(name, text = "Quit", width = 20, command = self.quit, font = '''
 
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
             
             self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
-            self.levelSelectButton.place(x = 1020, y = 180)
+            self.levelSelectButton.place(x = 1020, y = 130)
 
             self.scoreLabel = Label(name, text = "Score", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-            self.scoreLabel.place(x = 1020, y = 240)
+            self.scoreLabel.place(x = 1020, y = 180)
 
             self.scoreShowLabel = Label(name, text = score, width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
-            self.scoreShowLabel.place(x = 1140, y = 240)
+            self.scoreShowLabel.place(x = 1140, y = 180)
 
             self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
@@ -313,13 +311,11 @@ def main():
         def timer(level1):
             global counter, resetPressed, pausepressed
             counter==counter
-            if (counter != 0) and (resetPressed!=True):
-                
+            if (counter != 0) and (resetPressed!=True) and (pausepressed!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
             elif (resetPressed==True):
-                
                 counter="0"
                 level1.secShowLabel.config(text = str(0))
                 level1.minShowLabel.config(text = str(0))
@@ -456,20 +452,23 @@ def main():
                 for robot in ListOfRobots:
                     robot.move()
             
-        def reset(self):            
+        '''def reset(self):            
             level1.destroy()
-            Level1.main()
+            Level1.main()'''
 
         def pause(self):
             global counter, pausepressed
             if pausepressed==False:
                 pausepressed=True
+                robot.speed = pspeed
             else:
                 pausepressed=False
                 counter=pauseCounter
                 interface.timer()
+                print "Working"
 
         def sortByWindow(self):
+            global sortByWindow
             sortByWindow = Tk()
             sortByWindow.title("Sort By")
             sortByWindow.resizable(0,0)
@@ -483,8 +482,11 @@ def main():
             interface.sortByDescendingButton.place(x = 20, y = 60)
             
             sortByCanvas.pack()
-
+        
         def levelSelect(self):
+            '''level1.destroy()
+            from LevelSelect import main'''
+
             global levelWindow
             levelWindow = Tk()
             levelWindow.title("Level Select")
@@ -506,10 +508,14 @@ def main():
             levelCanvas.pack()
 
         def sortAsc(self):
+            global sortByWindow
             mergeSortAsc(ScoreBank,TreasuresFound)
+            sortByWindow.destroy()
 
         def sortDes(self):
+            global sortByWindow
             mergeSortDes(ScoreBank,TreasuresFound)
+            sortByWindow.destroy()
 
         def levelSelectLevel1(self):
             global levelWindow
