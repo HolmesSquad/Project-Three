@@ -535,17 +535,18 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
+            sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
             '''for i in TreasuresFound:
                    i.showLabels()'''
-            sortByWindow.destroy()
+            
             
         def sortDes(self):
             global sortByWindow
+            sortByWindow.destroy()
             mergeSortDes(ScoreBank,TreasuresFound)
             '''for i in TreasuresFound:
-                   i.showLabels()'''
-            sortByWindow.destroy()
+                   i.showLabels()'''          
                    
         def levelSelectLevel1(self):
             global levelWindow
@@ -600,6 +601,7 @@ def main():
             self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))
             canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
             canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
+            
         def showLabels(self):
             self.x1,self.y1,self.x2,self.y2=self.canvas.coords(self.name)
             self.x=self.x1-60
@@ -733,17 +735,11 @@ def main():
                     self.vy=0
                     RoboFinish=True
                     interface.sortByWindow()
-        
-                    
-
-    #mergeSortAsc(ScoreBank,TreasuresFound)
+                    for i in TreasuresFound:
+                        i.MouseOff()
+                        
     
-
-
-
     interface = interface(level1)
-    #interface.MaxTreasure=0
-    #interface.MaxRobots=0
     #level1.protocol("WM_DELETE_WINDOW",interface.programquitconfirm)
     level1.mainloop()
     
