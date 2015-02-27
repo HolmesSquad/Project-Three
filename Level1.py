@@ -35,6 +35,8 @@ def main():
     ListOfRobots=[]
     NumberOfTreasures=0
     NumberOfRobots=0
+    dict={'Robo':' Please enter the number of robots you would like to find the treasure','Treasure1':'Please enter the number of treasures you want to place on the map'}
+
     
     def sortAnimation():
         global d
@@ -296,6 +298,7 @@ def main():
             self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
+            
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
                 "Rectangle",
@@ -307,6 +310,10 @@ def main():
             self.variable.set(self.OPTIONS[0]) # default value
 
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
+
+        def helpWindow(level1):
+            counter=0
+            tkMessageBox.showinfo("Help", dict['Robo'])
 
         def timer(level1):
             global counter, resetPressed, pausepressed, pauseCounter
