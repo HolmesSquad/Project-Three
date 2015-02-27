@@ -8,7 +8,7 @@ def main():
     canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
     canvas.pack()
     
-    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
+    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
     global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     
     score = 0
@@ -250,6 +250,8 @@ def main():
         if NumberOfTreasures<int(interface.MaxTreasures) and ProgramActive is False:
             ListOfTreasures.append(treasures(event.x,event.y))
             NumberOfTreasures+=1
+            interface.TreasurePromptLabel.place_forget()
+            interface.ChangePromptLabel.place_forget()
             print interface.MaxTreasures
             print NumberOfTreasures
             if NumberOfTreasures==int(interface.MaxTreasures):
@@ -266,6 +268,9 @@ def main():
         def __init__(self, name):
             self.timerLabel = Label(name, text = "Timer:", width = 10, height = 2, font = ("Arial", 16), bg = "Gray")
             self.timerLabel.place(x = 1020, y = 20)
+            
+            self.PressStartLabel = Label(name, text = "Press Start to Begin", width = 20, height = 2, font = ("Arial", 16), bg = "White")
+            self.PressStartLabel.place(x=400, y=300)
 
             self.minShowLabel = Label(name, text = "00", width = 5, height = 2, font = ("Arial", 16), bg = "Gray")
             self.minShowLabel.place(x = 1120, y = 20)
@@ -490,6 +495,10 @@ def main():
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             interface.w.place(x = 1020, y = 550)
+            self.w.place(x = 1020, y = 550)
+            self.PressStartLabel.place_forget()
+            self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
+            self.ChangePromptLabel.place(x=510, y= 540)
             
         def treasureWindow(level2):
             global treasureWindow
