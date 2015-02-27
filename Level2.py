@@ -411,12 +411,6 @@ def main():
 
             wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 280, bg = "White")
 
-            #Boarder1 = wishlistCanvas.create_rectangle(105, 50, 108, 165, fill = 'Black', width = 2)
-            #Boarder2 = wishlistCanvas.create_rectangle(11, 65, 211, 60, fill = 'Black', width = 2)
-            #Boarder3 = wishlistCanvas.create_rectangle(11, 94, 211, 99, fill = 'Black', width = 2)        
-            #Boarder4 = wishlistCanvas.create_rectangle(11, 129, 211, 133, fill = 'Black', width = 2)
-            #Boarder5 = wishlistCanvas.create_rectangle(11, 164, 211, 167, fill = 'Black', width = 2)
-
             interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGray")
             interface.wishlistEntryButton.place(x = 60, y = 250)
 
@@ -571,6 +565,36 @@ def main():
                 counter=pauseCounter
                 interface.timer()
                 self.initiateMovement()
+
+        def sortByWindow(self):
+            global sortByWindow
+            sortByWindow = Tk()
+            sortByWindow.title("Sort By")
+            sortByWindow.resizable(0,0)
+
+            sortByCanvas = Canvas(sortByWindow, width = 200, height = 100, bg = "White")
+
+            interface.sortByAscendingButton = Button(sortByCanvas, text = "Ascending", width = 20, font = ("Arial", 10), command = self.sortAsc , bg = "LightBlue")
+            interface.sortByAscendingButton.place (x = 20, y = 20)
+
+            interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = self.sortDes , bg = "LightGreen")
+            interface.sortByDescendingButton.place(x = 20, y = 60)
+            
+            sortByCanvas.pack()
+
+        def sortAsc(self):
+            global sortByWindow
+            sortByWindow.destroy()
+            mergeSortAsc(ScoreBank,TreasuresFound)
+            '''for i in TreasuresFound:
+                   i.showLabels()'''
+            
+        def sortDes(self):
+            global sortByWindow
+            sortByWindow.destroy()
+            mergeSortDes(ScoreBank,TreasuresFound)
+            '''for i in TreasuresFound:
+                   i.showLabels()'''  
             
         def levelSelect(self):
             global levelWindow
@@ -673,6 +697,7 @@ def main():
             self.squareswishlist=0
             self.circleswishlist=0
             self.triangleswishlist=0
+            
         def closesttreasure(self):
             lowestdistance=100000
             for i in ListOfTreasures:
@@ -692,7 +717,8 @@ def main():
                     totaldistance=(ydistance**2+xdistance**2)**0.5
                     if totaldistance<lowestdistance:
                         lowestdistance=totaldistance
-                        self.ClosestTreasure=i                        
+                        self.ClosestTreasure=i
+                        
         def moveto(self,xdest,ydest):
             if xdest>self.x:
                 xdistance=xdest-self.x
@@ -753,22 +779,18 @@ def main():
                     TreasuresRemaining-=1
                     self.NumberOfTreasuresFound+=1
                 if TreasuresRemaining==0 or (self.squareswishlist==0 and self.circleswishlist==0 and self.triangleswishlist==0):
-                    self.closesttreasure()
-                    self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
-                else:
                     self.vx=0
                     self.vy=0
                     roboFinished=True
                     interface.sortByWindow()
-
-
-    #interface.MaxTreasure=0
-    #interface.MaxRobots=0
+                else:
+                    self.closesttreasure()
+                    self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
+                    
     #def programquitconfirm(self):
         #if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
             #level2.quit()
-
-            
+      
     interface = interface(level2)
     #level2.protocol("WM_DELETE_WINDOW",programquitconfirm) DO NOT ADD THIS IN YET!!!
 
