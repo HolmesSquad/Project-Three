@@ -135,6 +135,15 @@ def main():
             interface.c3=Checkbutton(wishlistWindow,text="Circle    ",onvalue=1,offvalue=0,height=1,width=11, bg="White")
             interface.c3.place(x=110,y=135)
 
+            interface.squareLabel=Label(wishlistWindow,text="Square  ",height=1,width=11)
+            interface.squareLabel.place(x=110,y=65)
+
+            interface.triangleLabel=Label(wishlistWindow,text="Triangle",height=1,width=11)
+            interface.triangleLabel.place(x=110,y=100)
+
+            interface.circleLabel=Label(wishlistWindow,text="Circle  ",height=1,width=11)
+            interface.circleLabel.place(x=110,y=135)
+
             interface.wishlistQuantityLabel=Label(wishlistCanvas,text="Quantity",width=9,font=("Arial",10), bg="White")
             interface.wishlistQuantityLabel.place(x = 1, y = 38)
 
@@ -174,16 +183,16 @@ def main():
         def wishlistChecker(self):
             if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
                 return 1 #returns 1 if no value is entered in wishlist
-            elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
-                return 2 #returns 2 if no objects are selected
-            elif ((interface.c1==1) and ((interface.squareQuantity.get())=="0") or (interface.squareQuantity.get())==""):
-                return 3 #returns 3 if squares are selected but no value input
-            elif ((interface.c2==1) and ((interface.triangleQuantity.get())=="0") or (interface.triangleQuantity.get())==""):
-                return 4 #returns 4 if triangles are selected but no value input
-            elif ((interface.c3==1) and ((interface.circleQuantity.get())=="0") or (interface.circleQuantity.get())==""):
-                return 5 #returns 5 if circles are selected but no value input
-            elif ((interface.c1==1) and (interface.c2==1) and (interface.c2==1)):
-                return 6 #returns 6 if no objects are selected
+           # elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
+              #  return 2 #returns 2 if no objects are selected
+            #elif ((interface.c1==1) and ((interface.squareQuantity.get())=="0") or (interface.squareQuantity.get())==""):
+              #  return 3 #returns 3 if squares are selected but no value input
+            #elif ((interface.c2==1) and ((interface.triangleQuantity.get())=="0") or (interface.triangleQuantity.get())==""):
+               # return 4 #returns 4 if triangles are selected but no value input
+            #elif ((interface.c3==1) and ((interface.circleQuantity.get())=="0") or (interface.circleQuantity.get())==""):
+             #   return 5 #returns 5 if circles are selected but no value input
+           # elif ((interface.c1==1) and (interface.c2==1) and (interface.c2==1)):
+              #  return 6 #returns 6 if no objects are selected
             else: #continues the program if there are no errors
                 squareNum=int(interface.squareQuantity.get())
                 triangleNum=int(interface.triangleQuantity.get())

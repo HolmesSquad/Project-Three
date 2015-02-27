@@ -436,6 +436,16 @@ def main():
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
                 counter=0
+            elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
+                counter=int(interface.timeEntrysec.get())
+                interface.timerShow(interface)
+                print "Run this 2"
+                timerWindow.destroy()
+            elif ((int((interface.timeEntrysec.get())=="")) or (int((interface.timeEntrysec.get())==0))):
+                counter=((int(interface.timeEntrymin.get())*60))
+                interface.timerShow(interface)
+                print "Run this 3"
+                timerWindow.destroy()
             else:
                 counter=int(interface.timeEntrysec.get())
                 counter=counter+((int(interface.timeEntrymin.get())*60))
