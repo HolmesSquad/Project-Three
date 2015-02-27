@@ -67,8 +67,7 @@ def main():
     
             mergeSortAsc(lHalfMA,alHalfMA)
             mergeSortAsc(rHalfMA,arHalfMA)
-            
-    
+
             aMA = 0
             bMA = 0
             cMA = 0
@@ -83,9 +82,6 @@ def main():
                     anotherList[acMA] = alHalfMA[aaMA]                               
                     aaMA += 1
                     iteration += 1
-
-
-                    
                     
                 else:
                     List[cMA] = rHalfMA[bMA]
@@ -121,7 +117,6 @@ def main():
     def mergeSortDes(List,anotherList):
         iteration = 0
         
-    
         if len(List) > 1:
             print len(anotherList)
             print iteration
@@ -134,8 +129,7 @@ def main():
     
             mergeSortDes(lHalfMD,alHalfMD)
             mergeSortDes(rHalfMD,arHalfMD)
-            
-    
+
             aMD = 0
             bMD = 0
             cMD = 0
@@ -153,7 +147,6 @@ def main():
                     aaMD += 1
                     iteration += 1
 
-                    
                 else:
                     print len(anotherList)
                     print iteration
@@ -205,7 +198,6 @@ def main():
         
             mergeSortAsc(lHalfMA,alHalfMA)
             mergeSortAsc(rHalfMA,arHalfMA)
-            
     
             aMA = 0
             bMA = 0
@@ -223,7 +215,6 @@ def main():
                     anotherList[acMA] = alHalfMA[aaMA]                               
                     aaMA += 1
                     iteration += 1
-
                     
                 else:
                     print len(anotherList)
@@ -535,18 +526,17 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
-            sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
             '''for i in TreasuresFound:
                    i.showLabels()'''
-            
+            sortByWindow.destroy()
             
         def sortDes(self):
             global sortByWindow
-            sortByWindow.destroy()
             mergeSortDes(ScoreBank,TreasuresFound)
             '''for i in TreasuresFound:
-                   i.showLabels()'''          
+                   i.showLabels()'''
+            sortByWindow.destroy()
                    
         def levelSelectLevel1(self):
             global levelWindow
@@ -601,7 +591,6 @@ def main():
             self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))
             canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
             canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
-            
         def showLabels(self):
             self.x1,self.y1,self.x2,self.y2=self.canvas.coords(self.name)
             self.x=self.x1-60
@@ -717,7 +706,8 @@ def main():
                     ScoreBank.append(self.ClosestTreasure.score)
                     ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
                     CoordsBank.append(ListofCoords[abcdefg])
-                    abcdefg += 1    
+                    abcdefg += 1
+                    self.ClosestTreasure.MouseOff(level1)
                     self.ClosestTreasure.destroylabels()
                     #self.TreasuresFound.append(self.ClosestTreasure)
                     if self.ClosestTreasure.type=="Triangle":
@@ -730,16 +720,17 @@ def main():
                 if TreasuresRemaining>0:
                     self.closesttreasure()
                     self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
+
                 else:
                     self.vx=0
                     self.vy=0
                     RoboFinish=True
                     interface.sortByWindow()
-                    for i in TreasuresFound:
-                        i.MouseOff()
-                        
-    
+
+    #mergeSortAsc(ScoreBank,TreasuresFound)
     interface = interface(level1)
+    #interface.MaxTreasure=0
+    #interface.MaxRobots=0
     #level1.protocol("WM_DELETE_WINDOW",interface.programquitconfirm)
     level1.mainloop()
     
