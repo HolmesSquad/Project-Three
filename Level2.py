@@ -375,6 +375,8 @@ def main():
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
                 counter=0
+            elif ((int(interface.timeEntrysec.get())=="0") and (int((interface.timeEntrymin.get())=="0"))):
+                tkMessageBox.showinfo("Error", "Please enter more than zero seconds")
             elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
                 counter=int(interface.timeEntrysec.get())
                 interface.timerShow(interface)
@@ -522,7 +524,10 @@ def main():
         def assignmaxtreasures(self):
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>10:
-                print "No more than ten treasures can be created"
+                tkMessageBox.showinfo("Error","No more than ten treasures can be created")
+            elif int(interface.treasureEntry.get())<1:
+                tkMessageBox.showinfo("Error", "Please enter more than zero")
+                
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -553,6 +558,9 @@ def main():
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>2:
                 print "No more than two robots can be created"
+            elif int(interface.robotEntry.get())<1:
+                tkMessageBox.showinfo("Error", "Please enter more than zero")
+                
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
