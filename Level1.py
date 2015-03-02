@@ -297,16 +297,21 @@ def main():
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
         def timer(level1):
-            global counter, resetPressed, pausepressed, pauseCounter
+            global counter, resetPressed, pausepressed, pauseCounter, RoboFinish
             counter==counter
             if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
+                print counter
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
             elif (pausepressed==True):
                 pauseCounter=counter
+                print "Hello"
             else:
+                RoboFinish=True
+                print RoboFinish
                 return False
+                
 
         def timerShow(level1,self):
             global counter, RoboFinished
@@ -357,11 +362,12 @@ def main():
             
             treasureCanvas = Canvas(treasureWindow, width = 210, height = 200, bg = "White")
             
-            interface.treasure_label = Label(treasureCanvas, text = "Number of Treasures (Max:15)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
-            interface.treasure_label.place(x = 35, y = 10)
+            interface.treasureLabel = Label(treasureCanvas, text = "Number of Treasures (Max:15)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.treasureLabel.place(x = 35, y = 10)
             
             interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
             interface.treasureEntry.place(x = 45,y = 60)
+            interface.treasureEntry.insert(0,"5")
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
             interface.treasureEntryButton.place(x = 65, y = 100)
@@ -371,7 +377,9 @@ def main():
         def assignmaxtreasures(self):
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>15:
-                print "No more than fifteen treasures can be created"
+                tkMessageBox.showinfo("Error","No more than fifteen treasures can be created")
+            elif int(interface.treasureEntry.get())<2:
+                tkMessageBox.showinfo("Error","Enter more treasure!")
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -392,6 +400,7 @@ def main():
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
             interface.robotEntry.place(x = 45,y = 60)
+            interface.robotEntry.insert(0,"1")
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
             interface.robotEntryButton.place(x = 65, y = 100)
@@ -400,9 +409,12 @@ def main():
             interface.w.place_forget()
             
         def assignmaxrobots(self):
-            if int(interface.robotEntry.get())>2:
+            if int(interface.robotEntry.get())>1:
                 print "No more than two robots can be created"
+            elif int(interface.robotEntry.get())<1:
+                print "No more than one robots can be created"
             else:
+            
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
                 self.RoboPromptLabel = Label(text = "Click anywhere to place a robot", width = 30, height = 2, font = ("Arial", 16), bg = "White")
@@ -651,8 +663,9 @@ def main():
                 self.canvas.update()
                 self.distanceleft-=1
                 time.sleep(0.01)
+            
             else:
-                if self.ClosestTreasure.found==False:
+                if self.ClosestTreasure.found==False and RoboFinish==False:
                     self.ClosestTreasure.found=True
                     TreasuresFound.append(self.ClosestTreasure)
                     self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
@@ -666,6 +679,15 @@ def main():
                     self.ClosestTreasure.MouseOff(level1)
                     self.ClosestTreasure.destroylabels()
                     #self.TreasuresFound.append(self.ClosestTreasure)
+                elif RoboFinish==True:
+                    self.distanceleft=0
+                    self.ClosestTreasure.found=True
+                    self.vx=0
+                    self.vy=0
+                    interface.sortByWindow()
+                    
+                    
+                
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     else:
@@ -680,7 +702,7 @@ def main():
                     self.vx=0
                     self.vy=0
                     RoboFinish=True
-                    interface.sortByWindow()
+                    
 
     interface = interface(level1)
     level1.mainloop()
