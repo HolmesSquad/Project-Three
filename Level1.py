@@ -13,31 +13,22 @@ def main():
     level1Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
 
     global RoboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank
-    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
+    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter, ListOfRobots
     
     score = 0
     ListOfTreasures=[]
     d = 0
     ScoreBank=[]
-    global ListOfRobots
     ListOfRobots=[]
     NumberOfTreasures=0
     NumberOfRobots=0
     ProgramActive=False
-    resetPressed = False
     TreasuresFound=[]
     ListofCoords = []
     CoordsBank = []
     pauseCounter=0
     abcdefg = 0
     RoboFinish = False
-    d=0
-    ListOfTreasures=[]
-    ListOfRobots=[]
-    NumberOfTreasures=0
-    NumberOfRobots=0
-    ProgramActive=False
-    resetPressed = False
     pausepressed=False
     
     def sortAnimation():
@@ -118,8 +109,6 @@ def main():
         iteration = 0
         
         if len(List) > 1:
-            print len(anotherList)
-            print iteration
             midMD = len(List) // 2
             lHalfMD = List[:midMD]
             rHalfMD = List[midMD:]
@@ -138,8 +127,6 @@ def main():
             acMD = 0
     
             while aMD < len(lHalfMD) and bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 if lHalfMD[aMD] > rHalfMD[bMD]:
                     List[cMD] = lHalfMD[aMD]                               
                     aMD += 1
@@ -148,8 +135,6 @@ def main():
                     iteration += 1
 
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMD] = rHalfMD[bMD]
                     bMD += 1
                     anotherList[acMD] = arHalfMD[abMD]
@@ -160,8 +145,6 @@ def main():
                 acMD += 1
     
             while aMD < len(lHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = lHalfMD[aMD]
                 aMD += 1
                 cMD += 1
@@ -172,8 +155,6 @@ def main():
 
     
             while bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = rHalfMD[bMD]
                 bMD += 1
                 cMD += 1
@@ -207,8 +188,6 @@ def main():
             acMA = 0
     
             while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 if lHalfMA[aMA] < rHalfMA[bMA]:
                     List[cMA] = lHalfMA[aMA]                               
                     aMA += 1
@@ -217,8 +196,6 @@ def main():
                     iteration += 1
                     
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMA] = rHalfMA[bMA]
                     bMA += 1
                     anotherList[acMA] = arHalfMA[abMA]
@@ -229,8 +206,6 @@ def main():
                 acMA += 1
     
             while aMA < len(lHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = lHalfMA[aMA]
                 aMA += 1
                 cMA += 1
@@ -241,8 +216,6 @@ def main():
 
     
             while bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = rHalfMA[bMA]
                 bMA += 1
                 cMA += 1
@@ -262,8 +235,6 @@ def main():
             NumberOfTreasures+=1
             interface.TreasurePromptLabel.place_forget()
             interface.ChangePromptLabel.place_forget()
-            print interface.MaxTreasures
-            print NumberOfTreasures
             if NumberOfTreasures==int(interface.MaxTreasures):
                 interface.robotWindow()
         elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
@@ -332,7 +303,7 @@ def main():
         def timer(level1):
             global counter, resetPressed, pausepressed, pauseCounter
             counter==counter
-            if (counter != 0) and (resetPressed!=True) and (pausepressed!=True) and (RoboFinish!=True):
+            if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
@@ -404,7 +375,7 @@ def main():
         def assignmaxtreasures(self):
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>15:
-                print "No more than ten treasures can be created"
+                print "No more than fifteen treasures can be created"
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -473,9 +444,6 @@ def main():
                         robot.move()
                 else:
                     break
-        '''def reset(self):            
-            level1.destroy()
-            Level1.main()'''
 
         def pause(self):
             global counter, pausepressed, pauseCounter
@@ -527,15 +495,11 @@ def main():
         def sortAsc(self):
             global sortByWindow
             mergeSortAsc(ScoreBank,TreasuresFound)
-            '''for i in TreasuresFound:
-                   i.showLabels()'''
             sortByWindow.destroy()
             
         def sortDes(self):
             global sortByWindow
             mergeSortDes(ScoreBank,TreasuresFound)
-            '''for i in TreasuresFound:
-                   i.showLabels()'''
             sortByWindow.destroy()
                    
         def levelSelectLevel1(self):
@@ -559,10 +523,6 @@ def main():
             import Level3
             Level3.main()
 
-        '''def programquitconfirm(self):
-            if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
-                level1.quit()'''
-
     class treasures:
         global canvas
         global NumberOfTreasures
@@ -573,7 +533,6 @@ def main():
             self.y=y
             self.name="Treasure"+str(NumberOfTreasures)
             self.found=False
-            #self.canvas = canvas
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
                 self.score=50
@@ -678,7 +637,6 @@ def main():
                 self.vy=(0-(ydistance/totaldistance))*self.speed
             else:
                 self.vy=0
-            print str(totaldistance)
             self.distanceleft=int(totaldistance)
 
         def move(self):
@@ -727,11 +685,7 @@ def main():
                     RoboFinish=True
                     interface.sortByWindow()
 
-    #mergeSortAsc(ScoreBank,TreasuresFound)
     interface = interface(level1)
-    #interface.MaxTreasure=0
-    #interface.MaxRobots=0
-    #level1.protocol("WM_DELETE_WINDOW",interface.programquitconfirm)
     level1.mainloop()
     
 main()
