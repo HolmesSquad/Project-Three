@@ -54,6 +54,7 @@ def main():
             time.sleep(0.5)                
             canvas.update()
 
+
     
 
     #Descending 
@@ -80,8 +81,6 @@ def main():
             acMD = 0
     
             while aMD < len(lHalfMD) and bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 if lHalfMD[aMD] > rHalfMD[bMD]:
                     List[cMD] = lHalfMD[aMD]                               
                     aMD += 1
@@ -89,8 +88,6 @@ def main():
                     aaMD += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMD] = rHalfMD[bMD]
                     bMD += 1
                     anotherList[acMD] = arHalfMD[abMD]
@@ -101,8 +98,6 @@ def main():
                 acMD += 1
     
             while aMD < len(lHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = lHalfMD[aMD]
                 aMD += 1
                 cMD += 1
@@ -112,8 +107,6 @@ def main():
                 iteration += 1
 
             while bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = rHalfMD[bMD]
                 bMD += 1
                 cMD += 1
@@ -125,8 +118,7 @@ def main():
             if iteration == len(TreasuresFound):
                 sortAnimation()
 
-        else:
-            sortAnimation()
+
 
     def mergeSortAsc(List, anotherList):
         iteration = 0       
@@ -149,8 +141,6 @@ def main():
             acMA = 0
     
             while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 if lHalfMA[aMA] < rHalfMA[bMA]:
                     List[cMA] = lHalfMA[aMA]                               
                     aMA += 1
@@ -158,8 +148,6 @@ def main():
                     aaMA += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMA] = rHalfMA[bMA]
                     bMA += 1
                     anotherList[acMA] = arHalfMA[abMA]
@@ -170,8 +158,6 @@ def main():
                 acMA += 1
     
             while aMA < len(lHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = lHalfMA[aMA]
                 aMA += 1
                 cMA += 1
@@ -181,8 +167,6 @@ def main():
                 iteration += 1
                 
             while bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = rHalfMA[bMA]
                 bMA += 1
                 cMA += 1
@@ -193,8 +177,6 @@ def main():
         
             if iteration == len(TreasuresFound):
                 sortAnimation()
-        else:
-            sortAnimation()
     
     def callback(event):
         global NumberOfTreasures
@@ -323,6 +305,44 @@ def main():
             timerWindow.grab_set() #these dont work 100% yet
             timerWindow.focus_force()
 
+        def assignScoreWindow(self):
+            global squareScore,circleScore,triangleScore,assignScoreWindow
+            
+            assignScoreWindow = Tk()
+            assignScoreWindow.title("Assign points")
+            assignScoreWindow.resizable(0,0)
+
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+
+            interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
+            interface.typeHeader.place(x = 1, y = 38)
+
+            interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
+            interface.squareLabel.place(x = 1, y = 78)
+
+            interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
+            interface.circleLabel.place(x = 1, y = 118)
+
+            interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
+            interface.triangleLabel.place(x = 1, y = 158)
+            
+            interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
+            interface.pointsHeader.place(x = 110, y = 38)
+
+            interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.place(x = 110,y = 78)
+
+            interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.place(x = 110,y = 118)
+
+            interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.place(x = 110,y = 158)
+
+            interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
+            interface.entryButton.place(x = 110, y = 198)
+            
+            assignScoreCanvas.pack()
+
         def timerWindowGet(self):
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
@@ -443,17 +463,21 @@ def main():
                 self.timerWindow()
             
         def start(self):
-            self.treasureWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             interface.w.place(x = 1020, y = 550)
+            self.assignScoreWindow()
             self.w.place(x = 1020, y = 550)
             self.PressStartLabel.place_forget()
             self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
             self.ChangePromptLabel.place(x=510, y= 540)
             
         def treasureWindow(level2):
-            global treasureWindow
+            global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
+            squareScore = int(interface.squareEntry.get())
+            circleScore = int(interface.circleEntry.get())
+            triangleScore = int(interface.triangleEntry.get())
+            assignScoreWindow.destroy()
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -501,6 +525,8 @@ def main():
             
             robotCanvas.pack()
             interface.w.place_forget()
+
+        
             
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>2:
@@ -599,7 +625,7 @@ def main():
             import Level3
     class treasures:
         global canvas
-        global NumberOfTreasures
+        global NumberOfTreasures,circleScore,triangleScore,squareScore
         def __init__(self,x,y):
             global NumberOfTreasures
             self.type=interface.variable.get()
@@ -609,15 +635,15 @@ def main():
             self.found=False
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
-                self.score=50
+                self.score= squareScore
                 self.colour='Blue'
             elif self.type=="Circle":
                 self.name=canvas.create_oval(self.x-10,self.y-10,self.x+10,self.y+10,fill='yellow')
-                self.score=75
+                self.score= circleScore
                 self.colour='Yellow'
             elif self.type=="Triangle":
                 self.name=canvas.create_polygon(self.x,self.y-10,self.x-10,self.y+10,self.x+10,self.y+10,fill='green')
-                self.score=100
+                self.score= triangleScore
                 self.colour='Green'
             self.ShapeLabel = Label(level2, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
             self.ColourLabel = Label(level2, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
@@ -731,6 +757,7 @@ def main():
                     TreasuresFound.append(self.ClosestTreasure)
                     ListOfTreasures.remove(self.ClosestTreasure)
                     ScoreBank.append(self.ClosestTreasure.score)
+                    print ScoreBank
                     ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
                     CoordsBank.append(ListofCoords[abcdefg])
                     abcdefg += 1
@@ -750,8 +777,6 @@ def main():
                     self.vx=0
                     self.vy=0
                     roboFinished=True
-                    print TreasuresFound
-                    print "Test"
                     interface.sortByWindow()
                 else:
                     self.closesttreasure()
