@@ -267,11 +267,6 @@ def main():
             self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16),bg = "LightGreen")
             self.startButton.place(x = 1020, y = 80)
 
-            '''self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
-            self.resetButton.place(x = 1020, y = 130)'''
-
-            '''self.QuitButton = Button(name, text = "Quit", width = 20, command = self.quit, font = '''
-
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
             
             self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
@@ -640,7 +635,7 @@ def main():
             self.distanceleft=int(totaldistance)
 
         def move(self):
-            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords
+            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
             global d,ListOfRobots,TreasuresFound,score
             if self.distanceleft>0 and self.ClosestTreasure.found==False:
                 self.x1+=self.vx
@@ -678,7 +673,6 @@ def main():
                 if TreasuresRemaining>0:
                     self.closesttreasure()
                     self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
-
                 else:
                     self.vx=0
                     self.vy=0
