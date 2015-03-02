@@ -1,6 +1,7 @@
 from Tkinter import *
 import time
 import tkMessageBox
+import webbrowser
 
 def main():
     level1 = Tk()
@@ -277,10 +278,8 @@ def main():
             self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16),bg = "LightGreen")
             self.startButton.place(x = 1020, y = 80)
 
-            '''self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
-            self.resetButton.place(x = 1020, y = 130)'''
-
-            '''self.QuitButton = Button(name, text = "Quit", width = 20, command = self.quit, font = '''
+            self.helpButton = Button(name, text = "Help", width = 20, command = self.webHelp, font = ("Arial", 16), bg = "Orange")
+            self.helpButton.place(x = 1020, y = 660)
 
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
             
@@ -311,9 +310,8 @@ def main():
 
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
-        def helpWindow(level1):
-            counter=0
-            tkMessageBox.showinfo("Help", dict['Robo'])
+        def webHelp(self):
+            webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki')
 
         def timer(level1):
             global counter, resetPressed, pausepressed, pauseCounter
@@ -475,10 +473,6 @@ def main():
                 else:
                     break
             
-        '''def reset(self):            
-            level1.destroy()
-            Level1.main()'''
-
         def pause(self):
             global counter, pausepressed, pauseCounter
             if pausepressed==False:
@@ -508,9 +502,6 @@ def main():
             sortByCanvas.pack()
         
         def levelSelect(self):
-            '''level1.destroy()
-            from LevelSelect import main'''
-
             global levelWindow
             levelWindow = Tk()
             levelWindow.title("Level Select")
@@ -561,10 +552,6 @@ def main():
             level1.destroy()
             import Level3
             Level3.main()
-
-        '''def programquitconfirm(self):
-            if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
-                level1.quit()'''
 
     class treasures:
         global canvas
