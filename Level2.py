@@ -27,10 +27,6 @@ def main():
     abcdefg = 0
     roboFinished = False
     d=0
-    ListOfTreasures=[]
-    ListOfRobots=[]
-    NumberOfTreasures=0
-    NumberOfRobots=0
     ProgramActive=False
     pausepressed=False
 
@@ -317,7 +313,7 @@ def main():
             self.w = apply(OptionMenu, (level2, self.variable) + tuple(self.OPTIONS))      
 
         def timer(level2):
-             global counter, resetPressed, pausepressed ,pauseCounter, roboFinished
+             global counter, pausepressed,pauseCounter, roboFinished
              counter==counter
              if (counter != 0) and (pausepressed!=True) and (roboFinished!=True):
                 counter=counter-1
@@ -451,21 +447,14 @@ def main():
             interface.circleQuantity.insert(0,"0")
             interface.circleQuantity.place(x = 10,y = 136)
 
-            interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+            '''interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
             interface.multiplicationLabel1.place(x = 90, y = 67)
             
             interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
             interface.multiplicationLabel2.place(x = 90, y = 102)
 
             interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
-            interface.multiplicationLabel3.place(x = 90, y = 138)
-
-            #interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
-            #interface.trapLabel.place(x = 10, y = 180)
-
-            #interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
-            #interface.trapQuantity.insert(0,"0")
-            #interface.trapQuantity.place(x = 80,y = 210)
+            interface.multiplicationLabel3.place(x = 90, y = 138)'''
             
             wishlistCanvas.pack()
             
@@ -554,6 +543,9 @@ def main():
             
             robotCanvas.pack()
             interface.w.place_forget()
+
+        '''def helpWindow(self):'''
+            
             
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>2:
