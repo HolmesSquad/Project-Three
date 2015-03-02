@@ -240,6 +240,7 @@ def main():
         elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
             ListOfRobots.append(robot(event.x,event.y))
             NumberOfRobots+=1
+            interface.RoboPromptLabel.place_forget()
             if NumberOfRobots==int(interface.MaxRobots):
                     interface.timerWindow()
                 
@@ -375,7 +376,7 @@ def main():
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
                 treasureWindow.destroy()
-                self.TreasurePromptLabel = Label(text = "Click anywhere to place an object", width = 30, height = 2, font = ("Arial", 16), bg = "White")
+                self.TreasurePromptLabel = Label(text = "Click anywhere to place a treasure", width = 30, height = 2, font = ("Arial", 16), bg = "White")
                 self.TreasurePromptLabel.place(x=350, y=300)
 
         def robotWindow(level1):
@@ -404,6 +405,8 @@ def main():
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
+                self.RoboPromptLabel = Label(text = "Click anywhere to place a robot", width = 30, height = 2, font = ("Arial", 16), bg = "White")
+                self.RoboPromptLabel.place(x=350, y=300)
 
         def start(self):
             self.treasureWindow()
