@@ -8,7 +8,7 @@ def main():
     canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
     canvas.pack()
     
-    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
+    global roboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
     global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     
     score = 0
@@ -25,7 +25,7 @@ def main():
     CoordsBank = []
     pauseCounter=0
     abcdefg = 0
-    roboFinished = False
+    roboFinish = False
     d=0
     ProgramActive=False
     pausepressed=False
@@ -313,20 +313,23 @@ def main():
             self.w = apply(OptionMenu, (level2, self.variable) + tuple(self.OPTIONS))      
 
         def timer(level2):
-             global counter, pausepressed,pauseCounter, roboFinished
+             global counter, pausepressed,pauseCounter, roboFinish
              counter==counter
-             if (counter != 0) and (pausepressed!=True) and (roboFinished!=True):
+             if (counter != 0) and (pausepressed!=True) and (roboFinish!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level2.secShowLabel.after(1000, level2.timer)
              elif (pausepressed==True):
                  pauseCounter=counter
              else:
-                return 1
+                RoboFinish=True
+                TreasuresRemaining=0
+                print RoboFinish
+                return False
 
         def timerShow(level2,self):
-            global counter, RoboFinished
-            RoboFinished=False
+            global counter, RoboFinish
+            RoboFinish=False
             interface.timer()   
 
         def minuteConvert(level2):
@@ -757,9 +760,19 @@ def main():
             print str(totaldistance)
             self.distanceleft=int(totaldistance)
 
+        def stopMoving(self):
+            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
+            global d,ListOfRobots,TreasuresFound,score
+            TreasuresRemaining=0
+            self.distanceleft=0
+            self.ClosestTreasure.found=True
+            self.vx=0
+            self.vy=0
+            interface.sortByWindow()
+
         def move(self):
-            global TreasuresRemaining,roboFinished
-            if self.distanceleft>0 and self.ClosestTreasure.found==False:
+            global TreasuresRemaining,roboFinish
+            if self.distanceleft>0 and self.ClosestTreasure.found==False and roboFinish==False:
                 self.x1+=self.vx
                 self.x2+=self.vx
                 self.y1+=self.vy
@@ -770,6 +783,10 @@ def main():
                 self.canvas.update()
                 self.distanceleft-=1
                 time.sleep(0.01)
+            elif (RoboFinish!=False):
+                print ("hello")
+                self.stopMoving()
+            
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
@@ -790,7 +807,7 @@ def main():
                 if TreasuresRemaining==0 or (self.squareswishlist==0 and self.circleswishlist==0 and self.triangleswishlist==0):
                     self.vx=0
                     self.vy=0
-                    roboFinished=True
+                    roboFinish=True
                     interface.sortByWindow()
                 else:
                     self.closesttreasure()

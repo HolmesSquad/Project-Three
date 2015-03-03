@@ -301,7 +301,7 @@ def main():
             counter==counter
             if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
-                print counter
+                print RoboFinish
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
             elif (pausepressed==True):
@@ -750,6 +750,9 @@ def main():
                 if TreasuresRemaining>0:
                     self.closesttreasure()
                     self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
+                else:
+                    RoboFinish=True
+                    interface.sortByWindow()
                 
                     
 
