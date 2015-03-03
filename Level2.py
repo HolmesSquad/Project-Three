@@ -532,7 +532,7 @@ def main():
             
             robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
             
-            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 1)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
             interface.robot_label.place(x = 35, y = 10)
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
@@ -548,10 +548,10 @@ def main():
             
             
         def assignmaxrobots(self):
-            if int(interface.robotEntry.get())>2:
-                print "No more than two robots can be created"
+            if int(interface.robotEntry.get())>1:
+                tkMessageBox.showinfo("Error", "Only one robot can be created")
             elif int(interface.robotEntry.get())<1:
-                tkMessageBox.showinfo("Error", "Please enter more than zero")
+                tkMessageBox.showinfo("Error", "Only one robot can be created")
                 
             else:
                 self.MaxRobots=interface.robotEntry.get()
