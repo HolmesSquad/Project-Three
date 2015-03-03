@@ -695,12 +695,8 @@ def main():
                     self.ClosestTreasure.MouseOff(level1)
                     self.ClosestTreasure.destroylabels()
                     #self.TreasuresFound.append(self.ClosestTreasure)
-                elif RoboFinish==True:
-                    print ("hello")
-                    self.stopMoving()
+               
                     
-                    
-                
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     else:
@@ -711,10 +707,7 @@ def main():
                 if TreasuresRemaining>0:
                     self.closesttreasure()
                     self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
-                else:
-                    self.vx=0
-                    self.vy=0
-                    RoboFinish=True
+                
                     
 
     interface = interface(level1)
