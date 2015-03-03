@@ -354,9 +354,51 @@ def main():
             timerCanvas.pack()
             timerWindow.grab_set() #these dont work 100% yet
             timerWindow.focus_force()
+       
+        def assignScoreWindow(self):
+            global squareScore,circleScore,triangleScore,assignScoreWindow
+            
+            assignScoreWindow = Tk()
+            assignScoreWindow.title("Assign points")
+            assignScoreWindow.resizable(0,0)
 
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+
+            interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
+            interface.typeHeader.place(x = 1, y = 38)
+
+            interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
+            interface.squareLabel.place(x = 1, y = 78)
+
+            interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
+            interface.circleLabel.place(x = 1, y = 118)
+
+            interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
+            interface.triangleLabel.place(x = 1, y = 158)
+            
+            interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
+            interface.pointsHeader.place(x = 110, y = 38)
+
+            interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.place(x = 110,y = 78)
+
+            interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.place(x = 110,y = 118)
+
+            interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.place(x = 110,y = 158)
+
+            interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
+            interface.entryButton.place(x = 110, y = 198)
+            
+            assignScoreCanvas.pack()
+            
         def treasureWindow(level1):
-            global treasureWindow
+            global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
+            squareScore = int(interface.squareEntry.get())
+            circleScore = int(interface.circleEntry.get())
+            triangleScore = int(interface.triangleEntry.get())
+            assignScoreWindow.destroy()
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -422,7 +464,7 @@ def main():
                 self.RoboPromptLabel.place(x=350, y=300)
 
         def start(self):
-            self.treasureWindow()
+            self.assignScoreWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             self.w.place(x = 1020, y = 550)
@@ -546,15 +588,15 @@ def main():
             self.found=False
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
-                self.score=50
+                self.score=squareScore
                 self.colour='Blue'
             elif self.type=="Circle":
                 self.name=canvas.create_oval(self.x-10,self.y-10,self.x+10,self.y+10,fill='yellow')
-                self.score=75
+                self.score=circleScore
                 self.colour='Yellow'
             elif self.type=="Triangle":
                 self.name=canvas.create_polygon(self.x,self.y-10,self.x-10,self.y+10,self.x+10,self.y+10,fill='green')
-                self.score=100
+                self.score=triangleScore
                 self.colour='Green'
             self.ShapeLabel = Label(level1, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
             self.ColourLabel = Label(level1, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
@@ -658,6 +700,7 @@ def main():
             self.ClosestTreasure.found=True
             self.vx=0
             self.vy=0
+            print "Helloooo"
             interface.sortByWindow()
                     
             return 0
