@@ -309,6 +309,7 @@ def main():
                 print "Hello"
             else:
                 RoboFinish=True
+                TreasuresRemaining=0
                 print RoboFinish
                 return False
                 
@@ -649,10 +650,22 @@ def main():
                 self.vy=0
             self.distanceleft=int(totaldistance)
 
+        def stopMoving(self):
+            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
+            global d,ListOfRobots,TreasuresFound,score
+            TreasuresRemaining=0
+            self.distanceleft=0
+            self.ClosestTreasure.found=True
+            self.vx=0
+            self.vy=0
+            interface.sortByWindow()
+                    
+            return 0
+
         def move(self):
             global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
             global d,ListOfRobots,TreasuresFound,score
-            if self.distanceleft>0 and self.ClosestTreasure.found==False:
+            if self.distanceleft>0 and self.ClosestTreasure.found==False and RoboFinish==False:
                 self.x1+=self.vx
                 self.x2+=self.vx
                 self.y1+=self.vy
@@ -663,6 +676,9 @@ def main():
                 self.canvas.update()
                 self.distanceleft-=1
                 time.sleep(0.01)
+            elif (RoboFinish!=False):
+                print ("hello")
+                self.stopMoving()
             
             else:
                 if self.ClosestTreasure.found==False and RoboFinish==False:
@@ -680,11 +696,8 @@ def main():
                     self.ClosestTreasure.destroylabels()
                     #self.TreasuresFound.append(self.ClosestTreasure)
                 elif RoboFinish==True:
-                    self.distanceleft=0
-                    self.ClosestTreasure.found=True
-                    self.vx=0
-                    self.vy=0
-                    interface.sortByWindow()
+                    print ("hello")
+                    self.stopMoving()
                     
                     
                 
