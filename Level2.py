@@ -805,6 +805,7 @@ def main():
                     TreasuresRemaining-=1
                     self.NumberOfTreasuresFound+=1
                 if TreasuresRemaining==0 or (self.squareswishlist==0 and self.circleswishlist==0 and self.triangleswishlist==0):
+                    TreasuresRemaining=0
                     self.vx=0
                     self.vy=0
                     roboFinish=True
