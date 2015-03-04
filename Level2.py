@@ -8,11 +8,10 @@ def main():
     canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
     canvas.pack()
     
-    global roboFinish,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
+    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
     global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     
     score = 0
-    ListOfTreasures=[]
     d = 0
     ScoreBank=[]
     global ListOfRobots
@@ -25,8 +24,12 @@ def main():
     CoordsBank = []
     pauseCounter=0
     abcdefg = 0
-    roboFinish = False
+    roboFinished = False
     d=0
+    ListOfTreasures=[]
+    ListOfRobots=[]
+    NumberOfTreasures=0
+    NumberOfRobots=0
     ProgramActive=False
     pausepressed=False
 
@@ -36,7 +39,12 @@ def main():
         global d
         for i in ListOfRobots:
             canvas.delete(i.shape)
+        for i in ListOfTreasures:
+            if i.x < 1000:
+                canvas.delete(i.name)        
+        print TreasuresFound
         for i in TreasuresFound:
+            print TreasuresFound
             if i.type == "Triangle":
                 canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
             else:
@@ -46,64 +54,8 @@ def main():
             time.sleep(0.5)                
             canvas.update()
 
-    #Ascending`
-    def mergeSortAsc(List,anotherList):
+
     
-        if len(List) > 1:
-            midMA = len(List) // 2
-            lHalfMA = List[:midMA]
-            rHalfMA = List[midMA:]
-            amidMA = len(anotherList) // 2
-            alHalfMA = anotherList[:amidMA]
-            arHalfMA = anotherList[amidMA:]
-    
-            mergeSortAsc(lHalfMA,alHalfMA)
-            mergeSortAsc(rHalfMA,arHalfMA)
-            
-    
-            aMA = 0
-            bMA = 0
-            cMA = 0
-            aaMA = 0
-            abMA = 0
-            acMA = 0
-    
-            while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                if lHalfMA[aMA] < rHalfMA[bMA]:
-                    List[cMA] = lHalfMA[aMA]                               
-                    aMA += 1
-                    anotherList[acMA] = alHalfMA[aaMA]                               
-                    aaMA += 1
-                    iteration += 1
-                else:
-                    List[cMA] = rHalfMA[bMA]
-                    bMA += 1
-                    anotherList[acMA] = arHalfMA[abMA]
-                    abMA += 1
-                    iteration += 1
-                cMA += 1
-                acMA += 1
-    
-            while aMA < len(lHalfMA):
-                List[cMA] = lHalfMA[aMA]
-                aMA += 1
-                cMA += 1
-                anotherList[acMA] = alHalfMA[aaMA]
-                aaMA += 1
-                acMA += 1
-                iteration += 1
-    
-            while bMA < len(rHalfMA):
-                List[cMA] = rHalfMA[bMA]
-                bMA += 1
-                cMA += 1
-                anotherList[acMA] = arHalfMA[abMA]
-                abMA += 1
-                acMA += 1
-                iteration += 1
-                
-        if iteration == len(TreasuresFound):
-            sortAnimation()
 
     #Descending 
     def mergeSortDes(List,anotherList):
@@ -129,8 +81,6 @@ def main():
             acMD = 0
     
             while aMD < len(lHalfMD) and bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 if lHalfMD[aMD] > rHalfMD[bMD]:
                     List[cMD] = lHalfMD[aMD]                               
                     aMD += 1
@@ -138,8 +88,6 @@ def main():
                     aaMD += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMD] = rHalfMD[bMD]
                     bMD += 1
                     anotherList[acMD] = arHalfMD[abMD]
@@ -150,8 +98,6 @@ def main():
                 acMD += 1
     
             while aMD < len(lHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = lHalfMD[aMD]
                 aMD += 1
                 cMD += 1
@@ -161,8 +107,6 @@ def main():
                 iteration += 1
 
             while bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = rHalfMD[bMD]
                 bMD += 1
                 cMD += 1
@@ -170,13 +114,14 @@ def main():
                 abMD += 1
                 acMD += 1
                 iteration += 1
+                
+            if iteration == len(TreasuresFound):
+                sortAnimation()
 
-        if iteration == len(TreasuresFound):
-            sortAnimation()
+
 
     def mergeSortAsc(List, anotherList):
-        iteration = 0
-        
+        iteration = 0       
         if len(List) > 1:
             midMA = len(List) // 2
             lHalfMA = List[:midMA]
@@ -196,8 +141,6 @@ def main():
             acMA = 0
     
             while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 if lHalfMA[aMA] < rHalfMA[bMA]:
                     List[cMA] = lHalfMA[aMA]                               
                     aMA += 1
@@ -205,8 +148,6 @@ def main():
                     aaMA += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMA] = rHalfMA[bMA]
                     bMA += 1
                     anotherList[acMA] = arHalfMA[abMA]
@@ -217,8 +158,6 @@ def main():
                 acMA += 1
     
             while aMA < len(lHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = lHalfMA[aMA]
                 aMA += 1
                 cMA += 1
@@ -228,8 +167,6 @@ def main():
                 iteration += 1
                 
             while bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = rHalfMA[bMA]
                 bMA += 1
                 cMA += 1
@@ -237,8 +174,9 @@ def main():
                 abMA += 1
                 acMA += 1
                 iteration += 1
-        if iteration == len(TreasuresFound):
-            sortAnimation()
+        
+            if iteration == len(TreasuresFound):
+                sortAnimation()
     
     def callback(event):
         global NumberOfTreasures
@@ -294,11 +232,11 @@ def main():
             self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
             self.scoreShowLabel.place(x = 1140, y = 180)
 
-            self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            self.treasureCollectedLabel = Label(name, text = "Robot Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
 
-            self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
-            self.treasureCollectedLabel2.place(x = 1020, y = 450)
+            #self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            #self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
@@ -319,23 +257,22 @@ def main():
             webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-1#windows')
 
         def timer(level2):
-             global counter, pausepressed,pauseCounter, roboFinish
+             global counter, resetPressed, pausepressed ,pauseCounter, roboFinished
              counter==counter
-             if (counter != 0) and (pausepressed!=True) and (roboFinish!=True):
+             if (counter != 0) and (pausepressed!=True) and (roboFinished!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level2.secShowLabel.after(1000, level2.timer)
              elif (pausepressed==True):
                  pauseCounter=counter
+             elif (roboFinished==True):
+                 TreasuresRemaining=0
              else:
-                RoboFinish=True
-                TreasuresRemaining=0
-                print RoboFinish
-                return False
+                return 1
 
         def timerShow(level2,self):
-            global counter, RoboFinish
-            RoboFinish=False
+            global counter, RoboFinished
+            RoboFinished=False
             interface.timer()   
 
         def minuteConvert(level2):
@@ -379,12 +316,48 @@ def main():
             timerWindow.grab_set() #these dont work 100% yet
             timerWindow.focus_force()
 
+        def assignScoreWindow(self):
+            global squareScore,circleScore,triangleScore,assignScoreWindow
+            
+            assignScoreWindow = Tk()
+            assignScoreWindow.title("Assign points")
+            assignScoreWindow.resizable(0,0)
+
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+
+            interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
+            interface.typeHeader.place(x = 1, y = 38)
+
+            interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
+            interface.squareLabel.place(x = 1, y = 78)
+
+            interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
+            interface.circleLabel.place(x = 1, y = 118)
+
+            interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
+            interface.triangleLabel.place(x = 1, y = 158)
+            
+            interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
+            interface.pointsHeader.place(x = 110, y = 38)
+
+            interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.place(x = 110,y = 78)
+
+            interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.place(x = 110,y = 118)
+
+            interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.place(x = 110,y = 158)
+
+            interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
+            interface.entryButton.place(x = 110, y = 198)
+            
+            assignScoreCanvas.pack()
+
         def timerWindowGet(self):
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
                 counter=0
-            elif ((int(interface.timeEntrysec.get())=="0") and (int((interface.timeEntrymin.get())=="0"))):
-                tkMessageBox.showinfo("Error", "Please enter more than zero seconds")
             elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
                 counter=int(interface.timeEntrysec.get())
                 interface.timerShow(interface)
@@ -411,7 +384,7 @@ def main():
             self.initiateMovement()
             
         def initiateMovement(self):
-            while TreasuresRemaining>0:
+            while ListOfRobots[0].squareswishlist>0 or ListOfRobots[0].triangleswishlist>0 or ListOfRobots[0].circleswishlist>0:
                 if pausepressed==False:
                     for robot in ListOfRobots:
                         robot.move()
@@ -459,14 +432,35 @@ def main():
             interface.circleQuantity.insert(0,"0")
             interface.circleQuantity.place(x = 10,y = 136)
 
+<<<<<<< HEAD
             interface.windowHelpButton = Button(wishlistCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
             interface.windowHelpButton.place(x = 180, y = 180)
+=======
+            interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+            interface.multiplicationLabel1.place(x = 90, y = 67)
+            
+            interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+            interface.multiplicationLabel2.place(x = 90, y = 102)
+
+            interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
+            interface.multiplicationLabel3.place(x = 90, y = 138)
+
+            #interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
+            #interface.trapLabel.place(x = 10, y = 180)
+
+            #interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
+            #interface.trapQuantity.insert(0,"0")
+            #interface.trapQuantity.place(x = 80,y = 210)
+>>>>>>> origin/master
             
             wishlistCanvas.pack()
             
         def wishlistChecker(self):
             if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
                 return 1 #returns 1 if no value is entered in wishlist
+            elif (int(interface.squareQuantity.get())+ (int(interface.triangleQuantity.get()))+(int(interface.circleQuantity.get())))>TreasuresRemaining:
+                tkMessageBox.showinfo("Error", "Please enter fewer treasures")
+                return 1
             elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
                 return 2 #returns 2 if no objects are selected
             elif ((interface.c1==1) and ((interface.squareQuantity.get())=="0") or (interface.squareQuantity.get())==""):
@@ -488,17 +482,21 @@ def main():
                 self.timerWindow()
             
         def start(self):
-            self.treasureWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             interface.w.place(x = 1020, y = 550)
+            self.assignScoreWindow()
             self.w.place(x = 1020, y = 550)
             self.PressStartLabel.place_forget()
             self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
             self.ChangePromptLabel.place(x=510, y= 540)
             
         def treasureWindow(level2):
-            global treasureWindow
+            global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
+            squareScore = int(interface.squareEntry.get())
+            circleScore = int(interface.circleEntry.get())
+            triangleScore = int(interface.triangleEntry.get())
+            assignScoreWindow.destroy()
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -523,9 +521,8 @@ def main():
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>10:
                 tkMessageBox.showinfo("Error","No more than ten treasures can be created")
-            elif int(interface.treasureEntry.get())<1:
-                tkMessageBox.showinfo("Error", "Please enter more than zero")
-                
+            elif int(interface.treasureEntry.get())<2:
+                tkMessageBox.showinfo("Error","Please enter 2 or more treasures")
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -550,18 +547,21 @@ def main():
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
             interface.robotEntryButton.place(x = 65, y = 100)
 
+<<<<<<< HEAD
             interface.windowHelpButton = Button(robotCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
             interface.windowHelpButton.place(x = 180, y = 170)
             
             robotCanvas.pack()
             interface.w.place_forget()            
+=======
+        
+>>>>>>> origin/master
             
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>1:
-                tkMessageBox.showinfo("Error", "Only one robot can be created")
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             elif int(interface.robotEntry.get())<1:
-                tkMessageBox.showinfo("Error", "Only one robot can be created")
-                
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
@@ -602,6 +602,7 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
+            print "Hello"
             sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
             
@@ -651,7 +652,7 @@ def main():
             import Level3
     class treasures:
         global canvas
-        global NumberOfTreasures
+        global NumberOfTreasures,circleScore,triangleScore,squareScore
         def __init__(self,x,y):
             global NumberOfTreasures
             self.type=interface.variable.get()
@@ -661,15 +662,15 @@ def main():
             self.found=False
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
-                self.score=50
+                self.score= squareScore
                 self.colour='Blue'
             elif self.type=="Circle":
                 self.name=canvas.create_oval(self.x-10,self.y-10,self.x+10,self.y+10,fill='yellow')
-                self.score=75
+                self.score= circleScore
                 self.colour='Yellow'
             elif self.type=="Triangle":
                 self.name=canvas.create_polygon(self.x,self.y-10,self.x-10,self.y+10,self.x+10,self.y+10,fill='green')
-                self.score=100
+                self.score= triangleScore
                 self.colour='Green'
             self.ShapeLabel = Label(level2, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
             self.ColourLabel = Label(level2, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
@@ -762,19 +763,10 @@ def main():
             print str(totaldistance)
             self.distanceleft=int(totaldistance)
 
-        def stopMoving(self):
-            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
-            global d,ListOfRobots,TreasuresFound,score
-            TreasuresRemaining=0
-            self.distanceleft=0
-            self.ClosestTreasure.found=True
-            self.vx=0
-            self.vy=0
-            interface.sortByWindow()
-
         def move(self):
-            global TreasuresRemaining,roboFinish
-            if self.distanceleft>0 and self.ClosestTreasure.found==False and roboFinish==False:
+            global TreasuresRemaining,roboFinished,abcdefg,CoordsBank,ListofCoords
+            global d,ListOfRobots,TreasuresFound,score
+            if self.distanceleft>0 and self.ClosestTreasure.found==False:
                 self.x1+=self.vx
                 self.x2+=self.vx
                 self.y1+=self.vy
@@ -785,15 +777,17 @@ def main():
                 self.canvas.update()
                 self.distanceleft-=1
                 time.sleep(0.01)
-            elif (RoboFinish!=False):
-                print ("hello")
-                self.stopMoving()
-            
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
                     self.ClosestTreasure.destroylabels()
-                    self.TreasuresFound.append(self.ClosestTreasure)
+                    TreasuresFound.append(self.ClosestTreasure)
+                    ListOfTreasures.remove(self.ClosestTreasure)
+                    ScoreBank.append(self.ClosestTreasure.score)
+                    print ScoreBank
+                    ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
+                    CoordsBank.append(ListofCoords[abcdefg])
+                    abcdefg += 1
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                         self.triangleswishlist-=1
@@ -809,7 +803,7 @@ def main():
                 if TreasuresRemaining==0 or (self.squareswishlist==0 and self.circleswishlist==0 and self.triangleswishlist==0):
                     self.vx=0
                     self.vy=0
-                    roboFinish=True
+                    roboFinished=True
                     interface.sortByWindow()
                 else:
                     self.closesttreasure()
