@@ -47,7 +47,7 @@ def main():
             canvas.delete(i.name)
         print TreasuresFound
         for i in TreasuresFound:
-            print TreasuresFound
+            print len(TreasuresFound)
             if i.type == "Triangle":
                 canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
             else:
@@ -128,11 +128,10 @@ def main():
             if iteration == len(TreasuresFound):
                 sortAnimation()
 
-        else:
-            sortAnimation()
 
     def mergeSortAsc(List, anotherList):
-        iteration = 0       
+        iteration = 0
+        print ScoreBank
         if len(List) > 1:
             midMA = len(List) // 2
             lHalfMA = List[:midMA]
@@ -195,9 +194,8 @@ def main():
                 iteration += 1
         
             if iteration == len(TreasuresFound):
+                print ScoreBank
                 sortAnimation()
-        else:
-            sortAnimation()
     
     def callback(event):
         global NumberOfTreasures
@@ -749,6 +747,7 @@ def main():
         def move(self):
             global TreasuresRemaining,roboFinish,abcdefg,CoordsBank,ListofCoords
             global d,ListOfRobots,TreasuresFound,score
+
             if self.distanceleft>0 and self.ClosestTreasure.found==False:
                 for trap in ListOfTraps:
                     if self.x2<=trap.x2+19 and self.y2<=trap.y2+19 and self.y1>=trap.y1-19 and self.x1>=trap.x1-19:
