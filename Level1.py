@@ -1,6 +1,7 @@
 from Tkinter import *
 import time
 import tkMessageBox
+import webbrowser
 
 def main():
        
@@ -269,6 +270,9 @@ def main():
             self.startButton.place(x = 1020, y = 80)
 
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
+
+            self.helpButton = Button(name, text = "Help", width = 20, command = self.webHelp, font = ("Arial", 16), bg = "Orange")
+            self.helpButton.place(x = 1020, y = 660)
             
             self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
             self.levelSelectButton.place(x = 1020, y = 130)
@@ -296,6 +300,12 @@ def main():
 
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
+        def webHelp(self):
+            webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-1')
+
+        def windowHelp(self):
+            webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-1#windows')
+
         def timer(level1):
             global counter, resetPressed, pausepressed, pauseCounter, RoboFinish
             counter==counter
@@ -310,7 +320,6 @@ def main():
             else:
                 RoboFinish=True
                 TreasuresRemaining=0
-                print RoboFinish
                 return False
                 
 
@@ -350,6 +359,9 @@ def main():
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
             interface.timeEntryButton.place(x = 65, y = 170)
+
+            interface.windowHelpButton = Button(timerCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             timerCanvas.pack()
             timerWindow.grab_set() #these dont work 100% yet
@@ -359,37 +371,40 @@ def main():
             global squareScore,circleScore,triangleScore,assignScoreWindow
             
             assignScoreWindow = Tk()
-            assignScoreWindow.title("Assign points")
+            assignScoreWindow.title("Assign Score")
             assignScoreWindow.resizable(0,0)
 
-            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 200, bg = "White")
 
             interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
-            interface.typeHeader.place(x = 1, y = 38)
+            interface.typeHeader.place(x = 1, y = 15)
 
             interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
-            interface.squareLabel.place(x = 1, y = 78)
+            interface.squareLabel.place(x = 1, y = 50)
 
             interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
-            interface.circleLabel.place(x = 1, y = 118)
+            interface.circleLabel.place(x = 1, y = 90)
 
             interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
-            interface.triangleLabel.place(x = 1, y = 158)
+            interface.triangleLabel.place(x = 1, y = 130)
             
             interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
-            interface.pointsHeader.place(x = 110, y = 38)
+            interface.pointsHeader.place(x = 110, y = 15)
 
             interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.squareEntry.place(x = 110,y = 78)
+            interface.squareEntry.place(x = 110,y = 50)
 
             interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.circleEntry.place(x = 110,y = 118)
+            interface.circleEntry.place(x = 110,y = 90)
 
             interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.triangleEntry.place(x = 110,y = 158)
+            interface.triangleEntry.place(x = 110,y = 130)
 
             interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
-            interface.entryButton.place(x = 110, y = 198)
+            interface.entryButton.place(x = 110, y = 170)
+
+            interface.windowHelpButton = Button(assignScoreCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 250, y = 170)
             
             assignScoreCanvas.pack()
             
@@ -414,6 +429,9 @@ def main():
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
             interface.treasureEntryButton.place(x = 65, y = 100)
+
+            interface.windowHelpButton = Button(treasureCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             treasureCanvas.pack()
             
@@ -447,6 +465,9 @@ def main():
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
             interface.robotEntryButton.place(x = 65, y = 100)
+
+            interface.windowHelpButton = Button(robotCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             robotCanvas.pack()
             interface.w.place_forget()
@@ -521,6 +542,9 @@ def main():
 
             interface.sortByDescendingButton = Button(sortByCanvas, text = "Descending", width = 20, font = ("Arial", 10), command = self.sortDes , bg = "LightGreen")
             interface.sortByDescendingButton.place(x = 20, y = 60)
+
+            interface.windowHelpButton = Button(sortByCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             sortByCanvas.pack()
 
