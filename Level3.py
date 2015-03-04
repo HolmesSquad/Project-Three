@@ -2,6 +2,8 @@ from Tkinter import *
 import tkMessageBox
 import time
 import random
+import webbrowser
+
 def main():
     level3 = Tk()
     level3.title("Level 3")
@@ -56,8 +58,6 @@ def main():
             d += 1
             time.sleep(0.5)                
             canvas.update()
-
-    
 
     #Descending 
     def mergeSortDes(List,anotherList):
@@ -127,7 +127,6 @@ def main():
                 
             if iteration == len(TreasuresFound):
                 sortAnimation()
-
 
     def mergeSortAsc(List, anotherList):
         iteration = 0
@@ -217,6 +216,7 @@ def main():
                 
     canvas.tag_bind(level3Map,"<Button-1>", callback)
     canvas.pack()
+    
     class interface:
         def __init__(self, name):
             self.timerLabel = Label(name, text = "Timer:", width = 10, height = 2, font = ("Arial", 16), bg = "Gray")
@@ -237,11 +237,11 @@ def main():
             self.startButton = Button(name, text = "Start", width = 20, command = self.start, font = ("Arial", 16), bg = "LightGreen")
             self.startButton.place(x = 1020, y = 80)
 
-            '''self.resetButton = Button(name, text = "Reset", width = 20, command = self.reset, font = ("Arial", 16), bg = "Orange")
-            self.resetButton.place(x = 1020, y = 130)'''
-
             self.pauseButton = Button(name, text = "Pause", width = 20, command = self.pause, font = ("Arial", 16), bg = "Yellow")
 
+            self.helpButton = Button(name, text = "Help", width = 20, command = self.webHelp, font = ("Arial", 16), bg = "Orange")
+            self.helpButton.place(x = 1020, y = 660)
+            
             self.levelSelectButton = Button(name, text = "Level Select", width = 20, command = self.levelSelect, font = ("Arial", 16), bg = "LightBlue")
             self.levelSelectButton.place(x = 1020, y = 130)
 
@@ -251,11 +251,11 @@ def main():
             self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
             self.scoreShowLabel.place(x = 1140, y = 180)
 
-            self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
 
-            self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
-            self.treasureCollectedLabel2.place(x = 1020, y = 450)
+            '''self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            self.treasureCollectedLabel2.place(x = 1020, y = 450)'''
             
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
@@ -267,7 +267,13 @@ def main():
             self.variable = StringVar(level3)
             self.variable.set(self.OPTIONS[0]) # default value
 
-            self.w = apply(OptionMenu, (level3, self.variable) + tuple(self.OPTIONS))      
+            self.w = apply(OptionMenu, (level3, self.variable) + tuple(self.OPTIONS))
+
+        def webHelp(self):
+            webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-3')
+
+        def windowHelp(self):
+            webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-3#windows')
 
         def timer(level3):
              global counter, resetPressed, pausepressed ,pauseCounter, roboFinished
@@ -311,18 +317,59 @@ def main():
             interface.timeEntrymin.insert(0,"0")
             interface.timeEntrymin.place(x = 30,y = 60)
             
-            
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
             interface.timeEntrysec.insert(0,"0")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
             interface.timeEntryButton.place(x = 65, y = 170)
+
+            interface.windowHelpButton = Button(timerCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             timerCanvas.pack()
             wishlistWindow.destroy()
-            timerWindow.grab_set() #these dont work 100% yet
-            timerWindow.focus_force()
+
+        def assignScoreWindow(self):
+            global squareScore,circleScore,triangleScore,assignScoreWindow
+            
+            assignScoreWindow = Tk()
+            assignScoreWindow.title("Assign points")
+            assignScoreWindow.resizable(0,0)
+
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+
+            interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
+            interface.typeHeader.place(x = 1, y = 38)
+
+            interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
+            interface.squareLabel.place(x = 1, y = 78)
+
+            interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
+            interface.circleLabel.place(x = 1, y = 118)
+
+            interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
+            interface.triangleLabel.place(x = 1, y = 158)
+            
+            interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
+            interface.pointsHeader.place(x = 110, y = 38)
+
+            interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.place(x = 110,y = 78)
+
+            interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.place(x = 110,y = 118)
+
+            interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.place(x = 110,y = 158)
+
+            interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
+            interface.entryButton.place(x = 110, y = 198)
+
+            interface.windowHelpButton = Button(assignScoreCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 250, y = 170)
+            
+            assignScoreCanvas.pack()
 
         def timerWindowGet(self):
             global counter, timerWindow
@@ -370,19 +417,19 @@ def main():
 
             wishlistCanvas = Canvas(wishlistWindow, width = 210, height = 280, bg = "White")
 
-            interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGray")
+            interface.wishlistEntryButton = Button(wishlistCanvas, text = "Ok", width = 10, font = ("Arial", 10), command = interface.wishlistChecker, bg = "LightGreen")
             interface.wishlistEntryButton.place(x = 60, y = 250)
 
             interface.wishlistEntryLabel = Label(wishlistCanvas, text = "Please select your desired items", width = 24, font = ("Arial", 10),  bg = "White")
             interface.wishlistEntryLabel.place(x = 10, y = 10)
 
-            interface.c1=Checkbutton(wishlistWindow,text="Square  ",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+            interface.c1=Label(wishlistWindow,text="Square  ",font = ("Arial", 10),height=1,width=11, bg="White")
             interface.c1.place(x=110,y=65)
 
-            interface.c2=Checkbutton(wishlistWindow,text="Triangle",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+            interface.c2=Label(wishlistWindow,text="Triangle",font = ("Arial", 10),height=1,width=11, bg="White")
             interface.c2.place(x=110,y=100)
 
-            interface.c3=Checkbutton(wishlistWindow,text="Circle    ",onvalue=1,offvalue=0,height=1,width=11, bg="White")
+            interface.c3=Label(wishlistWindow,text="Circle    ",font = ("Arial", 10),height=1,width=11, bg="White")
             interface.c3.place(x=110,y=135)
 
             interface.wishlistQuantityLabel=Label(wishlistCanvas,text="Quantity",width=9,font=("Arial",10), bg="White")
@@ -403,21 +450,15 @@ def main():
             interface.circleQuantity.insert(0,"0")
             interface.circleQuantity.place(x = 10,y = 136)
 
-            interface.multiplicationLabel1=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
-            interface.multiplicationLabel1.place(x = 90, y = 67)
-            
-            interface.multiplicationLabel2=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
-            interface.multiplicationLabel2.place(x = 90, y = 102)
-
-            interface.multiplicationLabel3=Label(wishlistCanvas,text="*",width=2,font=("Arial",12), bg="White")
-            interface.multiplicationLabel3.place(x = 90, y = 138)
-
             interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
             interface.trapLabel.place(x = 10, y = 180)
 
             interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
             interface.trapQuantity.insert(0,"0")
             interface.trapQuantity.place(x = 80,y = 210)
+
+            interface.windowHelpButton = Button(wishlistCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 180)
             
             wishlistCanvas.pack()
             
@@ -456,7 +497,10 @@ def main():
             self.ChangePromptLabel.place(x=510, y= 540)
             
         def treasureWindow(level3):
-            global treasureWindow
+            global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
+            squareScore = int(interface.squareEntry.get())
+            circleScore = int(interface.circleEntry.get())
+            triangleScore = int(interface.triangleEntry.get())
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -471,13 +515,18 @@ def main():
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
             interface.treasureEntryButton.place(x = 65, y = 100)
+
+            interface.windowHelpButton = Button(treasureCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             treasureCanvas.pack()
             
         def assignmaxtreasures(self):
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>10:
-                print "No more than ten treasures can be created"
+                tkMessageBox.showinfo("Error","No more than ten treasures can be created")
+            elif int(interface.treasureEntry.get())<2:
+                tkMessageBox.showinfo("Error","Please enter 2 or more treasures")
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -501,13 +550,18 @@ def main():
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
             interface.robotEntryButton.place(x = 65, y = 100)
+
+            interface.windowHelpButton = Button(robotCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
+            interface.windowHelpButton.place(x = 180, y = 170)
             
             robotCanvas.pack()
             interface.w.place_forget()
             
         def assignmaxrobots(self):
-            if int(interface.robotEntry.get())>2:
-                print "No more than two robots can be created"
+            if int(interface.robotEntry.get())>1:
+                tkMessageBox.showinfo("Error","Only one robot can be created")
+            elif int(interface.robotEntry.get())<1:
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
@@ -548,18 +602,13 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
-            print "Hello"
             sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
-            '''for i in TreasuresFound:
-                   i.showLabels()'''
             
         def sortDes(self):
             global sortByWindow
             sortByWindow.destroy()
             mergeSortDes(ScoreBank,TreasuresFound)
-            '''for i in TreasuresFound:
-                   i.showLabels()'''  
             
         def levelSelect(self):
             global levelWindow
@@ -600,10 +649,12 @@ def main():
             levelWindow.destroy()
             level3.destroy()
             import Level3
+
     class objects:
         def __init__(self,x,y):
             self.x=x
             self.y=y
+
     class treasures(objects):
         global canvas
         global NumberOfTreasures
@@ -647,6 +698,7 @@ def main():
             self.ShapeLabel = None
             self.ColourLabel = None
             self.WorthLabel = None
+
     #Function to create a trap in a random position
     def Createtrap():
         global trapNum
@@ -668,6 +720,7 @@ def main():
                         InvalidPosition=True
             if InvalidPosition==False:
                 ListOfTraps.append(traps(x,y))
+
     class traps(objects):
         def __init__(self,x,y):
             objects.__init__(self,x,y)
@@ -677,6 +730,7 @@ def main():
             self.y2=self.y+10
             self.collision=False
             self.name = canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='red')
+
     class robots(objects):
         def __init__(self,x,y):
             objects.__init__(self,x,y)
@@ -809,19 +863,12 @@ def main():
                     self.vx=0
                     self.vy=0
                     roboFinished=True
-                    print TreasuresFound
-                    print "Test"
                     interface.sortByWindow()
                 else:
                     self.closesttreasure()
                     self.moveto(self.ClosestTreasure.x,self.ClosestTreasure.y)
-                    
-    #def programquitconfirm(self):
-        #if tkMessageBox.askokcancel("Exit?","Are You sure you want to exit?"):
-            #level3.quit()
       
     interface = interface(level3)
-    #level3.protocol("WM_DELETE_WINDOW",programquitconfirm) DO NOT ADD THIS IN YET!!!
 
     level3.mainloop()
 main()
