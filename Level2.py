@@ -232,11 +232,11 @@ def main():
             self.scoreShowLabel = Label(name, text = "000", width = 10, height = 2, font = ("Arial", 16), bg = "LightGray")
             self.scoreShowLabel.place(x = 1140, y = 180)
 
-            self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            self.treasureCollectedLabel = Label(name, text = "Robot Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
 
-            self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
-            self.treasureCollectedLabel2.place(x = 1020, y = 450)
+            #self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            #self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
@@ -259,6 +259,8 @@ def main():
                 level2.secShowLabel.after(1000, level2.timer)
              elif (pausepressed==True):
                  pauseCounter=counter
+             elif (roboFinished==True):
+                 TreasuresRemaining=0
              else:
                 return 1
 
@@ -442,6 +444,9 @@ def main():
         def wishlistChecker(self):
             if ((interface.squareQuantity.get())=="0" and ((interface.triangleQuantity.get())=="0") and ((interface.circleQuantity.get())=="0")) or ((interface.squareQuantity.get())=="" and ((interface.triangleQuantity.get())=="") and ((interface.circleQuantity.get())=="")) :
                 return 1 #returns 1 if no value is entered in wishlist
+            elif (int(interface.squareQuantity.get())+ (int(interface.triangleQuantity.get()))+(int(interface.circleQuantity.get())))>TreasuresRemaining:
+                tkMessageBox.showinfo("Error", "Please enter fewer treasures")
+                return 1
             elif ((interface.c1==0) and (interface.c2==0) and (interface.c3==0)):
                 return 2 #returns 2 if no objects are selected
             elif ((interface.c1==1) and ((interface.squareQuantity.get())=="0") or (interface.squareQuantity.get())==""):
@@ -498,7 +503,9 @@ def main():
         def assignmaxtreasures(self):
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>10:
-                print "No more than ten treasures can be created"
+                tkMessageBox.showinfo("Error","No more than ten treasures can be created")
+            elif int(interface.treasureEntry.get())<2:
+                tkMessageBox.showinfo("Error","Please enter 2 or more treasures")
             else:
                 self.MaxTreasures=interface.treasureEntry.get()
                 TreasuresRemaining=int(self.MaxTreasures)
@@ -514,7 +521,7 @@ def main():
             
             robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
             
-            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 1)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
             interface.robot_label.place(x = 35, y = 10)
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
@@ -529,8 +536,10 @@ def main():
         
             
         def assignmaxrobots(self):
-            if int(interface.robotEntry.get())>2:
-                print "No more than two robots can be created"
+            if int(interface.robotEntry.get())>1:
+                tkMessageBox.showinfo("Error","Only one robot can be created")
+            elif int(interface.robotEntry.get())<1:
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
@@ -737,7 +746,7 @@ def main():
             self.distanceleft=int(totaldistance)
 
         def move(self):
-            global TreasuresRemaining,roboFinish,abcdefg,CoordsBank,ListofCoords
+            global TreasuresRemaining,roboFinished,abcdefg,CoordsBank,ListofCoords
             global d,ListOfRobots,TreasuresFound,score
             if self.distanceleft>0 and self.ClosestTreasure.found==False:
                 self.x1+=self.vx
