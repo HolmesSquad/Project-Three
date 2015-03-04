@@ -318,7 +318,7 @@ def main():
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"0")
+            interface.timeEntrysec.insert(0,"1")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
@@ -334,37 +334,40 @@ def main():
             global squareScore,circleScore,triangleScore,assignScoreWindow
             
             assignScoreWindow = Tk()
-            assignScoreWindow.title("Assign points")
+            assignScoreWindow.title("Assign Score")
             assignScoreWindow.resizable(0,0)
 
-            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 240, bg = "White")
+            assignScoreCanvas = Canvas(assignScoreWindow, width = 280, height = 200, bg = "White")
 
             interface.typeHeader=Label(assignScoreCanvas,text="Types",width=9,font=("Arial",10), bg="White")
-            interface.typeHeader.place(x = 1, y = 38)
+            interface.typeHeader.place(x = 1, y = 15)
 
             interface.squareLabel=Label(assignScoreCanvas,text="Square",width=9,font=("Arial",10), bg="White")
-            interface.squareLabel.place(x = 1, y = 78)
+            interface.squareLabel.place(x = 1, y = 50)
 
             interface.circleLabel=Label(assignScoreCanvas,text="Circle",width=9,font=("Arial",10), bg="White")
-            interface.circleLabel.place(x = 1, y = 118)
+            interface.circleLabel.place(x = 1, y = 90)
 
             interface.triangleLabel=Label(assignScoreCanvas,text="Triangle",width=9,font=("Arial",10), bg="White")
-            interface.triangleLabel.place(x = 1, y = 158)
+            interface.triangleLabel.place(x = 1, y = 130)
             
             interface.pointsHeader=Label(assignScoreCanvas,text="Points",width=12,font=("Arial",10), bg="White")
-            interface.pointsHeader.place(x = 110, y = 38)
+            interface.pointsHeader.place(x = 110, y = 15)
 
             interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.squareEntry.place(x = 110,y = 78)
+            interface.squareEntry.insert(50,"50")
+            interface.squareEntry.place(x = 110,y = 50)
 
             interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.circleEntry.place(x = 110,y = 118)
+            interface.circleEntry.insert(75,"75")
+            interface.circleEntry.place(x = 110,y = 90)
 
             interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
-            interface.triangleEntry.place(x = 110,y = 158)
+            interface.triangleEntry.insert(100,"100")
+            interface.triangleEntry.place(x = 110,y = 130)
 
             interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
-            interface.entryButton.place(x = 110, y = 198)
+            interface.entryButton.place(x = 110, y = 170)
 
             interface.windowHelpButton = Button(assignScoreCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
             interface.windowHelpButton.place(x = 250, y = 170)
@@ -454,11 +457,11 @@ def main():
             interface.trapLabel.place(x = 10, y = 180)
 
             interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
-            interface.trapQuantity.insert(0,"0")
+            interface.trapQuantity.insert(0,"10")
             interface.trapQuantity.place(x = 80,y = 210)
 
             interface.windowHelpButton = Button(wishlistCanvas, text = "?", width = 2, font = ("Arial", 10), command = interface.windowHelp, bg = "Orange")
-            interface.windowHelpButton.place(x = 180, y = 180)
+            interface.windowHelpButton.place(x = 180, y = 250)
             
             wishlistCanvas.pack()
             
@@ -487,20 +490,20 @@ def main():
                 self.timerWindow()
             
         def start(self):
-            self.treasureWindow()
+            self.assignScoreWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
-            interface.w.place(x = 1020, y = 550)
-            self.w.place(x = 1020, y = 550)
             self.PressStartLabel.place_forget()
-            self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
-            self.ChangePromptLabel.place(x=510, y= 540)
             
         def treasureWindow(level3):
             global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
             squareScore = int(interface.squareEntry.get())
             circleScore = int(interface.circleEntry.get())
             triangleScore = int(interface.triangleEntry.get())
+            interface.w.place(x = 1020, y = 550)
+            interface.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
+            interface.ChangePromptLabel.place(x=510, y= 540)
+            assignScoreWindow.destroy()
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -511,6 +514,7 @@ def main():
             interface.treasure_label.place(x = 35, y = 10)
             
             interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
+            interface.treasureEntry.insert(2,"2")
             interface.treasureEntry.place(x = 45,y = 60)
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
@@ -542,10 +546,11 @@ def main():
             
             robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
             
-            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 1)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
             interface.robot_label.place(x = 35, y = 10)
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
+            interface.robotEntry.insert(1,"1")
             interface.robotEntry.place(x = 45,y = 60)
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
@@ -559,7 +564,7 @@ def main():
             
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>1:
-                tkMessageBox.showinfo("Error","Only one robot can be created")
+                tkMessageBox.showinfo("Error","One robot must be created")
             elif int(interface.robotEntry.get())<1:
                 tkMessageBox.showinfo("Error","Only one robot can be created")
             else:

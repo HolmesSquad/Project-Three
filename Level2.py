@@ -117,8 +117,6 @@ def main():
             if iteration == len(TreasuresFound):
                 sortAnimation()
 
-
-
     def mergeSortAsc(List, anotherList):
         iteration = 0       
         if len(List) > 1:
@@ -298,7 +296,7 @@ def main():
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"0")
+            interface.timeEntrysec.insert(0,"1")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
@@ -353,6 +351,7 @@ def main():
             
             assignScoreCanvas.pack()
 
+
         def timerWindowGet(self):
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
@@ -360,18 +359,15 @@ def main():
             elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
                 counter=int(interface.timeEntrysec.get())
                 interface.timerShow(interface)
-                print "Run this 2"
                 timerWindow.destroy()
             elif (int((interface.timeEntrysec.get())=="")):
                 counter=((int(interface.timeEntrymin.get())*60))
                 interface.timerShow(interface)
-                print "Run this 3"
                 timerWindow.destroy()
             else:
                 counter=int(interface.timeEntrysec.get())
                 counter=counter+((int(interface.timeEntrymin.get())*60))
                 interface.timerShow(interface)
-                print "Run this"
                 timerWindow.destroy()
             ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
             if NumberOfRobots==2:
@@ -465,12 +461,9 @@ def main():
         def start(self):
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
-            interface.w.place(x = 1020, y = 550)
             self.assignScoreWindow()
-            self.w.place(x = 1020, y = 550)
             self.PressStartLabel.place_forget()
-            self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
-            self.ChangePromptLabel.place(x=510, y= 540)
+            
             
         def treasureWindow(level2):
             global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
@@ -478,6 +471,9 @@ def main():
             circleScore = int(interface.circleEntry.get())
             triangleScore = int(interface.triangleEntry.get())
             assignScoreWindow.destroy()
+            interface.w.place(x = 1020, y = 550)
+            interface.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
+            interface.ChangePromptLabel.place(x=510, y= 540)
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
