@@ -668,15 +668,15 @@ def main():
             self.found=False
             if self.type=="Rectangle":
                 self.name=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='blue')
-                self.score=50
+                self.score=squareScore
                 self.colour='Blue'
             elif self.type=="Circle":
                 self.name=canvas.create_oval(self.x-10,self.y-10,self.x+10,self.y+10,fill='yellow')
-                self.score=75
+                self.score=circleScore
                 self.colour='Yellow'
             elif self.type=="Triangle":
                 self.name=canvas.create_polygon(self.x,self.y-10,self.x-10,self.y+10,self.x+10,self.y+10,fill='green')
-                self.score=100
+                self.score=triangleScore
                 self.colour='Green'
             self.ShapeLabel = Label(level3, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
             self.ColourLabel = Label(level3, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
@@ -838,6 +838,8 @@ def main():
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
                     self.ClosestTreasure.destroylabels()
+                    score += self.ClosestTreasure.score
+                    interface.scoreShowLabel.config(text = score)
                     TreasuresFound.append(self.ClosestTreasure)
                     ListOfTreasures.remove(self.ClosestTreasure)
                     ScoreBank.append(self.ClosestTreasure.score)
