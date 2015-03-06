@@ -648,6 +648,8 @@ def main():
                 self.colour='Green'
             self.ShapeLabel = Label(level2, text = "Shape = "+self.type, bg = "White", font = ("Arial", 10))
             self.ColourLabel = Label(level2, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
+            self.ScoreLabel=Label(level2, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))
+            self.ScoreLabel.config(text = "Score = "+str(self.score))
             self.WorthLabel = Label(level2, text = "Worth = "+str(self.score), bg = "White", font = ("Arial", 10))
             canvas.tag_bind(self.name,"<Enter>", self.MouseRollover)
             canvas.tag_bind(self.name, "<Leave>", self.MouseOff)
@@ -751,12 +753,15 @@ def main():
                 self.canvas.update()
                 self.distanceleft-=1
                 time.sleep(0.01)
+                interface.scoreShowLabel.config(text = score)
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
                     self.ClosestTreasure.destroylabels()
                     TreasuresFound.append(self.ClosestTreasure)
                     ListOfTreasures.remove(self.ClosestTreasure)
+                    score += self.ClosestTreasure.score
+                    interface.scoreShowLabel.config(text = score)
                     ScoreBank.append(self.ClosestTreasure.score)
                     print ScoreBank
                     ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
