@@ -47,9 +47,7 @@ def main():
                 canvas.delete(i.name)
         for i in ListOfTraps:
             canvas.delete(i.name)
-        print TreasuresFound
         for i in TreasuresFound:
-            print len(TreasuresFound)
             if i.type == "Triangle":
                 canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
             else:
@@ -450,8 +448,8 @@ def main():
             interface.circleQuantity.insert(0,"0")
             interface.circleQuantity.place(x = 10,y = 136)
 
-            interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps",width=24,font=("Arial",10), bg="White")
-            interface.trapLabel.place(x = 10, y = 180)
+            interface.trapLabel=Label(wishlistCanvas,text="Please enter the number of traps     (Max: 100)",wraplength = 100,width=24,font=("Arial",10), bg="White")
+            interface.trapLabel.place(x = 10, y = 155)
 
             interface.trapQuantity = Entry(wishlistCanvas, text = "" , width = 8, bd = 5)
             interface.trapQuantity.insert(0,"10")
@@ -478,6 +476,8 @@ def main():
                 return 6 #returns 6 if no objects are selected
             elif (int((interface.squareQuantity.get())<"0")) or int((interface.triangleQuantity.get())<"0") or (int((interface.circleQuantity.get())<"0")):
                 return 7 #returns 7 if a negative value is entered
+            elif int(interface.trapQuantity.get()) > 100:
+                tkMessageBox.showinfo("Error", "Please enter less than 100 traps")
             else: #continues the program if there are no errors
                 ListOfRobots[0].squareswishlist=int(interface.squareQuantity.get())
                 ListOfRobots[0].triangleswishlist=int(interface.triangleQuantity.get())
@@ -822,6 +822,9 @@ def main():
                                     self.circleswishlist+=1
                                 canvas.delete(self.DeletedTreasure.name)
                                 self.NumberOfTreasuresFound-=1
+                                score -= self.DeletedTreasure.score
+                                interface.scoreShowLabel.config(text = score)
+
                     else:
                         trap.collision=False
                 self.x1+=self.vx
