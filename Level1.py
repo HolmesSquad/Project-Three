@@ -285,8 +285,8 @@ def main():
 
             self.treasureCollectedLabel = Label(name, text = "Robot 1 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
-            self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
-            self.treasureCollectedLabel2.place(x = 1020, y = 450)
+            #self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
+            #self.treasureCollectedLabel2.place(x = 1020, y = 450)
 
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
@@ -456,7 +456,7 @@ def main():
             
             robotCanvas = Canvas(robotWindow, width = 210, height = 200, bg = "White")
             
-            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 2)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
+            interface.robot_label = Label(robotCanvas, text = "Number of Robots (Max: 1)", wraplength = 100, width = 20, font = ("Arial", 9), bg = "White")
             interface.robot_label.place(x = 35, y = 10)
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
