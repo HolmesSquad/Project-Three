@@ -350,11 +350,11 @@ def main():
             interface.timermessage_label.place(x = 30, y = 120)
             
             interface.timeEntrymin = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrymin.insert(0,"0")
+            interface.timeEntrymin.insert(1,"1")
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"1")
+            interface.timeEntrysec.insert(0,"0")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
@@ -392,12 +392,15 @@ def main():
             interface.pointsHeader.place(x = 110, y = 15)
 
             interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.insert(50,"50")
             interface.squareEntry.place(x = 110,y = 50)
 
             interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.insert(75,"75")
             interface.circleEntry.place(x = 110,y = 90)
 
             interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.insert(100,"100")
             interface.triangleEntry.place(x = 110,y = 130)
 
             interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
@@ -425,7 +428,7 @@ def main():
             
             interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
             interface.treasureEntry.place(x = 45,y = 60)
-            interface.treasureEntry.insert(0,"5")
+            interface.treasureEntry.insert(5,"5")
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
             interface.treasureEntryButton.place(x = 65, y = 100)
@@ -461,7 +464,7 @@ def main():
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
             interface.robotEntry.place(x = 45,y = 60)
-            interface.robotEntry.insert(0,"1")
+            interface.robotEntry.insert(1,"1")
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")
             interface.robotEntryButton.place(x = 65, y = 100)
