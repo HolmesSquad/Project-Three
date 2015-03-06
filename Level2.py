@@ -10,29 +10,24 @@ def main():
     canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
     canvas.pack()
     
-    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure
+    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure, ListOfRobots
     global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
     
     score = 0
     d = 0
     ScoreBank=[]
-    global ListOfRobots
     ListOfRobots=[]
     NumberOfTreasures=0
     NumberOfRobots=0
     ProgramActive=False
     TreasuresFound=[]
     ListofCoords = []
+    ListOfTreasures=[]
     CoordsBank = []
     pauseCounter=0
     abcdefg = 0
     roboFinished = False
     d=0
-    ListOfTreasures=[]
-    ListOfRobots=[]
-    NumberOfTreasures=0
-    NumberOfRobots=0
-    ProgramActive=False
     pausepressed=False
 
     level2Map = canvas.create_rectangle(20, 20, 1000, 700, fill = 'white', width = 2)
@@ -292,11 +287,11 @@ def main():
             interface.timermessage_label.place(x = 30, y = 120)
             
             interface.timeEntrymin = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrymin.insert(0,"0")
+            interface.timeEntrymin.insert(1,"1")
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"1")
+            interface.timeEntrysec.insert(0,"0")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
@@ -335,12 +330,15 @@ def main():
             interface.pointsHeader.place(x = 110, y = 15)
 
             interface.squareEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.squareEntry.insert(50,"50")
             interface.squareEntry.place(x = 110,y = 50)
 
             interface.circleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.circleEntry.insert(75,"75")
             interface.circleEntry.place(x = 110,y = 90)
 
             interface.triangleEntry = Entry(assignScoreCanvas, text= "" , width = 20, bd = 5)
+            interface.triangleEntry.insert(100,"100")
             interface.triangleEntry.place(x = 110,y = 130)
 
             interface.entryButton = Button(assignScoreCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.treasureWindow, bg = "LightGreen")
@@ -484,6 +482,7 @@ def main():
             interface.treasure_label.place(x = 35, y = 10)
             
             interface.treasureEntry = Entry(treasureCanvas, text= "" , width = 20, bd = 5)
+            interface.treasureEntry.insert(2,"2")
             interface.treasureEntry.place(x = 45,y = 60)
             
             interface.treasureEntryButton = Button(treasureCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxtreasures, bg = "LightGreen")
@@ -519,6 +518,7 @@ def main():
             interface.robot_label.place(x = 35, y = 10)
             
             interface.robotEntry = Entry(robotCanvas, text= "" , width = 20, bd = 5)
+            interface.robotEntry.insert(1,"1")
             interface.robotEntry.place(x = 45,y = 60)
             
             interface.robotEntryButton = Button(robotCanvas, text="Ok", width = 10, font = ("Arial", 10),command=interface.assignmaxrobots, bg = "LightGreen")

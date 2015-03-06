@@ -253,9 +253,6 @@ def main():
 
             self.treasureCollectedLabel = Label(name, text = "Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
             self.treasureCollectedLabel.place(x = 1020, y = 350)
-
-            '''self.treasureCollectedLabel2 = Label(name, text = "Robot 2 Treasure Collected", width = 22, height = 1, font = ("Arial", 14), bg = "LightGray")
-            self.treasureCollectedLabel2.place(x = 1020, y = 450)'''
             
             #Create DropDown List for selecting which type of treasure to create
             self.OPTIONS = [
@@ -314,11 +311,11 @@ def main():
             interface.timermessage_label.place(x = 30, y = 120)
             
             interface.timeEntrymin = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrymin.insert(0,"0")
+            interface.timeEntrymin.insert(1,"1")
             interface.timeEntrymin.place(x = 30,y = 60)
             
             interface.timeEntrysec = Entry(timerCanvas, text = "" , width = 8, bd = 5)
-            interface.timeEntrysec.insert(0,"1")
+            interface.timeEntrysec.insert(0,"0")
             interface.timeEntrysec.place(x = 130,y = 60)
             
             interface.timeEntryButton = Button(timerCanvas, text = "Start", width = 10, font = ("Arial", 10), command = interface.timerWindowGet, bg = "LightGreen")
