@@ -32,7 +32,7 @@ def main():
     RoboFinish = False
     pausepressed=False
     
-    def sortAnimation():
+    def sortAnimation(): #function that places the objects after they have been sorted
         global d
         for i in ListOfRobots:
             canvas.delete(i.shape)
@@ -46,7 +46,7 @@ def main():
             canvas.update()
 
     #Ascending`
-    def mergeSortAsc(List,anotherList):
+    def mergeSortAsc(List,anotherList): #sorts the objects using a merge sort in ascending order
     
         if len(List) > 1:
             midMA = len(List) // 2
@@ -105,7 +105,7 @@ def main():
             sortAnimation()
 
     #Descending 
-    def mergeSortDes(List,anotherList):
+    def mergeSortDes(List,anotherList): #sorts the objects using a merge sort in decending order
         iteration = 0
         
         if len(List) > 1:
@@ -166,7 +166,7 @@ def main():
         if iteration == len(TreasuresFound):
             sortAnimation()
 
-    def mergeSortAsc(List, anotherList):
+    def mergeSortAsc(List, anotherList): #sorts the objects using a merge sort in ascending order
         iteration = 0
         if len(List) > 1:
             midMA = len(List) // 2
@@ -245,9 +245,9 @@ def main():
     canvas.tag_bind(level1Map,"<Button-1>", callback)
     canvas.pack()
 
-    class interface:
+    class interface: 
         global score
-        def __init__(self, name):
+        def __init__(self, name): #creates all the user interface and contains the methods that creates all the windows
             self.timerLabel = Label(name, text = "Timer:", width = 10, height = 2, font = ("Arial", 16), bg = "Gray")
             self.timerLabel.place(x = 1020, y = 20)
             
@@ -297,13 +297,13 @@ def main():
 
             self.w = apply(OptionMenu, (level1, self.variable) + tuple(self.OPTIONS))
 
-        def webHelp(self):
+        def webHelp(self): #opens the github wiki for level 1
             webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-1')
 
-        def windowHelp(self):
+        def windowHelp(self): #opens the github wiki for level 1 windows
             webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-1#windows')
 
-        def timer(level1):
+        def timer(level1): #adds one to the timer and the calls its self until the program is finished or paused
             global counter, resetPressed, pausepressed, pauseCounter, RoboFinish
             counter==counter
             if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
@@ -317,16 +317,16 @@ def main():
                 TreasuresRemaining=0
                 return False
                 
-        def timerShow(level1,self):
+        def timerShow(level1,self): #starts the timer
             global counter, RoboFinished
             RoboFinished=False
             interface.timer()
                     
-        def minuteConvert(level1):
+        def minuteConvert(level1): #converts the timer to minutes and seconds and then updates the correct labels
             level1.secShowLabel.config(text = str(counter%60))
             level1.minShowLabel.config(text = str(counter//60))
 
-        def timerWindow(level1):
+        def timerWindow(level1): #creates the window that allows the user to enter the time the robot has to complete the program
             global timerWindow
             timerWindow = Tk()
             timerWindow.title("Collection Time")
@@ -361,7 +361,7 @@ def main():
             timerWindow.grab_set() #these dont work 100% yet
             timerWindow.focus_force()
        
-        def assignScoreWindow(self):
+        def assignScoreWindow(self): #creates a window that allows the user to assign scores to each treasure type
             global squareScore,circleScore,triangleScore,assignScoreWindow
             
             assignScoreWindow = Tk()
@@ -405,7 +405,7 @@ def main():
             
             assignScoreCanvas.pack()
             
-        def treasureWindow(level1):
+        def treasureWindow(level1): #creates a window where the user can enter how many treasures they want
             global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
             squareScore = int(interface.squareEntry.get())
             circleScore = int(interface.circleEntry.get())
@@ -435,7 +435,7 @@ def main():
             
             treasureCanvas.pack()
             
-        def assignmaxtreasures(self):
+        def assignmaxtreasures(self): #assigns the number of treasures entered into the correct variables
             global TreasuresRemaining
             if int(interface.treasureEntry.get())>15:
                 tkMessageBox.showinfo("Error","No more than fifteen treasures can be created")
@@ -448,7 +448,7 @@ def main():
                 self.TreasurePromptLabel = Label(text = "Click anywhere to place a treasure", width = 30, height = 2, font = ("Arial", 16), bg = "White")
                 self.TreasurePromptLabel.place(x=350, y=300)
 
-        def robotWindow(level1):
+        def robotWindow(level1): #creates a window which allows the user to enter how many robots they want
             global robotWindow, timerWindow
             robotWindow = Tk()
             robotWindow.title("Number of Robots")
@@ -472,7 +472,7 @@ def main():
             robotCanvas.pack()
             interface.w.place_forget()
             
-        def assignmaxrobots(self):
+        def assignmaxrobots(self): #checks the number of robots entered is allowed
             if int(interface.robotEntry.get())>1:
                 tkMessageBox.showinfo("Error","Only one robot can be created")
             elif int(interface.robotEntry.get())<1:
@@ -483,13 +483,13 @@ def main():
                 self.RoboPromptLabel = Label(text = "Click anywhere to place a robot", width = 30, height = 2, font = ("Arial", 16), bg = "White")
                 self.RoboPromptLabel.place(x=350, y=300)
 
-        def start(self):
+        def start(self): #starts the program running and opens the score window
             self.assignScoreWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
             self.PressStartLabel.place_forget()
             
-        def timerWindowGet(self):
+        def timerWindowGet(self): #checks that a valid time has been entered and then starts the movement
             global counter, timerWindow
             if (interface.timeEntrysec.get())=="" or (((interface.timeEntrysec.get())=="0") and ((interface.timeEntrymin.get())=="0")):
                 counter=0
@@ -507,7 +507,7 @@ def main():
                 robot.moveto(robot.ClosestTreasure.x,robot.ClosestTreasure.y)
             self.initiateMovement()
 
-        def initiateMovement(self):
+        def initiateMovement(self): #starts the robot moving
             while TreasuresRemaining>0:
                 if pausepressed==False:
                     for robot in ListOfRobots:
@@ -515,7 +515,7 @@ def main():
                 else:
                     break
 
-        def pause(self):
+        def pause(self): #pauses the robots movement and the timer
             global counter, pausepressed, pauseCounter
             if pausepressed==False:
                 pausepressed=True
@@ -525,7 +525,7 @@ def main():
                 interface.timer()
                 self.initiateMovement()
 
-        def sortByWindow(self):
+        def sortByWindow(self): #creates a window that allows the user to choose how the treasures are sorted
             global sortByWindow
             sortByWindow = Tk()
             sortByWindow.title("Sort By")
@@ -544,7 +544,7 @@ def main():
             
             sortByCanvas.pack()
 
-        def levelSelect(self):
+        def levelSelect(self): #creates a window where the user can select what level they want to run
             global levelWindow
             levelWindow = Tk()
             levelWindow.title("Level Select")
@@ -565,31 +565,31 @@ def main():
             
             levelCanvas.pack()
 
-        def sortAsc(self):
+        def sortAsc(self): #starts the merge sort ascending
             global sortByWindow
             sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
             
-        def sortDes(self):
+        def sortDes(self): #starts the merge sort descending
             global sortByWindow
             sortByWindow.destroy()
             mergeSortDes(ScoreBank,TreasuresFound)
                    
-        def levelSelectLevel1(self):
+        def levelSelectLevel1(self): #closes the current level and opens level1
             global levelWindow
             levelWindow.destroy()
             level1.destroy()
             import Level1
             Level1.main()
 
-        def levelSelectLevel2(self):
+        def levelSelectLevel2(self):  #closes the current level and opens level2
             global levelWindow
             levelWindow.destroy()
             level1.destroy()
             import Level2
             Level2.main()
 
-        def levelSelectLevel3(self):
+        def levelSelectLevel3(self): #closes the current level and opens level3
             global levelWindow
             levelWindow.destroy()
             level1.destroy()
@@ -599,7 +599,7 @@ def main():
     class treasures:
         global canvas
         global NumberOfTreasures
-        def __init__(self,x,y):
+        def __init__(self,x,y): #contains all the variables for the treatures and has the methods that create them
             global NumberOfTreasures
             self.type=interface.variable.get()
             self.x=x
@@ -631,25 +631,25 @@ def main():
             self.ColourLabel = Label(level1, text = "Colour = "+self.colour, bg = "White", font = ("Arial", 10))
             self.ScoreLabel = Label(level1, text = "Score = "+str(self.score), bg = "White", font = ("Arial", 10))   
             
-        def MouseRollover(self,level1):
+        def MouseRollover(self,level1): #creates a window with all of the treasures properties when the mouse hovers over the treasure
             if self.ShapeLabel != None and self.ColourLabel != None and self.ScoreLabel != None:
                 self.ShapeLabel.place(x = self.x + 20, y = self.y - 20)
                 self.ColourLabel.place(x = self.x + 20, y = self.y)
                 self.ScoreLabel.place(x = self.x + 20, y = self.y+20)
 
-        def MouseOff(self,level1):
+        def MouseOff(self,level1): #destroys the rollover window
             if self.ShapeLabel != None and self.ColourLabel != None and self.ScoreLabel != None:
                 self.ShapeLabel.place_forget()
                 self.ColourLabel.place_forget()
                 self.ScoreLabel.place_forget()
 
-        def destroylabels(self):
+        def destroylabels(self): 
             self.ShapeLabel = None
             self.ColourLabel = None
             self.ScoreLabel = None
 
     class robot:
-        def __init__(self,x,y):
+        def __init__(self,x,y): #contains al the variables for the robots and the method that creates them
             self.x1=x-10
             self.y1=y-10
             self.x2=x+10
@@ -663,7 +663,7 @@ def main():
             self.TreasuresFoundPositions=[]
             self.NumberOfTreasuresFound=0
             
-        def closesttreasure(self):
+        def closesttreasure(self): #works out where the closest treasure is
             lowestdistance=100000
             for i in ListOfTreasures:
                 if i.found==False:
@@ -712,7 +712,7 @@ def main():
                 self.vy=0
             self.distanceleft=int(totaldistance)
 
-        def stopMoving(self):
+        def stopMoving(self): #stops the robot moving and opens the sorting window
             global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
             global d,ListOfRobots,TreasuresFound,score
             TreasuresRemaining=0
@@ -723,7 +723,7 @@ def main():
             interface.sortByWindow()     
             return 0
 
-        def move(self):
+        def move(self): 
             global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
             global d,ListOfRobots,TreasuresFound,score
             if self.distanceleft>0 and self.ClosestTreasure.found==False and RoboFinish==False:
