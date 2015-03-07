@@ -749,7 +749,6 @@ def main():
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
-                    self.ClosestTreasure.destroylabels()
                     TreasuresFound.append(self.ClosestTreasure)
                     ListOfTreasures.remove(self.ClosestTreasure)
                     score += self.ClosestTreasure.score
