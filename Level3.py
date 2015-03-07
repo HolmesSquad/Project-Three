@@ -61,8 +61,6 @@ def main():
     def mergeSortDes(List,anotherList):
         iteration = 0
         if len(List) > 1:
-            print len(anotherList)
-            print iteration
             midMD = len(List) // 2
             lHalfMD = List[:midMD]
             rHalfMD = List[midMD:]
@@ -81,8 +79,6 @@ def main():
             acMD = 0
     
             while aMD < len(lHalfMD) and bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 if lHalfMD[aMD] > rHalfMD[bMD]:
                     List[cMD] = lHalfMD[aMD]                               
                     aMD += 1
@@ -90,8 +86,6 @@ def main():
                     aaMD += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMD] = rHalfMD[bMD]
                     bMD += 1
                     anotherList[acMD] = arHalfMD[abMD]
@@ -102,8 +96,6 @@ def main():
                 acMD += 1
     
             while aMD < len(lHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = lHalfMD[aMD]
                 aMD += 1
                 cMD += 1
@@ -113,8 +105,6 @@ def main():
                 iteration += 1
 
             while bMD < len(rHalfMD):
-                print len(anotherList)
-                print iteration
                 List[cMD] = rHalfMD[bMD]
                 bMD += 1
                 cMD += 1
@@ -128,7 +118,6 @@ def main():
 
     def mergeSortAsc(List, anotherList):
         iteration = 0
-        print ScoreBank
         if len(List) > 1:
             midMA = len(List) // 2
             lHalfMA = List[:midMA]
@@ -148,8 +137,6 @@ def main():
             acMA = 0
     
             while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 if lHalfMA[aMA] < rHalfMA[bMA]:
                     List[cMA] = lHalfMA[aMA]                               
                     aMA += 1
@@ -157,8 +144,6 @@ def main():
                     aaMA += 1
                     iteration += 1
                 else:
-                    print len(anotherList)
-                    print iteration
                     List[cMA] = rHalfMA[bMA]
                     bMA += 1
                     anotherList[acMA] = arHalfMA[abMA]
@@ -169,8 +154,6 @@ def main():
                 acMA += 1
     
             while aMA < len(lHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = lHalfMA[aMA]
                 aMA += 1
                 cMA += 1
@@ -180,8 +163,6 @@ def main():
                 iteration += 1
                 
             while bMA < len(rHalfMA):
-                print len(anotherList)
-                print iteration
                 List[cMA] = rHalfMA[bMA]
                 bMA += 1
                 cMA += 1
@@ -191,7 +172,6 @@ def main():
                 iteration += 1
         
             if iteration == len(TreasuresFound):
-                print ScoreBank
                 sortAnimation()
     
     def callback(event):
@@ -202,8 +182,6 @@ def main():
             NumberOfTreasures+=1
             interface.TreasurePromptLabel.place_forget()
             interface.ChangePromptLabel.place_forget()
-            print interface.MaxTreasures
-            print NumberOfTreasures
             if NumberOfTreasures==int(interface.MaxTreasures):
                 interface.robotWindow()
         elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
@@ -376,18 +354,15 @@ def main():
             elif (int(interface.timeEntrysec.get())>0) and (int((interface.timeEntrymin.get())=="0") or (interface.timeEntrymin.get())==""):
                 counter=int(interface.timeEntrysec.get())
                 interface.timerShow(interface)
-                print "Run this 2"
                 timerWindow.destroy()
             elif (int((interface.timeEntrysec.get())=="")):
                 counter=((int(interface.timeEntrymin.get())*60))
                 interface.timerShow(interface)
-                print "Run this 3"
                 timerWindow.destroy()
             else:
                 counter=int(interface.timeEntrysec.get())
                 counter=counter+((int(interface.timeEntrymin.get())*60))
                 interface.timerShow(interface)
-                print "Run this"
                 timerWindow.destroy()
             Createtrap()
             ListOfRobots[0].TreasuresFoundPositions=[[1025,390,1045,410],[1055,390,1075,410],[1085,390,1105,410],[1115,390,1135,410],[1145,390,1165,410],[1175,390,1195,410],[1205,390,1225,410],[1235,390,1255,410],[1025,420,1045,440],[1055,420,1075,440]]
@@ -483,7 +458,6 @@ def main():
                 ListOfRobots[0].triangleswishlist=int(interface.triangleQuantity.get())
                 ListOfRobots[0].circleswishlist=int(interface.circleQuantity.get())
                 trapNum=int(interface.trapQuantity.get())
-               #print trapNum
                 self.timerWindow()
             
         def start(self):
@@ -789,7 +763,6 @@ def main():
                 self.vy=(0-(ydistance/totaldistance))*self.speed
             else:
                 self.vy=0
-            print str(totaldistance)
             self.distanceleft=int(totaldistance)
 
         def move(self):
@@ -801,7 +774,6 @@ def main():
                     if self.x2<=trap.x2+19 and self.y2<=trap.y2+19 and self.y1>=trap.y1-19 and self.x1>=trap.x1-19:
                         if trap.collision==False:
                             trap.collision=True
-                            print "Collision with trap"
                             if len(TreasuresFound)>0:
                                 time.sleep(0.5)
                                 self.DeletedTreasure=TreasuresFound.pop()
