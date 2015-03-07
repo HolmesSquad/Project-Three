@@ -34,9 +34,6 @@ A:Close the error message and run the program again. This is a current bug in th
 Q:When I click start the robot doesn't move. How do I fix this?
 A:Close the program, restart it and then press start again. This is because the robot has spawned on the treasure and imediately collects it, therefore it wont move.
 
-Q:How do I stop the robot getting stuck on traffic lights?
-A:Close the error message and run the program again. This is a current bug in the program and has yet to be fixed.
-
 Q:When the program runs I get a Tkinter error. Why?
 A:We are unsure why this happens but it does not stop the program from running correctly.
 
