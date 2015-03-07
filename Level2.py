@@ -10,8 +10,8 @@ def main():
     canvas = Canvas(level2, width = 1280, height = 720, bg = "White")
     canvas.pack()
     
-    global roboFinished,abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure, ListOfRobots
-    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter
+    global abcdefg,CoordsBank,ListofCoords,TreasuresFound,d,ScoreBank, ClosestTreasure, ListOfRobots
+    global NumberOfTreasures, NumberOfRobots, resetPressed, score, pausepressed, pauseCounter, RoboFinish
     
     score = 0
     d = 0
@@ -26,7 +26,7 @@ def main():
     CoordsBank = []
     pauseCounter=0
     abcdefg = 0
-    roboFinished = False
+    RoboFinish = False
     d=0
     pausepressed=False
 
@@ -39,14 +39,11 @@ def main():
         for i in ListOfTreasures:
             if i.x < 1000:
                 canvas.delete(i.name)        
-        print TreasuresFound
         for i in TreasuresFound:
-            print TreasuresFound
             if i.type == "Triangle":
                 canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
             else:
-                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
-                        
+                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])    
             d += 1
             time.sleep(0.5)                
             canvas.update()
@@ -55,8 +52,6 @@ def main():
     def mergeSortDes(List,anotherList):
         iteration = 0
         if len(List) > 1:
-            print len(anotherList)
-            print iteration
             midMD = len(List) // 2
             lHalfMD = List[:midMD]
             rHalfMD = List[midMD:]
@@ -178,8 +173,6 @@ def main():
             NumberOfTreasures+=1
             interface.TreasurePromptLabel.place_forget()
             interface.ChangePromptLabel.place_forget()
-            print interface.MaxTreasures
-            print NumberOfTreasures
             if NumberOfTreasures==int(interface.MaxTreasures):
                 interface.robotWindow()
         elif NumberOfRobots<int(interface.MaxRobots) and ProgramActive is False:
@@ -247,22 +240,22 @@ def main():
             webbrowser.open('https://github.com/HolmesSquad/Project-Three/wiki/Level-2#windows')
 
         def timer(level2):
-             global counter, resetPressed, pausepressed ,pauseCounter, roboFinished
+             global counter, resetPressed, pausepressed ,pauseCounter, RoboFinish
              counter==counter
-             if (counter != 0) and (pausepressed!=True) and (roboFinished!=True):
+             if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
                 interface.minuteConvert()
                 level2.secShowLabel.after(1000, level2.timer)
              elif (pausepressed==True):
                  pauseCounter=counter
-             elif (roboFinished==True):
+             elif (RoboFinish==True):
                  TreasuresRemaining=0
              else:
                 return 1
 
         def timerShow(level2,self):
-            global counter, RoboFinished
-            RoboFinished=False
+            global counter, RoboFinish
+            RoboFinish=False
             interface.timer()   
 
         def minuteConvert(level2):
@@ -348,7 +341,6 @@ def main():
             interface.windowHelpButton.place(x = 250, y = 170)
             
             assignScoreCanvas.pack()
-
 
         def timerWindowGet(self):
             global counter, timerWindow
@@ -452,8 +444,6 @@ def main():
                 ListOfRobots[0].squareswishlist=int(interface.squareQuantity.get())
                 ListOfRobots[0].triangleswishlist=int(interface.triangleQuantity.get())
                 ListOfRobots[0].circleswishlist=int(interface.circleQuantity.get())
-                #trapNum=int(interface.trapQuantity.get())
-               #print trapNum
                 self.timerWindow()
             
         def start(self):
@@ -461,7 +451,6 @@ def main():
             interface.pauseButton.place(x = 1020, y = 80)
             self.assignScoreWindow()
             self.PressStartLabel.place_forget()
-            
             
         def treasureWindow(level2):
             global treasureWindow,assignScoreWindow,squareScore,circleScore,triangleScore
@@ -538,14 +527,6 @@ def main():
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
-                
-        def reset(self):
-            global resetPressed
-            interface.pauseButton.place_forget()
-            interface.startButton.place(x = 1020, y = 80)
-            counter = 0
-            resetPressed=True
-            print "Reset"
 
         def pause(self):
             global counter, pausepressed, pauseCounter
@@ -575,7 +556,6 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
-            print "Hello"
             sortByWindow.destroy()
             mergeSortAsc(ScoreBank,TreasuresFound)
             
@@ -736,12 +716,22 @@ def main():
                 self.vy=(0-(ydistance/totaldistance))*self.speed
             else:
                 self.vy=0
-            print str(totaldistance)
             self.distanceleft=int(totaldistance)
 
-        def move(self):
-            global TreasuresRemaining,roboFinished,abcdefg,CoordsBank,ListofCoords
+        def stopMoving(self):
+            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords, counter
             global d,ListOfRobots,TreasuresFound,score
+            TreasuresRemaining=0
+            self.distanceleft=0
+            self.ClosestTreasure.found=True
+            self.vx=0
+            self.vy=0
+            interface.sortByWindow()     
+            return 0
+
+        def move(self):
+            global TreasuresRemaining,RoboFinish,abcdefg,CoordsBank,ListofCoords
+            global d,ListOfRobots,TreasuresFound,score, RoboFinish
             if self.distanceleft>0 and self.ClosestTreasure.found==False:
                 self.x1+=self.vx
                 self.x2+=self.vx
@@ -754,6 +744,8 @@ def main():
                 self.distanceleft-=1
                 time.sleep(0.01)
                 interface.scoreShowLabel.config(text = score)
+            elif (RoboFinish!=False):
+                self.stopMoving()
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
@@ -763,10 +755,11 @@ def main():
                     score += self.ClosestTreasure.score
                     interface.scoreShowLabel.config(text = score)
                     ScoreBank.append(self.ClosestTreasure.score)
-                    print ScoreBank
                     ListofCoords = ([250,40,270,60],[280,40,300,60],[310,40,330,60],[340,40,360,60],[370,40,390,60],[400,40,420,60],[430,40,450,60],[460,40,480,60],[490,40,510,60],[520,40,540,60],[550,40,570,60],[580,40,600,60],[610,40,630,60],[640,40,660,60],[670,40,690,60])
                     CoordsBank.append(ListofCoords[abcdefg])
                     abcdefg += 1
+                    self.ClosestTreasure.MouseOff(level2)
+                    self.ClosestTreasure.destroylabels()
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                         self.triangleswishlist-=1
@@ -782,7 +775,7 @@ def main():
                 if TreasuresRemaining==0 or (self.squareswishlist==0 and self.circleswishlist==0 and self.triangleswishlist==0):
                     self.vx=0
                     self.vy=0
-                    roboFinished=True
+                    RoboFinish=True
                     interface.sortByWindow()
                 else:
                     self.closesttreasure()

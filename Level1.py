@@ -40,8 +40,7 @@ def main():
             if i.type == "Triangle":
                 canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
             else:
-                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])
-                        
+                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])     
             d += 1
             time.sleep(0.5)                
             canvas.update()
@@ -169,7 +168,6 @@ def main():
 
     def mergeSortAsc(List, anotherList):
         iteration = 0
-        
         if len(List) > 1:
             midMA = len(List) // 2
             lHalfMA = List[:midMA]
@@ -214,7 +212,6 @@ def main():
                 aaMA += 1
                 acMA += 1
                 iteration += 1
-
     
             while bMA < len(rHalfMA):
                 List[cMA] = rHalfMA[bMA]
@@ -311,18 +308,15 @@ def main():
             counter==counter
             if (counter != 0) and (pausepressed!=True) and (RoboFinish!=True):
                 counter=counter-1
-                print RoboFinish
                 interface.minuteConvert()
                 level1.secShowLabel.after(1000, level1.timer)
             elif (pausepressed==True):
                 pauseCounter=counter
-                print "Hello"
             else:
                 RoboFinish=True
                 TreasuresRemaining=0
                 return False
                 
-
         def timerShow(level1,self):
             global counter, RoboFinished
             RoboFinished=False
@@ -417,6 +411,9 @@ def main():
             circleScore = int(interface.circleEntry.get())
             triangleScore = int(interface.triangleEntry.get())
             assignScoreWindow.destroy()
+            interface.w.place(x = 1020, y = 550)
+            interface.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
+            interface.ChangePromptLabel.place(x=510, y= 540)
             treasureWindow = Tk()
             treasureWindow.title("Number of Treasures")
             treasureWindow.resizable(0,0)
@@ -477,11 +474,10 @@ def main():
             
         def assignmaxrobots(self):
             if int(interface.robotEntry.get())>1:
-                print "No more than two robots can be created"
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             elif int(interface.robotEntry.get())<1:
-                print "No more than one robots can be created"
+                tkMessageBox.showinfo("Error","Only one robot can be created")
             else:
-            
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
                 self.RoboPromptLabel = Label(text = "Click anywhere to place a robot", width = 30, height = 2, font = ("Arial", 16), bg = "White")
@@ -491,10 +487,7 @@ def main():
             self.assignScoreWindow()
             interface.startButton.place_forget()
             interface.pauseButton.place(x = 1020, y = 80)
-            self.w.place(x = 1020, y = 550)
             self.PressStartLabel.place_forget()
-            self.ChangePromptLabel = Label(text="Use this Dropdown Menu to change Treasure -->", width = 40,height = 2, font = ("Arial", 16), bg = "white")
-            self.ChangePromptLabel.place(x=510, y= 540)
             
         def timerWindowGet(self):
             global counter, timerWindow
@@ -574,13 +567,13 @@ def main():
 
         def sortAsc(self):
             global sortByWindow
-            mergeSortAsc(ScoreBank,TreasuresFound)
             sortByWindow.destroy()
+            mergeSortAsc(ScoreBank,TreasuresFound)
             
         def sortDes(self):
             global sortByWindow
-            mergeSortDes(ScoreBank,TreasuresFound)
             sortByWindow.destroy()
+            mergeSortDes(ScoreBank,TreasuresFound)
                    
         def levelSelectLevel1(self):
             global levelWindow
@@ -727,9 +720,7 @@ def main():
             self.ClosestTreasure.found=True
             self.vx=0
             self.vy=0
-            print "Helloooo"
-            interface.sortByWindow()
-                    
+            interface.sortByWindow()     
             return 0
 
         def move(self):
@@ -747,9 +738,7 @@ def main():
                 self.distanceleft-=1
                 time.sleep(0.01)
             elif (RoboFinish!=False):
-                print ("hello")
                 self.stopMoving()
-            
             else:
                 if self.ClosestTreasure.found==False and RoboFinish==False:
                     self.ClosestTreasure.found=True
@@ -764,9 +753,6 @@ def main():
                     abcdefg += 1
                     self.ClosestTreasure.MouseOff(level1)
                     self.ClosestTreasure.destroylabels()
-                    #self.TreasuresFound.append(self.ClosestTreasure)
-               
-                    
                     if self.ClosestTreasure.type=="Triangle":
                         self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+10,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0]+20,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     else:
@@ -781,9 +767,8 @@ def main():
                     RoboFinish=True
                     interface.sortByWindow()
                 
-                    
-
     interface = interface(level1)
+    
     level1.mainloop()
     
 main()

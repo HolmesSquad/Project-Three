@@ -567,14 +567,6 @@ def main():
             else:
                 self.MaxRobots=interface.robotEntry.get()
                 robotWindow.destroy()
-                
-        def reset(self):
-            global resetPressed
-            interface.pauseButton.place_forget()
-            interface.startButton.place(x = 1020, y = 80)
-            counter = 0
-            resetPressed=True
-            print "Reset"
 
         def pause(self):
             global counter, pausepressed, pauseCounter
@@ -644,7 +636,7 @@ def main():
             global levelWindow
             levelWindow.destroy()
             level3.destroy()
-            import level2
+            import Level2
 
         def levelSelectLevel3(self):
             global levelWindow
