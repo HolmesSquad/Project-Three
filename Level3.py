@@ -832,6 +832,7 @@ def main():
             else:
                 if self.ClosestTreasure.found==False:
                     self.ClosestTreasure.found=True
+                    self.ClosestTreasure.MouseOff(level3)
                     self.ClosestTreasure.destroylabels()
                     score += self.ClosestTreasure.score
                     interface.scoreShowLabel.config(text = score)
