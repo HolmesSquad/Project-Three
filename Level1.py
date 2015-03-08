@@ -32,78 +32,7 @@ def main():
     RoboFinish = False
     pausepressed=False
     
-    def sortAnimation(): #function that places the objects after they have been sorted
-        global d
-        for i in ListOfRobots:
-            canvas.delete(i.shape)
-        for i in TreasuresFound:
-            if i.type == "Triangle":
-                canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
-            else:
-                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])     
-            d += 1
-            time.sleep(0.5)                
-            canvas.update()
-
-    #Ascending`
-    def mergeSortAsc(List,anotherList): #sorts the objects using a merge sort in ascending order
     
-        if len(List) > 1:
-            midMA = len(List) // 2
-            lHalfMA = List[:midMA]
-            rHalfMA = List[midMA:]
-            amidMA = len(anotherList) // 2
-            alHalfMA = anotherList[:amidMA]
-            arHalfMA = anotherList[amidMA:]
-    
-            mergeSortAsc(lHalfMA,alHalfMA)
-            mergeSortAsc(rHalfMA,arHalfMA)
-
-            aMA = 0
-            bMA = 0
-            cMA = 0
-            aaMA = 0
-            abMA = 0
-            acMA = 0
-    
-            while aMA < len(lHalfMA) and bMA < len(rHalfMA):
-                if lHalfMA[aMA] < rHalfMA[bMA]:
-                    List[cMA] = lHalfMA[aMA]                               
-                    aMA += 1
-                    anotherList[acMA] = alHalfMA[aaMA]                               
-                    aaMA += 1
-                    iteration += 1
-                    
-                else:
-                    List[cMA] = rHalfMA[bMA]
-                    bMA += 1
-                    anotherList[acMA] = arHalfMA[abMA]
-                    abMA += 1
-                    iteration += 1
-                cMA += 1
-                acMA += 1
-    
-            while aMA < len(lHalfMA):
-                List[cMA] = lHalfMA[aMA]
-                aMA += 1
-                cMA += 1
-                anotherList[acMA] = alHalfMA[aaMA]
-                aaMA += 1
-                acMA += 1
-                iteration += 1
-    
-            while bMA < len(rHalfMA):
-                List[cMA] = rHalfMA[bMA]
-                bMA += 1
-                cMA += 1
-                anotherList[acMA] = arHalfMA[abMA]
-                abMA += 1
-                acMA += 1
-                iteration += 1
-                
-        if iteration == len(TreasuresFound):
-            sortAnimation()
-
     #Descending 
     def mergeSortDes(List,anotherList): #sorts the objects using a merge sort in decending order
         iteration = 0
