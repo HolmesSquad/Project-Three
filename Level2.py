@@ -605,14 +605,18 @@ def main():
             level2.destroy()
             import Level3
             
-    class treasures:#contains all the variables for the treatures and has the methods that create them
-        global canvas
-        global NumberOfTreasures,circleScore,triangleScore,squareScore
+    class objects:
         def __init__(self,x,y):
-            global NumberOfTreasures
-            self.type=interface.variable.get()
             self.x=x
             self.y=y
+            
+    class treasures(objects):#contains all the variables for the treatures and has the methods that create them. Inherits the properties of the object class
+        global canvas
+        global NumberOfTreasures
+        def __init__(self,x,y):
+            objects.__init__(self,x,y)
+            global NumberOfTreasures
+            self.type=interface.variable.get()
             self.name="Treasure"+str(NumberOfTreasures)
             self.found=False
             if self.type=="Rectangle":
@@ -652,14 +656,13 @@ def main():
             self.ColourLabel = None
             self.WorthLabel = None
 
-    class robots: #contains al the variables for the robots and the method that creates them
+    class robots(objects):#contains all the variables for the robots and the method that creates them
         def __init__(self,x,y):
-            self.x1=x-10
-            self.y1=y-10
-            self.x2=x+10
-            self.y2=y+10
-            self.x=x
-            self.y=y
+            objects.__init__(self,x,y)
+            self.x1=self.x-10
+            self.y1=self.y-10
+            self.x2=self.x+10
+            self.y2=self.y+10
             self.speed=1
             self.canvas=canvas
             self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
