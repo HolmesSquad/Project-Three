@@ -32,7 +32,22 @@ def main():
     RoboFinish = False
     pausepressed=False
     
-    
+    def sortAnimation(): #function that places the objects after they have been sorted
+        global d
+        for i in ListOfRobots:
+            canvas.delete(i.shape)
+        for i in ListOfTreasures:
+            if i.x < 1000:
+                canvas.delete(i.name)        
+        for i in TreasuresFound:
+            if i.type == "Triangle":
+                canvas.coords(i.name,CoordsBank[d][0]+10,CoordsBank[d][1],CoordsBank[d][0],CoordsBank[d][3],CoordsBank[d][0]+20,CoordsBank[d][3])
+            else:
+                canvas.coords(i.name,CoordsBank[d][0],CoordsBank[d][1],CoordsBank[d][2],CoordsBank[d][3])    
+            d += 1
+            time.sleep(0.5)                
+            canvas.update()
+            
     #Descending 
     def mergeSortDes(List,anotherList): #sorts the objects using a merge sort in decending order
         iteration = 0
@@ -524,15 +539,20 @@ def main():
             level1.destroy()
             import Level3
             Level3.main()
+            
+    class objects:
+        def __init__(self,x,y):
+            self.x=x
+            self.y=y
+            
 
-    class treasures:
+    class treasures(objects):
         global canvas
         global NumberOfTreasures
         def __init__(self,x,y): #contains all the variables for the treatures and has the methods that create them
+            objects.__init__(self,x,y)
             global NumberOfTreasures
             self.type=interface.variable.get()
-            self.x=x
-            self.y=y
             self.name="Treasure"+str(NumberOfTreasures)
             self.found=False
             if self.type=="Rectangle":
@@ -577,14 +597,13 @@ def main():
             self.ColourLabel = None
             self.ScoreLabel = None
 
-    class robot:
+    class robot(objects):
         def __init__(self,x,y): #contains al the variables for the robots and the method that creates them
+            objects.__init__(self,x,y)
             self.x1=x-10
             self.y1=y-10
             self.x2=x+10
             self.y2=y+10
-            self.x=x
-            self.y=y
             self.speed=1
             self.canvas=canvas
             self.shape=canvas.create_rectangle(self.x-10,self.y-10,self.x+10,self.y+10,fill='cyan')
@@ -672,6 +691,7 @@ def main():
                 if self.ClosestTreasure.found==False and RoboFinish==False:
                     self.ClosestTreasure.found=True
                     TreasuresFound.append(self.ClosestTreasure)
+                    ListOfTreasures.remove(self.ClosestTreasure)
                     self.canvas.coords(self.ClosestTreasure.name,self.TreasuresFoundPositions[self.NumberOfTreasuresFound][0],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][1],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][2],self.TreasuresFoundPositions[self.NumberOfTreasuresFound][3])
                     self.canvas.update()
                     score += self.ClosestTreasure.score
